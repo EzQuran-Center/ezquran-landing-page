@@ -1,14 +1,28 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          setIsOpen(false);
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        setIsOpen(false);
+      }
     }
   };
 
@@ -16,7 +30,7 @@ export default function Navbar() {
     <nav className="fixed w-full bg-black/95 backdrop-blur-sm z-50 border-b border-yellow-600/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <div className="flex items-center space-x-3">
+          <button onClick={() => navigate('/')} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
             <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-lg flex items-center justify-center">
               <span className="text-2xl font-bold text-black">EQ</span>
             </div>
@@ -24,7 +38,7 @@ export default function Navbar() {
               <h1 className="text-xl font-bold text-white">EzQuran Centre</h1>
               <p className="text-xs text-yellow-500">THYORA INTERNATIONAL</p>
             </div>
-          </div>
+          </button>
 
           <div className="hidden md:flex space-x-8">
             <button onClick={() => scrollToSection('home')} className="text-white hover:text-yellow-500 transition-colors">
@@ -42,14 +56,28 @@ export default function Navbar() {
             <button onClick={() => scrollToSection('contact')} className="text-white hover:text-yellow-500 transition-colors">
               Hubungi Kami
             </button>
+            <button
+              onClick={() => navigate('/register')}
+              className="px-6 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
+            >
+              Daftar
+            </button>
           </div>
 
-          <button
-            className="md:hidden text-white"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={() => navigate('/register')}
+              className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg text-sm hover:from-yellow-400 hover:to-yellow-500 transition-all"
+            >
+              Daftar
+            </button>
+            <button
+              className="text-white"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
