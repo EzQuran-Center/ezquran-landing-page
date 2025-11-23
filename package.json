@@ -1,10 +1,13 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "ezquran-landing-page",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build:dev": "vite build --mode development",
+    "build:staging": "vite build --mode staging",
+    "build:production": "vite build --mode production",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
