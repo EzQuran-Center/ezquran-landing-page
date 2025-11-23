@@ -24,6 +24,9 @@ jobs:
           # or npm ci
 
       - name: Build For Development
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
           yarn build:dev
 
@@ -38,6 +41,9 @@ jobs:
           strip_components: 1
 
       - name: Build For Staging
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
           yarn build:staging
 
@@ -52,6 +58,9 @@ jobs:
           strip_components: 1
 
       - name: Build For Production
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
           yarn build:production
 
