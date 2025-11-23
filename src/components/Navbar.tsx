@@ -2,6 +2,8 @@ import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import logo from '../assets/logo-ezquran2.svg'
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -31,12 +33,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <button onClick={() => navigate('/')} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-lg flex items-center justify-center">
+            {/* <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-lg flex items-center justify-center">
               <span className="text-2xl font-bold text-black">EQ</span>
-            </div>
+            </div> */}
+            <img src={logo} alt="" className='max-w-12 max-h-12' />
             <div>
               <h1 className="text-xl font-bold text-white">EzQuran Centre</h1>
-              <p className="text-xs text-yellow-500">THYORA INTERNATIONAL</p>
             </div>
           </button>
 

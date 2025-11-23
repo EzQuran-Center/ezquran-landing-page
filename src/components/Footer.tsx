@@ -1,3 +1,5 @@
+import logo from '../assets/logo-ezquran2.svg'
+
 export default function Footer() {
   return (
     <footer className="bg-black text-white py-12 border-t border-yellow-600/20">
@@ -5,19 +7,20 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-lg flex items-center justify-center">
+              {/* <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-lg flex items-center justify-center">
                 <span className="text-2xl font-bold text-black">EQ</span>
-              </div>
+              </div> */}
+              <img src={logo} alt="" className='max-w-12 max-h-12' />
               <div>
                 <h3 className="text-xl font-bold">EzQuran Centre</h3>
-                <p className="text-xs text-yellow-500">THYORA INTERNATIONAL SDN. BHD.</p>
+                <p className="text-xs text-yellow-500">EZQURAN CENTRE SDN. BHD.</p>
               </div>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               Platform pembelajaran Al-Quran yang komprehensif untuk semua peringkat. Kami komited untuk membantu anda dalam perjalanan pembelajaran Al-Quran.
             </p>
             <p className="text-sm text-gray-500">
-              © 2024 THYORA INTERNATIONAL SDN. BHD.<br />
+              © {new Date().getFullYear()} EZQURAN CENTRE SDN. BHD.<br />
               Hak Cipta Terpelihara.
             </p>
           </div>

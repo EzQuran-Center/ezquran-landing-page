@@ -52,8 +52,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-black mb-1">E-mel</h4>
-                    <a href="mailto:thyora.international@gmail.com" className="text-gray-600 hover:text-yellow-600 transition-colors break-all">
-                      thyora.international@gmail.com
+                    <a href="mailto:admin@ezquran.my" className="text-gray-600 hover:text-yellow-600 transition-colors break-all">
+                      admin@ezquran.my
                     </a>
                   </div>
                 </div>

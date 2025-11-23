@@ -24,6 +24,7 @@ function HomePage() {
 }
 
 function App() {
+  console.log("env : ", import.meta.env.MODE)
   return (
     <AuthProvider>
       <Router>
