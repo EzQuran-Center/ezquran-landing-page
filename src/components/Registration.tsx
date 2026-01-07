@@ -272,8 +272,9 @@ export default function Registration() {
     }, [step, selectedTutor, selectedPackage]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pt-32 pb-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-br from-black via-black to-black pt-32 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
             {step === 'package' && (
             <div>
                 <div className="text-center mb-12">
@@ -337,7 +338,7 @@ export default function Registration() {
                 <p className="text-gray-400">Pilih guru yang anda inginkan untuk sesi kelas</p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
                 {tutorsLoading ? (
                     <div className="col-span-3 text-center text-gray-300">Memuatkan guru...</div>
                 ) : tutorsError ? (
@@ -414,7 +415,7 @@ export default function Registration() {
             )}
 
             {step === 'form' && selectedPackage && (
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-4xl mx-auto">
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12">
                 <div className="mb-8">
                     <button
@@ -442,30 +443,32 @@ export default function Registration() {
                     </div>
                     )}
 
-                    <div>
-                        <label htmlFor="username" className="block text-sm font-semibold text-white mb-2">Nama Pengguna (username)</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleInputChange}
-                            placeholder="nama_pengguna"
-                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-                        />
-                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+                        <div>
+                            <label htmlFor="username" className="block text-sm font-semibold text-white mb-2">Nama Pengguna (username)</label>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleInputChange}
+                                placeholder="nama_pengguna"
+                                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                            />
+                        </div>
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">Kata Laluan</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            placeholder="Minimum 6 aksara"
-                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-                        />
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">Kata Laluan</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange}
+                                placeholder="Minimum 6 aksara"
+                                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                            />
+                        </div>
                     </div>
 
                     <div>
