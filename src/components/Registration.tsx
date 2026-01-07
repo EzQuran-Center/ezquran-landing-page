@@ -333,27 +333,27 @@ export default function Registration() {
                 </div>
 
                 <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-white mb-2">Pilih Tutor</h2>
-                <p className="text-gray-400">Pilih tutor yang anda inginkan untuk sesi kelas</p>
+                <h2 className="text-2xl font-bold text-white mb-2">Pilih Guru</h2>
+                <p className="text-gray-400">Pilih guru yang anda inginkan untuk sesi kelas</p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                 {tutorsLoading ? (
-                    <div className="col-span-3 text-center text-gray-300">Memuatkan tutor...</div>
+                    <div className="col-span-3 text-center text-gray-300">Memuatkan guru...</div>
                 ) : tutorsError ? (
                     <div className="col-span-3 text-center text-red-400">{tutorsError}</div>
                 ) : tutors.length === 0 ? (
-                    <div className="col-span-3 text-center text-gray-300">Tiada tutor ditemui</div>
+                    <div className="col-span-3 text-center text-gray-300">Tiada guru ditemui</div>
                 ) : (
                     tutors.map((t: any) => (
                     <div key={t.tutor_id} className="flex flex-col justify-center items-center gap-4 text-left bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:shadow-lg transition">
                         <Avatar src={t.tutor_image} name={t.tutor_fullname || t.tutor_name} size={56} />
                         <div className="flex-1 text-center">
                             <h3 className="font-semibold text-white text-lg">{t.tutor_fullname || t.tutor_name}</h3>
-                            <p className="text-sm text-gray-400">{t.tutor_phone}</p>
+                            <p className="text-sm text-gray-400">Pemegang Sanad Riwayat Hafs 'An 'Asim</p>
                         </div>
                         <div>
-                        <button onClick={() => handleTutorSelect(t)} className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg">Pilih Tutor</button>
+                            <button onClick={() => handleTutorSelect(t)} className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg text-sm">Pilih Guru</button>
                         </div>
                     </div>))
                 )}
@@ -385,7 +385,7 @@ export default function Registration() {
                 <h3 className="text-white font-semibold mb-3">Pilih Hari</h3>
                 <div className="flex flex-wrap gap-2">
                     {weekdays.map((d) => (
-                    <button key={d.value} onClick={() => toggleDay(d.value)} className={`px-3 py-1 w-[100px] rounded-full ${daysSelected.includes(d.value) ? 'bg-yellow-500 text-black' : 'bg-white/5 text-white'}`}>
+                    <button key={d.value} onClick={() => toggleDay(d.value)} className={`px-4 py-2 w-[100px] rounded-full ${daysSelected.includes(d.value) ? 'bg-yellow-500 text-black' : 'bg-white/5 text-white'}`}>
                         {d.label}
                     </button>
                     ))}
@@ -404,7 +404,7 @@ export default function Registration() {
                     <div className="grid md:grid-cols-3 gap-4">
                     {slots.filter((s: any) => s.is_available).map((s: any) => (
                         <button key={s.slot_id} onClick={() => handleSlotSelect(s)} className="p-4 bg-white/5 rounded-lg text-left hover:bg-white/10">
-                        <div className="font-semibold text-white">{s.slot_time_12h || s.slot_time}</div>
+                        <div className="font-semibold text-white text-center">{s.slot_time_12h || s.slot_time}</div>
                         </button>
                     ))}
                     </div>

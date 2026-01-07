@@ -190,7 +190,7 @@ Address: Lot 84-G, Jalan Cattleya 9, Persada Cattleya, 70450 Seremban, Negeri Se
     const content = language === 'bm' ? contentBM : contentEN;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pt-32 pb-12">
+        <div className="min-h-screen bg-gradient-to-br from-black via-black to-black pt-32 pb-12">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Language Toggle */}
                 <div className="flex justify-end mb-8">
@@ -213,7 +213,7 @@ Address: Lot 84-G, Jalan Cattleya 9, Persada Cattleya, 70450 Seremban, Negeri Se
                                     : 'text-gray-400 hover:text-white'
                             }`}
                         >
-                            English
+                            Bahasa Inggeris
                         </button>
                     </div>
                 </div>
