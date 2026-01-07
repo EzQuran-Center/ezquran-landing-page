@@ -3,25 +3,25 @@ import { ShoppingBag, ExternalLink } from "lucide-react";
 export default function Merchandise() {
 	const categories = [
 		{
-			title: "Pakaian Muslim",
-			description: "Koleksi jubah dan pakaian muslim yang elegan dan selesa",
-			image: "👔",
+			title: "Buku EzTajwid",
+			description: "Buku EzTajwid lengkap dengan panduan pembelajaran tajwid yang mudah difahami.",
+			image: "📘",
 		},
 		{
-			title: "Telekung",
-			description: "Telekung berkualiti tinggi dengan pelbagai rekaan menarik",
-			image: "🧕",
+			title: "Buku Disebalik Kalimah",
+			description: "Koleksi buku yang menerangkan maksud dan tafsiran ayat-ayat Al-Quran",
+			image: "📗",
 		},
 		{
-			title: "Tudung & Shawl",
-			description: "Pelbagai pilihan tudung dan shawl dengan fabrik premium",
-			image: "🧣",
+			title: "Buku Dear Allah, Doa Diary",
+			description: "Buku jurnal doa harian untuk mendekatkan diri kepada Allah SWT",
+			image: "📕",
 		},
-		{
-			title: "Aksesori Islam",
-			description: "Aksesori dan barangan keperluan harian berunsur Islam",
-			image: "📿",
-		},
+		// {
+		// 	title: "Aksesori Islam",
+		// 	description: "Aksesori dan barangan keperluan harian berunsur Islam",
+		// 	image: "📿",
+		// },
 	];
 
 	return (
@@ -33,19 +33,17 @@ export default function Merchandise() {
 				<div className="text-center mb-16">
 					<div className="inline-flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full mb-6">
 						<ShoppingBag size={20} />
-						<span className="font-semibold">Barangan Islam</span>
+						<span className="font-semibold">Produk Kami</span>
 					</div>
 					<h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
-						Koleksi{" "}
-						<span className="text-yellow-600">Barangan</span> Kami
+						Koleksi{" "}<span className="text-yellow-600">Produk</span> Kami
 					</h2>
 					<p className="text-xl text-gray-600 max-w-2xl mx-auto">
-						Dapatkan pelbagai barangan Islam berkualiti tinggi untuk
-						keperluan harian anda
+						Dapatkan pelbagai produk Islam berkualiti tinggi untuk keperluan harian anda
 					</p>
 				</div>
 
-				<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
 					{categories.map((category, index) => (
 						<div
 							key={index}
