@@ -12,6 +12,8 @@ import Merchandise from "./components/Merchandise";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Registration from "./components/Registration";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsAndConditions from "./components/TermsAndConditions";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
 
@@ -54,6 +56,26 @@ function App() {
 							<>
 								<Navbar />
 								<Registration />
+								<Footer />
+							</>
+						}
+					/>
+					<Route
+						path="/polisi-privasi"
+						element={
+							<>
+								<Navbar />
+								<PrivacyPolicy />
+								<Footer />
+							</>
+						}
+					/>
+					<Route
+						path="/terma-dan-syarat"
+						element={
+							<>
+								<Navbar />
+								<TermsAndConditions />
 								<Footer />
 							</>
 						}
