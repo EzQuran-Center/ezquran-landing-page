@@ -1,4 +1,5 @@
 import { BookOpen, Users, Award } from "lucide-react";
+import Banner1 from '../assets/ezquran-banner-1.png';
 
 export default function Hero() {
 	const scrollToPackages = () => {
@@ -82,13 +83,14 @@ export default function Hero() {
 			<div className="relative hidden md:block">
 				<div className="relative w-full h-[600px] rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-500/20 to-yellow-700/20 backdrop-blur-sm border border-yellow-500/30 flex items-center justify-center">
 				<div className="text-center space-y-6 p-12">
-					<div className="text-8xl text-yellow-500 mb-4">🕌</div>
+					{/* <div className="text-8xl text-yellow-500 mb-4">🕌</div>
 					<div className="text-4xl font-bold text-white mb-4" style={{ fontFamily: "serif" }}>
 					بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 					</div>
 					<p className="text-lg text-gray-300">
 					Dengan nama Allah Yang Maha Pemurah lagi Maha Penyayang
-					</p>
+					</p> */}
+					<img src={Banner1} alt="Hero Banner" className="w-full h-auto rounded-lg shadow-lg object-fill" />
 				</div>
 				</div>
 				<div className="absolute -top-6 -right-6 w-32 h-32 bg-yellow-500/20 rounded-full blur-3xl"></div>
