@@ -1,49 +1,49 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { supabase, User } from '../lib/supabase';
+import { User } from '../lib/supabase';
 
 interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-  error: string | null;
+//   user: User | null;
+//   loading: boolean;
+//   error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser]       = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError]     = useState<string | null>(null);
 
-    useEffect(() => {
-        const loadUser = async () => {
-        try {
-            setLoading(true);
-            const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+    // useEffect(() => {
+    //     const loadUser = async () => {
+    //     try {
+    //         setLoading(true);
+    //         const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
 
-            if (authError) throw authError;
+    //         if (authError) throw authError;
 
-            if (authUser?.email) {
-            const { data, error: fetchError } = await supabase
-                .from('users')
-                .select('*')
-                .eq('email', authUser.email)
-                .maybeSingle();
+    //         if (authUser?.email) {
+    //         const { data, error: fetchError } = await supabase
+    //             .from('users')
+    //             .select('*')
+    //             .eq('email', authUser.email)
+    //             .maybeSingle();
 
-            if (fetchError) throw fetchError;
-            setUser(data);
-            }
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred');
-        } finally {
-            setLoading(false);
-        }
-        };
+    //         if (fetchError) throw fetchError;
+    //         setUser(data);
+    //         }
+    //     } catch (err) {
+    //         setError(err instanceof Error ? err.message : 'An error occurred');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    //     };
 
-        loadUser();
-    }, []);
+    //     loadUser();
+    // }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, error }}>
+        <AuthContext.Provider value={{}}>
         {children}
         </AuthContext.Provider>
     );

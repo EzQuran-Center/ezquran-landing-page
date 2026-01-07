@@ -1,23 +1,78 @@
-import { useState } from 'react';
-import { supabase, packages, malaysianStates } from '../lib/supabase';
-import { CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import api from '../lib/api';
+import { CheckCircle, AlertCircle, Loader, ArrowLeft } from 'lucide-react';
+import Avatar from './Avatar';
 
 export default function Registration() {
-    const [step, setStep] = useState<'package' | 'form' | 'success'>('package');
-    const [selectedPackage, setSelectedPackage] = useState<typeof packages[0] | null>(null);
+    const location = useLocation();
+    const [step, setStep] = useState<'package' | 'tutor' | 'schedule' | 'form' | 'success'>('package');
+    const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
+        username: '',
+        password: '',
         phone: '',
-        state: '',
     });
 
-    const handlePackageSelect = (pkg: typeof packages[0]) => {
-        setSelectedPackage(pkg);
-        setStep('form');
+    const [packages, setPackages] = useState<any[]>([]);
+    const [packagesLoading, setPackagesLoading] = useState<boolean>(true);
+    const [packagesError, setPackagesError] = useState<string | null>(null);
+
+    const [tutors, setTutors] = useState<any[]>([]);
+    const [tutorsLoading, setTutorsLoading] = useState<boolean>(false);
+    const [tutorsError, setTutorsError] = useState<string | null>(null);
+    const [selectedTutor, setSelectedTutor] = useState<any | null>(null);
+
+    const [daysSelected, setDaysSelected] = useState<string[]>([]);
+    const weekdays = [
+        { value: 'Monday', label: 'Isnin' },
+        { value: 'Tuesday', label: 'Selasa' },
+        { value: 'Wednesday', label: 'Rabu' },
+        { value: 'Thursday', label: 'Khamis' },
+        { value: 'Friday', label: 'Jumaat' },
+        { value: 'Saturday', label: 'Sabtu' },
+        { value: 'Sunday', label: 'Ahad' },
+    ];
+
+    const dayLabel = (val: string) => weekdays.find((w) => w.value === val)?.label || val;
+
+    const [slots, setSlots] = useState<any[]>([]);
+    const [slotsLoading, setSlotsLoading] = useState<boolean>(false);
+    const [slotsError, setSlotsError] = useState<string | null>(null);
+    const [selectedSlot, setSelectedSlot] = useState<any | null>(null);
+
+    const handlePackageSelect = (pkg: any) => {
+        const mapped = {
+            id: pkg.package_id,
+            name: pkg.package_name,
+            price: parseFloat(pkg.package_price || '0'),
+            raw: pkg,
+        };
+        setSelectedPackage(mapped);
+        setStep('tutor');
         setError(null);
+    };
+
+
+    const handleTutorSelect = (tutor: any) => {
+        setSelectedTutor(tutor);
+        setStep('schedule');
+        setDaysSelected([]);
+        setSelectedSlot(null);
+        setSlots([]);
+    };
+
+    const toggleDay = (day: string) => {
+        setDaysSelected(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]);
+    };
+
+    const handleSlotSelect = (slot: any) => {
+        setSelectedSlot(slot);
+        setStep('form');
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -29,8 +84,10 @@ export default function Registration() {
         if (!formData.fullName.trim()) return 'Sila masukkan nama lengkap';
         if (!formData.email.trim()) return 'Sila masukkan email';
         if (!formData.email.includes('@')) return 'Email tidak sah';
+        if (!formData.username.trim()) return 'Sila masukkan nama pengguna';
+        if (!formData.password) return 'Sila masukkan kata laluan';
+        if (formData.password.length < 6) return 'Kata laluan mesti sekurang-kurangnya 6 aksara';
         if (!formData.phone.trim()) return 'Sila masukkan nombor telefon';
-        if (!formData.state) return 'Sila pilih negeri';
         if (!selectedPackage) return 'Sila pilih pakej';
         return null;
     };
@@ -39,76 +96,180 @@ export default function Registration() {
         e.preventDefault();
         const validationError = validateForm();
         if (validationError) {
-        setError(validationError);
-        return;
+            setError(validationError);
+            return;
         }
 
-        if (!selectedPackage) return;
-
-        try {
         setLoading(true);
-        setError(null);
+        // placeholder: here you'd call your registration + enrollment endpoints.
+        // For now just log the collected data and simulate a delay.
+        console.log('Registering user and enrolling:', {
+            username: formData.username,
+            password: formData.password ? '***' : '',
+            fullName: formData.fullName,
+            email: formData.email,
+            phone: formData.phone,
+            package: selectedPackage,
+            tutor: selectedTutor,
+            days: daysSelected,
+            slot: selectedSlot,
+        });
+        setTimeout(() => {
+            setLoading(false);
+            setStep('success');
+        }, 600);
 
-        const { data: existingUser } = await supabase
-            .from('users')
-            .select('id')
-            .eq('email', formData.email)
-            .maybeSingle();
+        // if (!selectedPackage) return;
 
-        let userId;
+        // try {
+        // setLoading(true);
+        // setError(null);
 
-        if (existingUser) {
-            userId = existingUser.id;
-            const { error: updateError } = await supabase
-            .from('users')
-            .update({
-                full_name: formData.fullName,
-                phone: formData.phone,
-                state: formData.state,
-                updated_at: new Date().toISOString(),
+        // const { data: existingUser } = await supabase
+        //     .from('users')
+        //     .select('id')
+        //     .eq('email', formData.email)
+        //     .maybeSingle();
+
+        // let userId;
+
+        // if (existingUser) {
+        //     userId = existingUser.id;
+        //     const { error: updateError } = await supabase
+        //     .from('users')
+        //     .update({
+        //         full_name: formData.fullName,
+        //         phone: formData.phone,
+        //         state: formData.state,
+        //         updated_at: new Date().toISOString(),
+        //     })
+        //     .eq('id', userId);
+
+        //     if (updateError) throw updateError;
+        // } else {
+        //     const { data: newUser, error: insertError } = await supabase
+        //     .from('users')
+        //     .insert({
+        //         full_name: formData.fullName,
+        //         email: formData.email,
+        //         phone: formData.phone,
+        //         state: formData.state,
+        //     })
+        //     .select('id')
+        //     .single();
+
+        //     if (insertError) throw insertError;
+        //     userId = newUser.id;
+        // }
+
+        // const { error: enrollmentError } = await supabase
+        //     .from('enrollments')
+        //     .insert({
+        //     user_id: userId,
+        //     package: selectedPackage.name.replace('Pakej ', ''),
+        //     price: selectedPackage.price,
+        //     status: 'pending',
+        //     payment_method: 'WhatsApp',
+        //     });
+
+        // if (enrollmentError) throw enrollmentError;
+
+        // const whatsappMessage = `Halo! Saya ingin mendaftar dengan pakej berikut:%0A%0ANama: ${formData.fullName}%0AEmail: ${formData.email}%0ATelefon: ${formData.phone}%0APakej: ${selectedPackage.name}%0AHarga: RM${selectedPackage.price}`;
+
+        // window.open(`https://wa.me/60183868296?text=${whatsappMessage}`, '_blank');
+
+        // setStep('success');
+        // } catch (err) {
+        // setError(err instanceof Error ? err.message : 'Ralat semasa mendaftar');
+        // } finally {
+        // setLoading(false);
+        // }
+    };
+
+    useEffect(() => {
+        let mounted = true;
+        setPackagesLoading(true);
+        setPackagesError(null);
+
+        api.get('package')
+            .then((res: any) => {
+                const items = res?.data?.packages || [];
+                if (mounted) setPackages(items);
             })
-            .eq('id', userId);
-
-            if (updateError) throw updateError;
-        } else {
-            const { data: newUser, error: insertError } = await supabase
-            .from('users')
-            .insert({
-                full_name: formData.fullName,
-                email: formData.email,
-                phone: formData.phone,
-                state: formData.state,
+            .catch((err: any) => {
+                console.error('Failed to load packages', err);
+                if (mounted) setPackagesError(err?.message || 'Gagal memuatkan pakej');
             })
-            .select('id')
-            .single();
-
-            if (insertError) throw insertError;
-            userId = newUser.id;
-        }
-
-        const { error: enrollmentError } = await supabase
-            .from('enrollments')
-            .insert({
-            user_id: userId,
-            package: selectedPackage.name.replace('Pakej ', ''),
-            price: selectedPackage.price,
-            status: 'pending',
-            payment_method: 'WhatsApp',
+            .finally(() => {
+                if (mounted) setPackagesLoading(false);
             });
 
-        if (enrollmentError) throw enrollmentError;
+        return () => {
+            mounted = false;
+        };
+    }, []);
 
-        const whatsappMessage = `Halo! Saya ingin mendaftar dengan pakej berikut:%0A%0ANama: ${formData.fullName}%0AEmail: ${formData.email}%0ATelefon: ${formData.phone}%0ANegeri: ${formData.state}%0APakej: ${selectedPackage.name}%0AHarga: RM${selectedPackage.price}`;
-
-        window.open(`https://wa.me/60183868296?text=${whatsappMessage}`, '_blank');
-
-        setStep('success');
-        } catch (err) {
-        setError(err instanceof Error ? err.message : 'Ralat semasa mendaftar');
-        } finally {
-        setLoading(false);
+    // Check for pre-selected package from navigation state
+    useEffect(() => {
+        const state = location.state as any;
+        if (state?.selectedPackage) {
+            const pkg = state.selectedPackage;
+            const mapped = {
+                id: pkg.package_id,
+                name: pkg.package_name,
+                price: parseFloat(pkg.package_price || '0'),
+                raw: pkg,
+            };
+            setSelectedPackage(mapped);
+            setStep('tutor');
         }
-    };
+    }, [location]);
+
+    // fetch tutors when entering tutor step
+    useEffect(() => {
+        if (step !== 'tutor' || !selectedPackage) return;
+        let mounted = true;
+        setTutorsLoading(true);
+        setTutorsError(null);
+
+        api.get('registration/tutors')
+            .then((res: any) => {
+                const items = res?.data || res || [];
+                if (mounted) setTutors(items);
+            })
+            .catch((err: any) => {
+                console.error('Failed to load tutors', err);
+                if (mounted) setTutorsError(err?.message || 'Gagal memuatkan tutor');
+            })
+            .finally(() => {
+                if (mounted) setTutorsLoading(false);
+            });
+
+        return () => { mounted = false; };
+    }, [step, selectedPackage]);
+
+    // fetch slots when entering schedule step
+    useEffect(() => {
+        if (step !== 'schedule' || !selectedTutor || !selectedPackage) return;
+        let mounted = true;
+        setSlotsLoading(true);
+        setSlotsError(null);
+
+        api.get(`registration/tutors/${selectedTutor.tutor_id}/schedules?package_id=${selectedPackage.id}`)
+            .then((res: any) => {
+                const timeSlots = res?.data?.time_slots || res?.data?.time_slots || [];
+                if (mounted) setSlots(timeSlots || []);
+            })
+            .catch((err: any) => {
+                console.error('Failed to load slots', err);
+                if (mounted) setSlotsError(err?.message || 'Gagal memuatkan slot waktu');
+            })
+            .finally(() => {
+                if (mounted) setSlotsLoading(false);
+            });
+
+        return () => { mounted = false; };
+    }, [step, selectedTutor, selectedPackage]);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pt-32 pb-12">
@@ -125,17 +286,24 @@ export default function Registration() {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-8">
-                {packages.map((pkg) => (
+                {packagesLoading ? (
+                    <div className="col-span-3 text-center text-gray-300">Memuatkan pakej...</div>
+                ) : packagesError ? (
+                    <div className="col-span-3 text-center text-red-400">{packagesError}</div>
+                ) : packages.length === 0 ? (
+                    <div className="col-span-3 text-center text-gray-300">Tiada pakej ditemui</div>
+                ) : (
+                    packages.map((pkg) => (
                     <button
-                    key={pkg.id}
+                    key={pkg.package_id}
                     onClick={() => handlePackageSelect(pkg)}
                     className="group bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-500/50 rounded-2xl p-8 transition-all transform hover:scale-105 text-left"
                     >
-                    <h3 className="text-2xl font-bold text-white mb-2">{pkg.name}</h3>
+                    <h3 className="text-2xl font-bold text-white mb-2">{pkg.package_name}</h3>
                     <div className="text-4xl font-bold text-yellow-500 mb-4">
-                        {pkg.currency}{pkg.price.toFixed(2)}
+                        RM {parseFloat(pkg.package_price || '0').toFixed(2)}
                     </div>
-                    <p className="text-gray-400">sebulan</p>
+                    <p className="text-gray-400">{pkg.package_commitment_type || 'sebulan'}</p>
                     <div className="mt-6 pt-6 border-t border-white/10">
                         <button
                         onClick={() => handlePackageSelect(pkg)}
@@ -145,7 +313,102 @@ export default function Registration() {
                         </button>
                     </div>
                     </button>
-                ))}
+                )))}
+                </div>
+            </div>
+            )}
+
+            {step === 'tutor' && selectedPackage && (
+            <div>
+                <div className="mb-8">
+                    <button
+                    onClick={() => {
+                        setStep('package');
+                        setError(null);
+                    }}
+                    className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2">
+                    <ArrowLeft size={16} />
+                    Kembali
+                    </button>
+                </div>
+
+                <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-white mb-2">Pilih Tutor</h2>
+                <p className="text-gray-400">Pilih tutor yang anda inginkan untuk sesi kelas</p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                {tutorsLoading ? (
+                    <div className="col-span-3 text-center text-gray-300">Memuatkan tutor...</div>
+                ) : tutorsError ? (
+                    <div className="col-span-3 text-center text-red-400">{tutorsError}</div>
+                ) : tutors.length === 0 ? (
+                    <div className="col-span-3 text-center text-gray-300">Tiada tutor ditemui</div>
+                ) : (
+                    tutors.map((t: any) => (
+                    <div key={t.tutor_id} className="flex flex-col justify-center items-center gap-4 text-left bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:shadow-lg transition">
+                        <Avatar src={t.tutor_image} name={t.tutor_fullname || t.tutor_name} size={56} />
+                        <div className="flex-1 text-center">
+                            <h3 className="font-semibold text-white text-lg">{t.tutor_fullname || t.tutor_name}</h3>
+                            <p className="text-sm text-gray-400">{t.tutor_phone}</p>
+                        </div>
+                        <div>
+                        <button onClick={() => handleTutorSelect(t)} className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg">Pilih Tutor</button>
+                        </div>
+                    </div>))
+                )}
+                </div>
+            </div>
+            )}
+
+            {step === 'schedule' && selectedTutor && (
+            <div>
+                <div className="mb-8">
+                    <button
+                    onClick={() => {
+                        setStep('tutor');
+                        setError(null);
+                    }}
+                    className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2"
+                    >
+                    <ArrowLeft size={16} />
+                    Kembali
+                    </button>
+                </div>
+
+                <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-white mb-2">Pilih Hari & Waktu</h2>
+                <p className="text-gray-400">Pilih hari yang sesuai, kemudian pilih slot waktu tersedia</p>
+                </div>
+
+                <div className="mb-6">
+                <h3 className="text-white font-semibold mb-3">Pilih Hari</h3>
+                <div className="flex flex-wrap gap-2">
+                    {weekdays.map((d) => (
+                    <button key={d.value} onClick={() => toggleDay(d.value)} className={`px-3 py-1 w-[100px] rounded-full ${daysSelected.includes(d.value) ? 'bg-yellow-500 text-black' : 'bg-white/5 text-white'}`}>
+                        {d.label}
+                    </button>
+                    ))}
+                </div>
+                </div>
+
+                <div>
+                <h3 className="text-white font-semibold mb-3">Pilih Waktu</h3>
+                {slotsLoading ? (
+                    <div className="text-gray-300">Memuatkan slot...</div>
+                ) : slotsError ? (
+                    <div className="text-red-400">{slotsError}</div>
+                ) : slots.length === 0 ? (
+                    <div className="text-gray-300">Tiada slot tersedia</div>
+                ) : (
+                    <div className="grid md:grid-cols-3 gap-4">
+                    {slots.filter((s: any) => s.is_available).map((s: any) => (
+                        <button key={s.slot_id} onClick={() => handleSlotSelect(s)} className="p-4 bg-white/5 rounded-lg text-left hover:bg-white/10">
+                        <div className="font-semibold text-white">{s.slot_time_12h || s.slot_time}</div>
+                        </button>
+                    ))}
+                    </div>
+                )}
                 </div>
             </div>
             )}
@@ -156,12 +419,13 @@ export default function Registration() {
                 <div className="mb-8">
                     <button
                     onClick={() => {
-                        setStep('package');
+                        setStep('schedule');
                         setError(null);
                     }}
-                    className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold"
+                    className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2"
                     >
-                    ← Kembali ke Pemilihan Pakej
+                    <ArrowLeft size={16} />
+                    Kembali
                     </button>
                 </div>
 
@@ -179,68 +443,68 @@ export default function Registration() {
                     )}
 
                     <div>
-                    <label htmlFor="fullName" className="block text-sm font-semibold text-white mb-2">
-                        Nama Lengkap
-                    </label>
-                    <input
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleInputChange}
-                        placeholder="Ahmad bin Ali"
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-                    />
+                        <label htmlFor="username" className="block text-sm font-semibold text-white mb-2">Nama Pengguna (username)</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleInputChange}
+                            placeholder="nama_pengguna"
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                        />
                     </div>
 
                     <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
-                        E-mel
-                    </label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="ahmad@email.com"
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-                    />
+                        <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">Kata Laluan</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            placeholder="Minimum 6 aksara"
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                        />
                     </div>
 
                     <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-white mb-2">
-                        Nombor Telefon
-                    </label>
-                    <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="+60 12-345 6789"
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-                    />
+                        <label htmlFor="fullName" className="block text-sm font-semibold text-white mb-2">Nama Lengkap</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            value={formData.fullName}
+                            onChange={handleInputChange}
+                            placeholder="Ahmad bin Ali"
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                        />
                     </div>
 
                     <div>
-                    <label htmlFor="state" className="block text-sm font-semibold text-white mb-2">
-                        Negeri
-                    </label>
-                    <select
-                        id="state"
-                        name="state"
-                        value={formData.state}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-                    >
-                        <option value="">Pilih Negeri</option>
-                        {malaysianStates.map((state) => (
-                        <option key={state} value={state}>
-                            {state}
-                        </option>
-                        ))}
-                    </select>
+                        <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">E-mel</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="ahmad@email.com"
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="phone" className="block text-sm font-semibold text-white mb-2">Nombor Telefon</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            placeholder="+60 12-345 6789"
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                        />
                     </div>
 
                     <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mt-8">
@@ -254,6 +518,24 @@ export default function Registration() {
                         <span>Harga:</span>
                         <span className="font-semibold">RM {selectedPackage.price.toFixed(2)}</span>
                         </div>
+                        {selectedTutor && (
+                        <div className="flex justify-between">
+                        <span>Tutor:</span>
+                        <span className="font-semibold">{selectedTutor.tutor_fullname || selectedTutor.tutor_name}</span>
+                        </div>
+                        )}
+                        {daysSelected.length > 0 && (
+                        <div className="flex justify-between">
+                        <span>Hari:</span>
+                        <span className="font-semibold">{daysSelected.map(dayLabel).join(', ')}</span>
+                        </div>
+                        )}
+                        {selectedSlot && (
+                        <div className="flex justify-between">
+                        <span>Waktu:</span>
+                        <span className="font-semibold">{selectedSlot.slot_time_12h || selectedSlot.slot_time}</span>
+                        </div>
+                        )}
                         <div className="flex justify-between pt-2 border-t border-yellow-500/30">
                         <span>Jumlah:</span>
                         <span className="text-yellow-400 font-bold text-lg">RM {selectedPackage.price.toFixed(2)}</span>
@@ -332,7 +614,7 @@ export default function Registration() {
                     <button
                     onClick={() => {
                         setStep('package');
-                        setFormData({ fullName: '', email: '', phone: '', state: '' });
+                        setFormData({ fullName: '', email: '', username: '', password: '', phone: '' });
                         setSelectedPackage(null);
                         setError(null);
                     }}
