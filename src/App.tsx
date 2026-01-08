@@ -14,6 +14,8 @@ import Footer from "./components/Footer";
 import Registration from "./components/Registration";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
+import NotFound from "./components/NotFound";
+import AffiliateRedirect from "./components/AffiliateRedirect";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
 
@@ -80,6 +82,9 @@ function App() {
 							</>
 						}
 					/>
+					<Route path="/404" element={<NotFound />} />
+					<Route path="/:code" element={<AffiliateRedirect />} />
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Router>
 		</AuthProvider>

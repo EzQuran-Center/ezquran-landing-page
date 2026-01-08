@@ -1,33 +1,35 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import api from '../lib/api';
+import { getAffiliateCode } from '../lib/affiliate';
 import { CheckCircle, AlertCircle, Loader, ArrowLeft } from 'lucide-react';
 import Avatar from './Avatar';
+import api from '../lib/api';
 
 export default function Registration() {
     const location = useLocation();
-    const [step, setStep] = useState<'package' | 'tutor' | 'schedule' | 'form' | 'success'>('package');
+
+    const [step, setStep]                       = useState<'package' | 'tutor' | 'schedule' | 'form' | 'success'>('package');
     const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        username: '',
-        password: '',
-        phone: '',
-    });
+    const [loading, setLoading]                 = useState(false);
+    const [error, setError]                     = useState<string | null>(null);
+    const [formData, setFormData]               = useState({ fullName: '', email: '', username: '', password: '', phone: ''});
+    const [registrationData, setRegistrationData] = useState<any | null>(null);
 
-    const [packages, setPackages] = useState<any[]>([]);
+    const [packages, setPackages]               = useState<any[]>([]);
     const [packagesLoading, setPackagesLoading] = useState<boolean>(true);
-    const [packagesError, setPackagesError] = useState<string | null>(null);
+    const [packagesError, setPackagesError]     = useState<string | null>(null);
 
-    const [tutors, setTutors] = useState<any[]>([]);
-    const [tutorsLoading, setTutorsLoading] = useState<boolean>(false);
-    const [tutorsError, setTutorsError] = useState<string | null>(null);
-    const [selectedTutor, setSelectedTutor] = useState<any | null>(null);
+    const [tutors, setTutors]                   = useState<any[]>([]);
+    const [tutorsLoading, setTutorsLoading]     = useState<boolean>(false);
+    const [tutorsError, setTutorsError]         = useState<string | null>(null);
+    const [selectedTutor, setSelectedTutor]     = useState<any | null>(null);
 
-    const [daysSelected, setDaysSelected] = useState<string[]>([]);
+    const [slots, setSlots]                     = useState<any[]>([]);
+    const [slotsLoading, setSlotsLoading]       = useState<boolean>(false);
+    const [slotsError, setSlotsError]           = useState<string | null>(null);
+    const [selectedSlot, setSelectedSlot]       = useState<any | null>(null);
+
+    const [daysSelected, setDaysSelected]       = useState<string[]>([]);
     const weekdays = [
         { value: 'Monday', label: 'Isnin' },
         { value: 'Tuesday', label: 'Selasa' },
@@ -40,11 +42,6 @@ export default function Registration() {
 
     const dayLabel = (val: string) => weekdays.find((w) => w.value === val)?.label || val;
 
-    const [slots, setSlots] = useState<any[]>([]);
-    const [slotsLoading, setSlotsLoading] = useState<boolean>(false);
-    const [slotsError, setSlotsError] = useState<string | null>(null);
-    const [selectedSlot, setSelectedSlot] = useState<any | null>(null);
-
     const handlePackageSelect = (pkg: any) => {
         const mapped = {
             id: pkg.package_id,
@@ -56,7 +53,6 @@ export default function Registration() {
         setStep('tutor');
         setError(null);
     };
-
 
     const handleTutorSelect = (tutor: any) => {
         setSelectedTutor(tutor);
@@ -101,89 +97,49 @@ export default function Registration() {
         }
 
         setLoading(true);
-        // placeholder: here you'd call your registration + enrollment endpoints.
-        // For now just log the collected data and simulate a delay.
-        console.log('Registering user and enrolling:', {
+        setError(null);
+        
+        // Get affiliate code from localStorage if exists
+        const affiliateCode = getAffiliateCode();
+
+        const payload = {
             username: formData.username,
-            password: formData.password ? '***' : '',
+            password: formData.password,
             fullName: formData.fullName,
             email: formData.email,
             phone: formData.phone,
-            package: selectedPackage,
-            tutor: selectedTutor,
-            days: daysSelected,
+            package: selectedPackage.id,
+            tutor: selectedTutor.tutor_id,
+            days: daysSelected[0],
             slot: selectedSlot,
-        });
-        setTimeout(() => {
+            class_start_at: selectedSlot ? selectedSlot.slot_start : null, 
+            class_end_at: selectedSlot ? selectedSlot.slot_end : null,
+            affiliateCode: affiliateCode || null,
+            isWeb: true,
+        };
+        
+        try {
+            const response = await api.post('registration/web-enroll', payload);
+            console.log('Registration response:', response);
+
+            if(response && response.success) {
+                setRegistrationData(response.data);
+                
+                // Redirect to checkout URL
+                if (response.data.checkout_url) {
+                    window.location.href = response.data.checkout_url;
+                } else {
+                    setStep('success');
+                }
+            } else {
+                setError(response.message || 'Pendaftaran gagal. Sila cuba lagi.');
+                setLoading(false);
+            }
+        } catch (error: any) {
+            console.error('Registration error:', error);
+            setError(error?.message || 'Ralat semasa mendaftar. Sila cuba lagi.');
             setLoading(false);
-            setStep('success');
-        }, 600);
-
-        // if (!selectedPackage) return;
-
-        // try {
-        // setLoading(true);
-        // setError(null);
-
-        // const { data: existingUser } = await supabase
-        //     .from('users')
-        //     .select('id')
-        //     .eq('email', formData.email)
-        //     .maybeSingle();
-
-        // let userId;
-
-        // if (existingUser) {
-        //     userId = existingUser.id;
-        //     const { error: updateError } = await supabase
-        //     .from('users')
-        //     .update({
-        //         full_name: formData.fullName,
-        //         phone: formData.phone,
-        //         state: formData.state,
-        //         updated_at: new Date().toISOString(),
-        //     })
-        //     .eq('id', userId);
-
-        //     if (updateError) throw updateError;
-        // } else {
-        //     const { data: newUser, error: insertError } = await supabase
-        //     .from('users')
-        //     .insert({
-        //         full_name: formData.fullName,
-        //         email: formData.email,
-        //         phone: formData.phone,
-        //         state: formData.state,
-        //     })
-        //     .select('id')
-        //     .single();
-
-        //     if (insertError) throw insertError;
-        //     userId = newUser.id;
-        // }
-
-        // const { error: enrollmentError } = await supabase
-        //     .from('enrollments')
-        //     .insert({
-        //     user_id: userId,
-        //     package: selectedPackage.name.replace('Pakej ', ''),
-        //     price: selectedPackage.price,
-        //     status: 'pending',
-        //     payment_method: 'WhatsApp',
-        //     });
-
-        // if (enrollmentError) throw enrollmentError;
-
-        // const whatsappMessage = `Halo! Saya ingin mendaftar dengan pakej berikut:%0A%0ANama: ${formData.fullName}%0AEmail: ${formData.email}%0ATelefon: ${formData.phone}%0APakej: ${selectedPackage.name}%0AHarga: RM${selectedPackage.price}`;
-
-        // window.open(`https://wa.me/60183868296?text=${whatsappMessage}`, '_blank');
-
-        // setStep('success');
-        // } catch (err) {
-        // setError(err instanceof Error ? err.message : 'Ralat semasa mendaftar');
-        // } finally {
-        // setLoading(false);
-        // }
+        }
     };
 
     useEffect(() => {
@@ -579,12 +535,18 @@ export default function Registration() {
 
                 <h2 className="text-3xl font-bold text-white mb-4">Pendaftaran Berjaya!</h2>
                 <p className="text-gray-300 mb-8">
-                    Terima kasih telah memilih EzQuran Centre. Anda akan dibawa ke WhatsApp untuk mengesahkan pembayaran.
+                    Terima kasih telah memilih EzQuran Centre. {registrationData?.invoice_no ? 'Invois anda telah dijana.' : 'Anda akan dibawa untuk mengesahkan pembayaran.'}
                 </p>
 
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6 mb-8 text-left">
                     <h3 className="font-semibold text-yellow-500 mb-4">Maklumat Pendaftaran Anda</h3>
                     <div className="space-y-3 text-sm text-gray-300">
+                    {registrationData?.invoice_no && (
+                        <div>
+                            <span className="text-gray-400">No. Invois:</span>
+                            <p className="font-semibold">{registrationData.invoice_no}</p>
+                        </div>
+                    )}
                     <div>
                         <span className="text-gray-400">Nama:</span>
                         <p className="font-semibold">{formData.fullName}</p>
@@ -605,8 +567,21 @@ export default function Registration() {
                 </div>
 
                 <div className="space-y-3">
+                    {registrationData?.checkout_url && (
+                        <>
+                            <p className="text-sm text-gray-400">
+                                Sila klik butang di bawah untuk melengkapkan pembayaran:
+                            </p>
+                            <button
+                                onClick={() => window.location.href = registrationData.checkout_url}
+                                className="w-full py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
+                            >
+                                Teruskan ke Pembayaran
+                            </button>
+                        </>
+                    )}
                     <p className="text-sm text-gray-400">
-                    Jika tetingkap WhatsApp tidak terbuka, sila klik butang di bawah:
+                        Atau hubungi kami untuk bantuan:
                     </p>
                     <button
                     onClick={() => window.open('https://wa.me/60183868296', '_blank')}
@@ -619,6 +594,7 @@ export default function Registration() {
                         setStep('package');
                         setFormData({ fullName: '', email: '', username: '', password: '', phone: '' });
                         setSelectedPackage(null);
+                        setRegistrationData(null);
                         setError(null);
                     }}
                     className="w-full py-4 bg-white/10 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all"
