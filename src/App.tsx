@@ -16,6 +16,7 @@ import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
 import NotFound from "./components/NotFound";
 import AffiliateRedirect from "./components/AffiliateRedirect";
+import Receipt from "./components/Receipt";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
 
@@ -82,6 +83,8 @@ function App() {
 							</>
 						}
 					/>
+					<Route path="/resit" element={<Receipt />} />
+					<Route path="/receipt" element={<Receipt />} />
 					<Route path="/404" element={<NotFound />} />
 					<Route path="/:code" element={<AffiliateRedirect />} />
 					<Route path="*" element={<NotFound />} />

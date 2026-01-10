@@ -1,13 +1,16 @@
 import { Check, Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../lib/api";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Packages() {
-	const navigate = useNavigate();
-	const [packages, setPackages] = useState<any[]>([]);
-	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<string | null>(null);
+
+	const { selectedCountry } 		= useAuth();
+	const navigate 					= useNavigate();
+	const [packages, setPackages] 	= useState<any[]>([]);
+	const [loading, setLoading] 	= useState<boolean>(true);
+	const [error, setError] 		= useState<string | null>(null);
 
 	const handleSelectPackage = (pkg: any) => {
 		navigate('/register', { state: { selectedPackage: pkg.raw } });
@@ -18,9 +21,9 @@ export default function Packages() {
 		setLoading(true);
 		setError(null);
 
-		api.get("package")
+		api.get(`region/${selectedCountry}/packages`)
 			.then((res: any) => {
-				const items = res?.data?.packages || [];
+				const items = res?.data || [];
 				if (mounted) setPackages(items);
 			})
 			.catch((err: any) => {
@@ -34,12 +37,12 @@ export default function Packages() {
 		return () => {
 			mounted = false;
 		};
-	}, []);
+	}, [selectedCountry]);
 
-	function formatPrice(p: any) {
+	function formatPrice(p: any, currency: any) {
 		if (!p) return "";
 		// assume server returns string like "150.00"
-		return `RM ${p}`;
+		return `${currency} ${p}`;
 	}
 
 	function formatPeriod(pkg: any) {
@@ -53,7 +56,7 @@ export default function Packages() {
 	const displayPackages = packages.map((p) => ({
 		id: p.package_id,
 		name: p.package_name,
-		price: formatPrice(p.package_price),
+		price: formatPrice(p.final_price, p.region_currency),
 		period: formatPeriod(p),
 		popular: (p.package_featured || "").toLowerCase() === "yes",
 		features: p.package_metadata || [],
@@ -115,7 +118,7 @@ export default function Packages() {
 
 								<div className="text-center mb-8">
 									<h3 className={`text-2xl font-bold mb-4 ${pkg.popular ? "text-black" : "text-white"}`}>
-										{pkg.name}
+										• {pkg.name} •
 									</h3>
 									<div className={`mb-2 ${pkg.popular ? "text-black" : "text-white"}`}>
 										<span className="text-5xl font-bold">{pkg.price}</span>

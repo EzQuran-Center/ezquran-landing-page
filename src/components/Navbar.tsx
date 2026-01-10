@@ -1,13 +1,18 @@
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, Globe } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo-ezquran2.svg";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [showRegionModal, setShowRegionModal] = useState(false);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { regions, selectedCountry, setSelectedCountry, loadingRegions, isCountrySelected } = useAuth();
+
+	const selectedRegion = regions.find(r => r.region_id.toString() === selectedCountry);
 
 	const scrollToSection = (id: string) => {
 		if (location.pathname !== "/") {
@@ -28,7 +33,23 @@ export default function Navbar() {
 		}
 	};
 
+	// Disable body scroll when modal is open
+	useEffect(() => {
+		if (showRegionModal) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'unset';
+		}
+		
+		// Cleanup on unmount
+		return () => {
+			document.body.style.overflow = 'unset';
+		};
+	}, [showRegionModal]);
+
 	return (
+		<>
 		<nav className="fixed w-full bg-black/95 backdrop-blur-sm z-50 border-b border-yellow-600/20">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex justify-between items-center h-20">
@@ -39,7 +60,7 @@ export default function Navbar() {
 						<img src={logo} alt="" className="max-w-12 max-h-12" />
 						<div>
 							<h1 className="text-xl font-bold text-white">
-								EzQuran Centre
+								EzQuran
 							</h1>
 						</div>
 					</button>
@@ -51,18 +72,6 @@ export default function Navbar() {
 						>
 							Utama
 						</button>
-						{/* <button
-							onClick={() => scrollToSection("services")}
-							className="text-white hover:text-yellow-500 transition-colors"
-						>
-							Perkhidmatan
-						</button> */}
-						{/* <button
-							onClick={() => scrollToSection("packages")}
-							className="text-white hover:text-yellow-500 transition-colors"
-						>
-							Pakej
-						</button> */}
 						<button
 							onClick={() => scrollToSection("merchandise")}
 							className="text-white hover:text-yellow-500 transition-colors"
@@ -86,6 +95,13 @@ export default function Navbar() {
 							className="text-white hover:text-yellow-500 transition-colors"
 						>
 							Hubungi Kami
+						</button>
+						<button
+							onClick={() => setShowRegionModal(true)}
+							className="flex items-center gap-2 text-white hover:text-yellow-500 transition-colors"
+						>
+							<Globe size={18} />
+							{selectedRegion ? selectedRegion.region_code : 'Region'}
 						</button>
 						<button
 							onClick={() => navigate("/register")}
@@ -122,22 +138,22 @@ export default function Navbar() {
 							Utama
 						</button>
 						<button
-							onClick={() => scrollToSection("services")}
-							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
-						>
-							Perkhidmatan
-						</button>
-						<button
-							onClick={() => scrollToSection("packages")}
-							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
-						>
-							Pakej
-						</button>
-						<button
 							onClick={() => scrollToSection("merchandise")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
 						>
-							Barangan
+							Produk
+						</button>
+						<button
+							onClick={() => navigate("/polisi-privasi")}
+							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
+						>
+							Polisi Privasi
+						</button>
+						<button
+							onClick={() => navigate("/terma-dan-syarat")}
+							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
+						>
+							Terma & Syarat
 						</button>
 						<button
 							onClick={() => scrollToSection("contact")}
@@ -145,9 +161,86 @@ export default function Navbar() {
 						>
 							Hubungi Kami
 						</button>
+						<button
+							onClick={() => {
+								setShowRegionModal(true);
+								setIsOpen(false);
+							}}
+							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors flex items-center gap-2"
+						>
+							<Globe size={18} />
+							{selectedRegion ? `${selectedRegion.region_name} (${selectedRegion.region_code})` : 'Change Region'}
+						</button>
+						<button
+							onClick={() => navigate("/register")}
+							className="block w-full text-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
+						>
+							Daftar
+						</button>
 					</div>
 				</div>
 			)}
 		</nav>
+		{/* Region Selection Modal */}
+		{showRegionModal && (
+			<div 
+				className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999] p-4 overflow-y-auto"
+				onClick={() => setShowRegionModal(false)}
+			>
+				<div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative" onClick={(e) => e.stopPropagation()}>
+					<h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome to EzQuran</h2>
+					<p className="text-sm text-gray-600 mb-6">Please select your country to continue</p>
+					{loadingRegions ? (
+						<div className="flex items-center justify-center py-8">
+							<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+						</div>
+					) : regions.length === 0 ? (
+						<div className="text-center py-8 text-gray-500">
+							<p>Unable to load regions. Please refresh the page.</p>
+						</div>
+					) : (
+						<div className="space-y-2 max-h-96 overflow-y-auto">
+							{regions.map((region) => (
+								<button
+									key={region.region_id}
+									onClick={() => {
+										setSelectedCountry(region.region_id.toString());
+										setShowRegionModal(false);
+									}}
+									className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${
+										selectedCountry === region.region_id.toString()
+											? 'border-emerald-500 bg-emerald-50'
+											: 'border-gray-200 hover:border-emerald-500 hover:bg-emerald-50'
+									}`}
+								>
+									<img
+										src={region.region_flag}
+										alt={`${region.region_name} flag`}
+										className="w-10 h-7 object-cover rounded"
+									/>
+									<div className="flex-1 text-left">
+										<span className="text-lg font-medium text-gray-900 block">
+											{region.region_name}
+										</span>
+										<span className="text-xs text-gray-500">
+											{region.region_currency}
+										</span>
+									</div>
+									{selectedCountry === region.region_id.toString() && (
+										<span className="text-emerald-600 font-semibold">✓</span>
+									)}
+								</button>
+							))}
+						</div>
+					)}
+				</div>
+			</div>
+		)}
+
+		{/* Overlay to prevent interaction when country not selected */}
+		{!isCountrySelected && (
+			<div className="fixed inset-0 bg-transparent z-[999] overflow-hidden" />
+		)}
+		</>
 	);
 }

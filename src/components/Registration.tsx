@@ -4,9 +4,12 @@ import { getAffiliateCode } from '../lib/affiliate';
 import { CheckCircle, AlertCircle, Loader, ArrowLeft } from 'lucide-react';
 import Avatar from './Avatar';
 import api from '../lib/api';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Registration() {
-    const location = useLocation();
+
+    const location              = useLocation();
+    const { selectedCountry }   = useAuth();
 
     const [step, setStep]                       = useState<'package' | 'tutor' | 'schedule' | 'form' | 'success'>('package');
     const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
@@ -46,7 +49,8 @@ export default function Registration() {
         const mapped = {
             id: pkg.package_id,
             name: pkg.package_name,
-            price: parseFloat(pkg.package_price || '0'),
+            price: parseFloat(pkg.final_price || '0'),
+            currency: pkg.region_currency,
             raw: pkg,
         };
         setSelectedPackage(mapped);
@@ -116,6 +120,7 @@ export default function Registration() {
             class_end_at: selectedSlot ? selectedSlot.slot_end : null,
             affiliateCode: affiliateCode || null,
             isWeb: true,
+            region_id: selectedCountry || '1',
         };
         
         try {
@@ -147,9 +152,9 @@ export default function Registration() {
         setPackagesLoading(true);
         setPackagesError(null);
 
-        api.get('package')
+        api.get(`region/${selectedCountry}/packages`)
             .then((res: any) => {
-                const items = res?.data?.packages || [];
+                const items = res?.data || [];
                 if (mounted) setPackages(items);
             })
             .catch((err: any) => {
@@ -258,7 +263,7 @@ export default function Registration() {
                     >
                     <h3 className="text-2xl font-bold text-white mb-2">{pkg.package_name}</h3>
                     <div className="text-4xl font-bold text-yellow-500 mb-4">
-                        RM {parseFloat(pkg.package_price || '0').toFixed(2)}
+                        {pkg.region_currency} {parseFloat(pkg.final_price || '0').toFixed(2)}
                     </div>
                     <p className="text-gray-400">{pkg.package_commitment_type || 'sebulan'}</p>
                     <div className="mt-6 pt-6 border-t border-white/10">
@@ -475,7 +480,7 @@ export default function Registration() {
                         </div>
                         <div className="flex justify-between">
                         <span>Harga:</span>
-                        <span className="font-semibold">RM {selectedPackage.price.toFixed(2)}</span>
+                        <span className="font-semibold">{selectedPackage.currency} {selectedPackage.price.toFixed(2)}</span>
                         </div>
                         {selectedTutor && (
                         <div className="flex justify-between">
@@ -497,7 +502,7 @@ export default function Registration() {
                         )}
                         <div className="flex justify-between pt-2 border-t border-yellow-500/30">
                         <span>Jumlah:</span>
-                        <span className="text-yellow-400 font-bold text-lg">RM {selectedPackage.price.toFixed(2)}</span>
+                        <span className="text-yellow-400 font-bold text-lg">{selectedPackage.currency} {selectedPackage.price.toFixed(2)}</span>
                         </div>
                     </div>
                     <p className="text-xs text-gray-400 mt-4">
