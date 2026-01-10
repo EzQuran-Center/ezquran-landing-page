@@ -7,6 +7,7 @@ import {
 } from "react";
 import { User } from "../lib/supabase";
 import { api } from "../lib/api";
+import { Globe } from "lucide-react";
 
 interface Region {
 	region_id: number;
@@ -188,6 +189,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			{/* Overlay to prevent interaction when country not selected */}
 			{!isCountrySelected && (
 				<div className="fixed inset-0 bg-transparent z-40" />
+			)}
+
+			{/* Fixed Action Button - Bottom Right */}
+			{isCountrySelected && (
+				<button
+					onClick={() => setShowCountryModal(true)}
+					className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center group print:hidden z-[999]"
+					aria-label="Change Region"
+				>
+					<Globe size={24} className="group-hover:rotate-12 transition-transform" />
+				</button>
 			)}
 
 			{children}

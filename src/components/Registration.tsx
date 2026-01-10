@@ -168,7 +168,7 @@ export default function Registration() {
         return () => {
             mounted = false;
         };
-    }, []);
+    }, [selectedCountry]);
 
     // Check for pre-selected package from navigation state
     useEffect(() => {
