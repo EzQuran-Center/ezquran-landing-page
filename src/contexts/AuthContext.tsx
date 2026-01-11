@@ -5,7 +5,6 @@ import {
 	useEffect,
 	ReactNode,
 } from "react";
-import { User } from "../lib/supabase";
 import { api } from "../lib/api";
 import { Globe } from "lucide-react";
 
@@ -38,10 +37,6 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-	const [user, setUser]                               = useState<User | null>(null);
-	const [loading, setLoading]                         = useState(true);
-	const [error, setError]                             = useState<string | null>(null);
-
 	const [regions, setRegions]                         = useState<Region[]>([]);
 	const [loadingRegions, setLoadingRegions]           = useState(true);
 

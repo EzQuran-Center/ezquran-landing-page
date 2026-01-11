@@ -9,25 +9,25 @@ export default function Services() {
 			icon: BookOpen,
 			title: t("services.iqra.title"),
 			description: t("services.iqra.description"),
-			features: t("services.iqra.features") as string[],
+			features: t("services.iqra.features") as unknown as string[],
 		},
 		{
 			icon: Mic,
 			title: t("services.tilawah.title"),
 			description: t("services.tilawah.description"),
-			features: t("services.tilawah.features") as string[],
+			features: t("services.tilawah.features") as unknown as string[],
 		},
 		{
 			icon: Users,
 			title: t("services.fardhuAin.title"),
 			description: t("services.fardhuAin.description"),
-			features: t("services.fardhuAin.features") as string[],
+			features: t("services.fardhuAin.features") as unknown as string[],
 		},
 		{
 			icon: ShoppingBag,
 			title: t("services.tadabbur.title"),
 			description: t("services.tadabbur.description"),
-			features: t("services.tadabbur.features") as string[],
+			features: t("services.tadabbur.features") as unknown as string[],
 		},
 	];
 

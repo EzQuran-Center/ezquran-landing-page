@@ -170,7 +170,7 @@ export default function Navbar() {
 								setShowRegionModal(true);
 								setIsOpen(false);
 							}}
-							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors flex items-center gap-2"
+							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors items-center gap-2"
 						>
 							<Globe size={18} />
 							{selectedRegion ? `${selectedRegion.region_name} (${selectedRegion.region_code})` : 'Change Region'}

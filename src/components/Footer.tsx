@@ -1,4 +1,4 @@
-import { MailIcon, MapIcon, PhoneIcon, PinIcon } from "lucide-react";
+import { MailIcon, MapIcon, PhoneIcon } from "lucide-react";
 import logo from "../assets/logo-ezquran2.svg";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
@@ -70,7 +70,7 @@ export default function Footer() {
 								</a>
 							</li>
 							<li className="text-sm">
-								<a href="mailto:thyora.international@gmail.com" className="text-sm hover:text-yellow-500 transition-colors text-sm break-all">
+								<a href="mailto:thyora.international@gmail.com" className="text-sm hover:text-yellow-500 transition-colors break-all">
 									<MailIcon size={20} className="inline-block mr-2" />
 									admin@ezquran.my
 								</a>
