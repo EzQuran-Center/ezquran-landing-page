@@ -5,11 +5,13 @@ import { CheckCircle, AlertCircle, Loader, ArrowLeft } from 'lucide-react';
 import Avatar from './Avatar';
 import api from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from '../hooks/useTranslation';
 
 export default function Registration() {
 
     const location              = useLocation();
     const { selectedCountry }   = useAuth();
+    const { t }                 = useTranslation();
 
     const [step, setStep]                       = useState<'package' | 'tutor' | 'schedule' | 'form' | 'success'>('package');
     const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
@@ -32,15 +34,15 @@ export default function Registration() {
     const [slotsError, setSlotsError]           = useState<string | null>(null);
     const [selectedSlot, setSelectedSlot]       = useState<any | null>(null);
 
-    const [daysSelected, setDaysSelected]       = useState<string[]>([]);
+    const [daysSelected, setDaysSelected]       = useState<string>('');
     const weekdays = [
-        { value: 'Monday', label: 'Isnin' },
-        { value: 'Tuesday', label: 'Selasa' },
-        { value: 'Wednesday', label: 'Rabu' },
-        { value: 'Thursday', label: 'Khamis' },
-        { value: 'Friday', label: 'Jumaat' },
-        { value: 'Saturday', label: 'Sabtu' },
-        { value: 'Sunday', label: 'Ahad' },
+        { value: 'Monday', label: 'Monday' },
+        { value: 'Tuesday', label: 'Tuesday' },
+        { value: 'Wednesday', label: 'Wednesday' },
+        { value: 'Thursday', label: 'Thursday' },
+        { value: 'Friday', label: 'Friday' },
+        { value: 'Saturday', label: 'Saturday' },
+        { value: 'Sunday', label: 'Sunday' },
     ];
 
     const dayLabel = (val: string) => weekdays.find((w) => w.value === val)?.label || val;
@@ -61,13 +63,14 @@ export default function Registration() {
     const handleTutorSelect = (tutor: any) => {
         setSelectedTutor(tutor);
         setStep('schedule');
-        setDaysSelected([]);
+        setDaysSelected('');
         setSelectedSlot(null);
         setSlots([]);
     };
 
     const toggleDay = (day: string) => {
-        setDaysSelected(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]);
+        // setDaysSelected(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]);
+        setDaysSelected(day)
     };
 
     const handleSlotSelect = (slot: any) => {
@@ -114,7 +117,7 @@ export default function Registration() {
             phone: formData.phone,
             package: selectedPackage.id,
             tutor: selectedTutor.tutor_id,
-            days: daysSelected[0],
+            days: daysSelected,
             slot: selectedSlot,
             class_start_at: selectedSlot ? selectedSlot.slot_start : null, 
             class_end_at: selectedSlot ? selectedSlot.slot_end : null,
@@ -216,7 +219,7 @@ export default function Registration() {
         setSlotsLoading(true);
         setSlotsError(null);
 
-        api.get(`registration/tutors/${selectedTutor.tutor_id}/schedules?package_id=${selectedPackage.id}`)
+        api.get(`registration/tutors/${selectedTutor.tutor_id}/schedules?package_id=${selectedPackage.id}&class_day=${daysSelected}`)
             .then((res: any) => {
                 const timeSlots = res?.data?.time_slots || res?.data?.time_slots || [];
                 if (mounted) setSlots(timeSlots || []);
@@ -230,7 +233,31 @@ export default function Registration() {
             });
 
         return () => { mounted = false; };
-    }, [step, selectedTutor, selectedPackage]);
+    }, [step, selectedTutor, selectedPackage, daysSelected]);
+
+    // fetch time slots when daysSelected changes
+    // useEffect(() => {
+    //     if (step !== 'schedule' || !selectedTutor || !selectedPackage || daysSelected.length === 0) return;
+    //     let mounted = true;
+    //     setSlotsLoading(true);
+    //     setSlotsError(null);
+        
+    //     api.get(`registration/tutors/${selectedTutor.tutor_id}/schedules?package_id=${selectedPackage.id}`)
+    //         .then((res: any) => {
+    //             const timeSlots = res?.data?.time_slots || res?.data?.time_slots || [];
+    //             if (mounted) setSlots(timeSlots || []);
+    //         })
+    //         .catch((err: any) => {
+    //             console.error('Failed to load slots', err);
+    //             if (mounted) setSlotsError(err?.message || 'Gagal memuatkan slot waktu');
+    //         })
+    //         .finally(() => {
+    //             if (mounted) setSlotsLoading(false);
+    //         });
+
+    //     return () => { mounted = false; }
+    // }, [step, selectedTutor, selectedPackage, daysSelected]);
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-black to-black pt-32 pb-12">
@@ -240,20 +267,18 @@ export default function Registration() {
             <div>
                 <div className="text-center mb-12">
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                    Pilih <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">Pakej Anda</span>
+                    {t('registration.package.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">{t('registration.package.highlight')}</span>
                 </h1>
-                <p className="text-xl text-gray-300">
-                    Pilih pakej pembelajaran yang sesuai dengan keperluan anda
-                </p>
+                <p className="text-xl text-gray-300">{t('registration.package.subtitle')}</p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-8">
                 {packagesLoading ? (
-                    <div className="col-span-3 text-center text-gray-300">Memuatkan pakej...</div>
+                    <div className="col-span-3 text-center text-gray-300">{t('registration.loading_package')}</div>
                 ) : packagesError ? (
                     <div className="col-span-3 text-center text-red-400">{packagesError}</div>
                 ) : packages.length === 0 ? (
-                    <div className="col-span-3 text-center text-gray-300">Tiada pakej ditemui</div>
+                    <div className="col-span-3 text-center text-gray-300">{t('registration.error_package')}</div>
                 ) : (
                     packages.map((pkg) => (
                     <button
@@ -271,7 +296,7 @@ export default function Registration() {
                         onClick={() => handlePackageSelect(pkg)}
                         className="w-full py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg group-hover:from-yellow-400 group-hover:to-yellow-500 transition-all"
                         >
-                        Pilih Pakej Ini
+                        {t('registration.package.button')}
                         </button>
                     </div>
                     </button>
@@ -282,40 +307,46 @@ export default function Registration() {
 
             {step === 'tutor' && selectedPackage && (
             <div>
-                <div className="mb-8">
-                    <button
-                    onClick={() => {
-                        setStep('package');
-                        setError(null);
-                    }}
-                    className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2">
-                    <ArrowLeft size={16} />
-                    Kembali
-                    </button>
-                </div>
-
-                <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-white mb-2">Pilih Guru</h2>
-                <p className="text-gray-400">Pilih guru yang anda inginkan untuk sesi kelas</p>
+                
+                <div className="flex justify-between text-center mb-6">
+                    <div className="">
+                        <button
+                        onClick={() => {
+                            setStep('package');
+                            setError(null);
+                        }}
+                        className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2">
+                        <ArrowLeft size={24} />
+                        </button>
+                    </div>
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">{t('registration.tutor.title')}</h2>
+                        <p className="text-lg md:text-xl text-gray-400">{t('registration.tutor.subtitle')}</p>
+                    </div>
+                    <div></div>
                 </div>
 
                 <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
                 {tutorsLoading ? (
-                    <div className="col-span-3 text-center text-gray-300">Memuatkan guru...</div>
+                    <div className="col-span-3 text-center text-gray-300">{t('registration.loading_tutor')}</div>
                 ) : tutorsError ? (
                     <div className="col-span-3 text-center text-red-400">{tutorsError}</div>
                 ) : tutors.length === 0 ? (
-                    <div className="col-span-3 text-center text-gray-300">Tiada guru ditemui</div>
+                    <div className="col-span-3 text-center text-gray-300">{t('registration.error_tutor')}</div>
                 ) : (
-                    tutors.map((t: any) => (
-                    <div key={t.tutor_id} className="flex flex-col justify-center items-center gap-4 text-left bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:shadow-lg transition">
-                        <Avatar src={t.tutor_image} name={t.tutor_fullname || t.tutor_name} size={56} />
+                    tutors.map((tutor: any) => (
+                    <div key={tutor.tutor_id} className="flex flex-col justify-center items-center gap-4 text-left bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:shadow-lg transition">
+                        <Avatar src={tutor.tutor_image} name={tutor.tutor_fullname || tutor.tutor_name} size={56} />
                         <div className="flex-1 text-center">
-                            <h3 className="font-semibold text-white text-lg">{t.tutor_fullname || t.tutor_name}</h3>
+                            <h3 className="font-semibold text-white text-lg">{tutor.tutor_fullname || tutor.tutor_name}</h3>
                             <p className="text-sm text-gray-400">Pemegang Sanad Riwayat Hafs 'An 'Asim</p>
                         </div>
                         <div>
-                            <button onClick={() => handleTutorSelect(t)} className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg text-sm">Pilih Guru</button>
+                            <button 
+                                onClick={() => handleTutorSelect(tutor)} 
+                                className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg text-sm">
+                                    {t('registration.tutor.button')}
+                                </button>
                         </div>
                     </div>))
                 )}
@@ -325,48 +356,51 @@ export default function Registration() {
 
             {step === 'schedule' && selectedTutor && (
             <div>
-                <div className="mb-8">
-                    <button
-                    onClick={() => {
-                        setStep('tutor');
-                        setError(null);
-                    }}
-                    className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2"
-                    >
-                    <ArrowLeft size={16} />
-                    Kembali
-                    </button>
+                <div className="flex justify-between text-center">
+                    <div className="">
+                        <button
+                        onClick={() => {
+                            setStep('tutor');
+                            setError(null);
+                        }}
+                        className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2">
+                        <ArrowLeft size={24} />
+                        </button>
+                    </div>
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">{t('registration.datetime.title')}</h2>
+                        <p className="text-lg md:text-xl text-gray-400">{t('registration.datetime.subtitle')}</p>
+                    </div>
+                    <div></div>
                 </div>
 
-                <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-white mb-2">Pilih Hari & Waktu</h2>
-                <p className="text-gray-400">Pilih hari yang sesuai, kemudian pilih slot waktu tersedia</p>
-                </div>
-
-                <div className="mb-6">
-                <h3 className="text-white font-semibold mb-3">Pilih Hari</h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="mt-12 mb-12 text-center">
+                <p className="text-xl md:text-2xl text-white font-semibold mb-6">{t('registration.datetime.select_days')}</p>
+                <div className="flex flex-wrap justify-center gap-2">
                     {weekdays.map((d) => (
-                    <button key={d.value} onClick={() => toggleDay(d.value)} className={`px-4 py-2 w-[100px] rounded-full ${daysSelected.includes(d.value) ? 'bg-yellow-500 text-black' : 'bg-white/5 text-white'}`}>
-                        {d.label}
-                    </button>
+                    <button key={d.value} onClick={() => toggleDay(d.value)} className={`px-4 py-2 max-w-[120px] rounded-full ${daysSelected.includes(d.value) ? 'bg-yellow-500 text-black' : 'bg-white/5 text-white'}`}>{t(`registration.datetime.days.${d.label}`)}</button>
                     ))}
                 </div>
                 </div>
 
-                <div>
-                <h3 className="text-white font-semibold mb-3">Pilih Waktu</h3>
+                <div className='text-center max-w-2xl mx-auto'>
+                <p className="text-xl md:text-2xl text-white font-semibold mb-6">{t('registration.datetime.select_time')} ({daysSelected ? parseInt(slots.filter((s: any) => s.is_available).length || 0) : 0})</p>
                 {slotsLoading ? (
-                    <div className="text-gray-300">Memuatkan slot...</div>
+                    <div className="text-gray-300">{t('registration.loading_datetime')}</div>
                 ) : slotsError ? (
                     <div className="text-red-400">{slotsError}</div>
                 ) : slots.length === 0 ? (
-                    <div className="text-gray-300">Tiada slot tersedia</div>
-                ) : (
+                    <div className="text-gray-300">{t('registration.error_datetime')}</div>
+                ) : (daysSelected && slots.length > 0 ) && (
                     <div className="grid md:grid-cols-3 gap-4">
-                    {slots.filter((s: any) => s.is_available).map((s: any) => (
-                        <button key={s.slot_id} onClick={() => handleSlotSelect(s)} className="p-4 bg-white/5 rounded-lg text-left hover:bg-white/10">
-                        <div className="font-semibold text-white text-center">{s.slot_time_12h || s.slot_time}</div>
+                    {slots.map((s: any) => (
+                        <button 
+                            key={s.slot_id} 
+                            onClick={() => handleSlotSelect(s)} 
+                            className="p-4 bg-white/5 rounded-lg text-left hover:bg-white/10"
+                            disabled={!s.is_available}  
+                        >
+                            <div className={`font-semibold text-white text-center ${s.is_available == false && 'text-red-600 line-through'}`}>{s.slot_time_12h || s.slot_time}</div>
                         </button>
                     ))}
                     </div>
@@ -491,7 +525,7 @@ export default function Registration() {
                         {daysSelected.length > 0 && (
                         <div className="flex justify-between">
                         <span>Hari:</span>
-                        <span className="font-semibold">{daysSelected.map(dayLabel).join(', ')}</span>
+                        <span className="font-semibold">{daysSelected}</span>
                         </div>
                         )}
                         {selectedSlot && (

@@ -1,0 +1,218 @@
+{
+	"navbar": {
+		"home": "Home",
+		"products": "Products",
+		"privacy": "Privacy Policy",
+		"terms": "Terms & Conditions",
+		"contact": "Contact Us",
+		"register": "Register"
+	},
+	"hero": {
+		"title": "Learn Al-Quran With Ease",
+		"subtitle": "A comprehensive Al-Quran learning platform for all levels. Learn to read, recite, and understand the Al-Quran with guidance from experienced teachers.",
+		"cta": "Start Learning",
+        "students": "Students",
+        "teachers": "Teachers",
+        "years": "Years"
+	},
+	"services": {
+		"title": "Our",
+		"titleHighlight": "Services",
+		"subtitle": "We provide various services to assist you in your Al-Quran learning journey",
+		"iqra": {
+			"title": "Iqra' & Tajweed Classes",
+			"description": "Learn to read Iqra' with proper tajweed from basics to mastery.",
+			"features": [
+				"Basic Reading",
+				"Tajweed",
+				"Makharijul Huruf",
+				"Individual & Group Classes"
+			]
+		},
+		"tilawah": {
+			"title": "Al-Quran & Tilawah Classes",
+			"description": "Learn the art of Quran recitation with experienced teachers.",
+			"features": [
+				"Tilawah Techniques",
+				"Recitation Melodies",
+				"Performance",
+				"Recognition Certificate"
+			]
+		},
+		"fardhuAin": {
+			"title": "Fardhu Ain Masterclass",
+			"description": "Gain in-depth understanding of Fardhu Ain through exclusive masterclass.",
+			"features": [
+				"In-depth Topics",
+				"Expert Teachers",
+				"Interactive Sessions",
+				"Participation Certificate"
+			]
+		},
+		"tadabbur": {
+			"title": "Tadabbur Al-Quran Masterclass",
+			"description": "Get access to online Tadabbur Al-Quran classes.",
+			"features": [
+				"Online Access",
+				"Interactive Classes",
+				"Learning Resources",
+				"Participation Certificate"
+			]
+		}
+	},
+	"packages": {
+		"title": "Choose Your Package",
+		"monthly": "Monthly",
+		"selectPackage": "Select Package"
+	},
+	"contact": {
+		"title": "Contact",
+        "highlight": "Us",
+        "subtitle": "We are here to help you. Feel free to reach out to us for any inquiries.",
+		"name": "Name",
+		"email": "Email",
+		"send": "Send",
+        "information": {
+            "title": "Contact Information",
+            "address": "Address",
+            "phone": "Phone",
+            "email": "Email",
+            "hours": "Working Hours"
+        },
+        "follow": {
+            "title": "Follow Us",
+            "description": "Get the latest updates on programs and promotions by following our social media channels."
+        },
+        "message": {
+            "title": "Send a Message",
+            "fullname": "Full Name",
+            "email": "Email",
+            "phone": "Phone Number",
+            "message": "Your Message",
+            "whatsapp": "Send Message via WhatsApp",
+            "placeholder": "Type your message here..."
+        }
+	},
+	"modal": {
+		"welcome": "Welcome to EzQuran",
+		"selectCountry": "Please select your country to continue",
+		"changeRegion": "Change Region",
+		"selectRegion": "Select your region to see relevant content and pricing",
+		"changeLater": "You can change this later in settings",
+		"loading": "Loading regions...",
+		"error": "Unable to load regions. Please refresh the page."
+	},
+	"receipt": {
+		"title": "Payment Successful!",
+		"thankYou": "Thank you for your payment. Your receipt is ready.",
+		"receiptNo": "Receipt No.",
+		"customerInfo": "Customer Information",
+		"paymentDetails": "Payment Details",
+		"totalAmount": "Total Amount",
+		"downloadPDF": "Download PDF",
+		"backToHome": "Back to Home",
+		"downloadReceipt": "Download Receipt",
+		"receiptNotFound": "Receipt Not Found",
+		"fullName": "Full Name",
+		"email": "Email",
+		"phone": "Phone",
+		"username": "Username",
+		"package": "Package",
+		"description": "Description",
+		"paymentMethod": "Payment Method",
+		"paymentDate": "Payment Date",
+		"invoiceType": "Invoice Type",
+		"computerGenerated": "This is a computer-generated receipt and does not require a signature. For any inquiries, please contact EzQuran Centre support."
+	},
+    "merchandise": {
+        "badge": "Our Products",
+        "title": "Our Exclusive Merchandise",
+        "subtitle": "Explore our exclusive range of EzQuran merchandise to complement your Al-Quran learning journey.",
+        "products": {
+            "1": {
+                "title": "EzTajwid Book",
+                "description": "A daily prayer journal book to help you get closer to Allah SWT",
+                "image": "📕"
+            },
+            "2": {
+                "title": "Behind the Words Book",
+                "description": "A collection of books explaining the meanings and interpretations of Al-Quran verses",
+                "image": "📗"
+            },
+            "3": {
+                "title": "Dear Allah, Doa Diary Book",
+                "description": "A daily prayer journal book to help you get closer to Allah SWT",
+                "image": "📘"
+            }
+        }
+    },
+    "footer": {
+        "description": "EzQuran is a comprehensive Al-Quran learning platform designed to make learning easy and accessible for everyone.",
+        "copyright": "Copyright © EzQuran. All rights reserved.",
+        "links": {
+            "title": "Quick Links",
+            "home": "Home",
+            "products": "Products",
+            "privacy": "Privacy Policy",
+            "terms": "Terms & Conditions",
+            "contact": "Contact Us"
+        }
+    },
+    "registration": {
+        "package": {
+            "title": "Choose",
+            "highlight": "Your Package",
+            "subtitle": "Choose the package that best suits your learning needs.",
+            "button": "Select Package"
+        },
+        "loading_package": "Loading packages...",
+        "error_package": "Unable to load packages. Please try again later.",
+        "tutor": {
+            "title": "Choose Your Tutor",
+            "subtitle": "Select a tutor that matches your learning style.",
+            "button": "Select Tutor"
+        },
+        "loading_tutor": "Loading tutors...",
+        "error_tutor": "Unable to load tutors. Please try again later.",
+        "datetime": {
+            "title": "Choose Day & Time",
+            "subtitle": "Select a convenient day and time for your classes.",
+            "button": "Select Date & Time",
+            "select_days": "Select Available Days",
+            "select_time": "Select Available Time Slots",
+            "days": {
+                "Monday": "Monday",
+                "Tuesday": "Tuesday",
+                "Wednesday": "Wednesday",
+                "Thursday": "Thursday",
+                "Friday": "Friday",
+                "Saturday": "Saturday",
+                "Sunday": "Sunday"
+            }
+        },
+        "loading_datetime": "Loading available dates and times...",
+        "error_datetime": "Unable to load available dates and times. Please try again later.",
+        "form": {
+            "title": "Complete Your Registration",
+            "subtitle": "Please fill in the details below to complete your registration.",
+            "selectedPackage": "Selected Package",
+            "selectedTutor": "Selected Tutor",
+            "selectedDatetime": "Selected Day & Time",
+            "username": "Username",
+            "password": "Password",
+            "fullname": "Full Name",
+            "email": "Email",
+            "phone": "Phone Number",
+            "address": "Shipping Address",
+            "address_description": "Please provide a complete address for the delivery of learning materials.",
+            "summary": {
+                "package": "Package",
+                "price": "Price",
+                "tutor": "Tutor",
+                "datetime": "Day & Time",
+                "amount": "Total Amount"
+            },
+            "button": "Proceed to Payment"
+        }
+    }
+}

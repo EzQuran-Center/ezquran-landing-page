@@ -1,48 +1,49 @@
 import { BookOpen, Mic, Users, ShoppingBag } from "lucide-react";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function Services() {
+	const { t } = useTranslation();
+
 	const services = [
 		{
 			icon: BookOpen,
-			title: "Kelas Iqra' & Tajwid",
-			description: "Belajar membaca Iqra' dengan tajwid yang betul dari asas hingga mahir.",
-			features: [ "Bacaan Asas", "Tajwid", "Makharijul Huruf", "Kelas Individu & Kumpulan"],
+			title: t("services.iqra.title"),
+			description: t("services.iqra.description"),
+			features: t("services.iqra.features") as string[],
 		},
 		{
 			icon: Mic,
-			title: "Kelas Al-Quran & Tilawah",
-			description: "Pelajari seni tilawah Al-Quran dengan bimbingan guru berpengalaman.",
-			features: [ "Teknik Tilawah", "Lagu-lagu Tilawah", "Persembahan", "Sijil Pengiktirafan"],
+			title: t("services.tilawah.title"),
+			description: t("services.tilawah.description"),
+			features: t("services.tilawah.features") as string[],
 		},
 		{
 			icon: Users,
-			title: "Masterclass Fardhu Ain",
-			description: "Dapatkan pemahaman mendalam tentang Fardhu Ain melalui masterclass eksklusif.",
-			features: ["Topik Mendalam", "Guru Pakar", "Sesi Interaktif", "Sijil Penyertaan"],
+			title: t("services.fardhuAin.title"),
+			description: t("services.fardhuAin.description"),
+			features: t("services.fardhuAin.features") as string[],
 		},
 		{
 			icon: ShoppingBag,
-			title: "Masterclass Tadabbur Al-Quran",
-			description: "Dapatkan akses kepada kelas tadabbur Al-Quran secara online.",
-			features: ["Akses Online", "Kelas Interaktif", "Sumber Pembelajaran", "Sijil Penyertaan"],
+			title: t("services.tadabbur.title"),
+			description: t("services.tadabbur.description"),
+			features: t("services.tadabbur.features") as string[],
 		},
 	];
 
 	return (
 		<section id="services" className="py-24 bg-white">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="text-center mb-16">
+				<div className="text-center mb-3">
 					<h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
-						Perkhidmatan{" "}
-						<span className="text-yellow-600">Kami</span>
+					{t("services.title")}{" "}
+					<span className="text-yellow-600">{t("services.titleHighlight")}</span>
 					</h2>
-					<p className="text-xl text-gray-600 max-w-2xl mx-auto">
-						Kami menyediakan pelbagai perkhidmatan untuk membantu
-						anda dalam perjalanan pembelajaran Al-Quran
-					</p>
 				</div>
-
-				<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+				<p className="text-xl text-gray-600 max-w-2xl mx-auto">
+					{t("services.subtitle")}
+				</p>
+				<div className="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 					{services.map((service, index) => (
 						<div
 							key={index}

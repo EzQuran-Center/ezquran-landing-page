@@ -4,13 +4,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo-ezquran2.svg";
 import { useAuth } from "../contexts/AuthContext";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function Navbar() {
+
 	const [isOpen, setIsOpen] = useState(false);
 	const [showRegionModal, setShowRegionModal] = useState(false);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { regions, selectedCountry, setSelectedCountry, loadingRegions, isCountrySelected } = useAuth();
+
+	const { t } = useTranslation()
 
 	const selectedRegion = regions.find(r => r.region_id.toString() === selectedCountry);
 
@@ -57,12 +61,12 @@ export default function Navbar() {
 						onClick={() => navigate("/")}
 						className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
 					>
-						<img src={logo} alt="" className="max-w-12 max-h-12" />
-						<div>
+						<img src={logo} alt="" className="max-w-16 max-h-16" />
+						{/* <div>
 							<h1 className="text-xl font-bold text-white">
 								EzQuran
 							</h1>
-						</div>
+						</div> */}
 					</button>
 
 					<div className="hidden md:flex space-x-8">
@@ -70,31 +74,31 @@ export default function Navbar() {
 							onClick={() => scrollToSection("home")}
 							className="text-white hover:text-yellow-500 transition-colors"
 						>
-							Utama
+							{t('navbar.home')}
 						</button>
 						<button
 							onClick={() => scrollToSection("merchandise")}
 							className="text-white hover:text-yellow-500 transition-colors"
 						>
-							Produk
+							{t('navbar.products')}
 						</button>
 						<button
 							onClick={() => navigate("/polisi-privasi")}
 							className="text-white hover:text-yellow-500 transition-colors"
 						>
-							Polisi Privasi
+							{t('navbar.privacy')}
 						</button>
 						<button
 							onClick={() => navigate("/terma-dan-syarat")}
 							className="text-white hover:text-yellow-500 transition-colors"
 						>
-							Terma & Syarat
+							{t('navbar.terms')}
 						</button>
 						<button
 							onClick={() => scrollToSection("contact")}
 							className="text-white hover:text-yellow-500 transition-colors"
 						>
-							Hubungi Kami
+							{t('navbar.contact')}
 						</button>
 						<button
 							onClick={() => setShowRegionModal(true)}
@@ -107,7 +111,7 @@ export default function Navbar() {
 							onClick={() => navigate("/register")}
 							className="px-6 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
 						>
-							Daftar
+							{t('navbar.register')}
 						</button>
 					</div>
 
@@ -116,7 +120,7 @@ export default function Navbar() {
 							onClick={() => navigate("/register")}
 							className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg text-sm hover:from-yellow-400 hover:to-yellow-500 transition-all"
 						>
-							Daftar
+							{t('navbar.register')}
 						</button>
 						<button
 							className="text-white"
@@ -135,31 +139,31 @@ export default function Navbar() {
 							onClick={() => scrollToSection("home")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
 						>
-							Utama
+							{t('navbar.home')}
 						</button>
 						<button
 							onClick={() => scrollToSection("merchandise")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
 						>
-							Produk
+							{t('navbar.products')}
 						</button>
 						<button
 							onClick={() => navigate("/polisi-privasi")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
 						>
-							Polisi Privasi
+							{t('navbar.privacy')}
 						</button>
 						<button
 							onClick={() => navigate("/terma-dan-syarat")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
 						>
-							Terma & Syarat
+							{t('navbar.terms')}
 						</button>
 						<button
 							onClick={() => scrollToSection("contact")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
 						>
-							Hubungi Kami
+							{t('navbar.contact')}
 						</button>
 						<button
 							onClick={() => {
@@ -175,7 +179,7 @@ export default function Navbar() {
 							onClick={() => navigate("/register")}
 							className="block w-full text-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
 						>
-							Daftar
+							{t('navbar.register')}
 						</button>
 					</div>
 				</div>
@@ -188,15 +192,15 @@ export default function Navbar() {
 				onClick={() => setShowRegionModal(false)}
 			>
 				<div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative" onClick={(e) => e.stopPropagation()}>
-					<h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome to EzQuran</h2>
-					<p className="text-sm text-gray-600 mb-6">Please select your country to continue</p>
+					<h2 className="text-2xl font-bold text-gray-900 mb-1">{t('modal.welcome')}</h2>
+					<p className="text-sm text-gray-600 mb-6">{t('modal.selectCountry')}</p>
 					{loadingRegions ? (
 						<div className="flex items-center justify-center py-8">
 							<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
 						</div>
 					) : regions.length === 0 ? (
 						<div className="text-center py-8 text-gray-500">
-							<p>Unable to load regions. Please refresh the page.</p>
+							<p>{t('modal.error')}</p>
 						</div>
 					) : (
 						<div className="space-y-2 max-h-96 overflow-y-auto">

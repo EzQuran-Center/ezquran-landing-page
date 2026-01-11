@@ -1,7 +1,11 @@
 import { BookOpen, Users, Award } from "lucide-react";
 import Banner1 from '../assets/ezquran-banner-1.png';
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function Hero() {
+
+	const { t } = useTranslation();
+
 	const scrollToPackages = () => {
 		const element = document.getElementById("packages");
 		if (element) {
@@ -25,17 +29,22 @@ export default function Hero() {
 				</span>
 				</div>
 
-				<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-loose">
-				Belajar Al-Quran
+				{/* <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-loose">
+				Belajar Al-Quran {t('hero.title')}
 				<span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 mt-2">
 					Dengan Mudah
 				</span>
+				</h1> */}
+
+				<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-loose from-yellow-400 to-yellow-700 bg-clip-text text-transparent bg-gradient-to-r">
+				{t('hero.title')}
 				</h1>
 
 				<p className="text-xl text-gray-300 leading-relaxed">
-				Platform pembelajaran Al-Quran yang komprehensif untuk semua
+				{/* Platform pembelajaran Al-Quran yang komprehensif untuk semua
 				peringkat. Belajar membaca, tilawah, dan memahami Al-Quran dengan
-				bimbingan guru berpengalaman.
+				bimbingan guru berpengalaman. */}
+				{t('hero.subtitle')}
 				</p>
 
 				<div className="flex flex-col sm:flex-row gap-4">
@@ -43,7 +52,7 @@ export default function Hero() {
 					onClick={scrollToPackages}
 					className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all transform hover:scale-105 shadow-lg shadow-yellow-500/30"
 				>
-					Daftar Sekarang
+					{t('hero.cta')}
 				</button>
 				<button
 					onClick={() =>
@@ -51,7 +60,7 @@ export default function Hero() {
 					}
 					className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/20"
 				>
-					Hubungi Kami
+					{t('navbar.contact')}
 				</button>
 				</div>
 
@@ -61,27 +70,27 @@ export default function Hero() {
 					<BookOpen className="text-yellow-500" size={28} />
 					</div>
 					<p className="text-2xl font-bold text-white">500+</p>
-					<p className="text-sm text-gray-400">Pelajar</p>
+					<p className="text-sm text-gray-400">{t('hero.students')}</p>
 				</div>
 				<div className="text-center">
 					<div className="flex justify-center mb-2">
 					<Users className="text-yellow-500" size={28} />
 					</div>
 					<p className="text-2xl font-bold text-white">20+</p>
-					<p className="text-sm text-gray-400">Guru</p>
+					<p className="text-sm text-gray-400">{t('hero.teachers')}</p>
 				</div>
 				<div className="text-center">
 					<div className="flex justify-center mb-2">
 					<Award className="text-yellow-500" size={28} />
 					</div>
 					<p className="text-2xl font-bold text-white">8+</p>
-					<p className="text-sm text-gray-400">Tahun</p>
+					<p className="text-sm text-gray-400">{t('hero.years')}</p>
 				</div>
 				</div>
 			</div>
 
 			<div className="relative hidden md:block">
-				<div className="relative w-full h-[600px] rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-500/20 to-yellow-700/20 backdrop-blur-sm border border-yellow-500/30 flex items-center justify-center">
+				<div className="relative w-full max-h-[600px] rounded-2xl overflow-hidden backdrop-blur-sm border border-yellow-500/30 flex items-center justify-center">
 				<div className="text-center space-y-6 p-12">
 					{/* <div className="text-8xl text-yellow-500 mb-4">🕌</div>
 					<div className="text-4xl font-bold text-white mb-4" style={{ fontFamily: "serif" }}>
@@ -90,7 +99,7 @@ export default function Hero() {
 					<p className="text-lg text-gray-300">
 					Dengan nama Allah Yang Maha Pemurah lagi Maha Penyayang
 					</p> */}
-					<img src={Banner1} alt="Hero Banner" className="w-full h-auto rounded-lg shadow-lg object-fill" />
+					<img src={Banner1} alt="Hero Banner" className="w-full h-auto rounded-lg shadow-lg object-cover" />
 				</div>
 				</div>
 				<div className="absolute -top-6 -right-6 w-32 h-32 bg-yellow-500/20 rounded-full blur-3xl"></div>

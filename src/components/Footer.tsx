@@ -1,9 +1,11 @@
 import { MailIcon, MapIcon, PhoneIcon, PinIcon } from "lucide-react";
 import logo from "../assets/logo-ezquran2.svg";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function Footer() {
-	const navigate = useNavigate();
+	const navigate 	= useNavigate();
+	const { t } 	= useTranslation();
 	return (
 		<footer className="bg-black text-white py-12 border-t border-yellow-600/20">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,104 +14,50 @@ export default function Footer() {
 						<div className="flex items-center space-x-3 mb-4">
 							<img src={logo} alt="" className="max-w-12 max-h-12"/>
 							<div>
-								<h3 className="text-xl font-bold">EzQuran Centre</h3>
+								<h3 className="text-xl font-bold">EzQuran</h3>
 								<p className="text-xs text-yellow-500">EZQURAN CENTRE SDN. BHD.</p>
 							</div>
 						</div>
 						<p className="text-gray-400 mb-4 max-w-md">
-							Platform pembelajaran Al-Quran yang komprehensif
-							untuk semua peringkat. Kami komited untuk membantu
-							anda dalam perjalanan pembelajaran Al-Quran.
+							{t('footer.description')}
 						</p>
 						<p className="text-sm text-gray-500">
-							© {new Date().getFullYear()} EZQURAN CENTRE SDN. BHD.
-							<br />
-							Hak Cipta Terpelihara.
+							{t('footer.copyright')}
 						</p>
 					</div>
 
 					<div>
-						<h4 className="font-bold text-lg mb-4 text-yellow-500">
-							Pautan Pantas
-						</h4>
+						<h4 className="font-bold text-lg mb-4 text-yellow-500">{t('footer.links.title')}</h4>
 						<ul className="space-y-2">
 							<li>
 								<button
-									onClick={() =>
-										document
-											.getElementById("home")
-											?.scrollIntoView({
-												behavior: "smooth",
-											})
-									}
+									onClick={() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth",})}
 									className="text-gray-400 hover:text-yellow-500 transition-colors"
 								>
-									Utama
-								</button>
-							</li>
-							{/* <li>
-								<button
-									onClick={() =>
-										document
-											.getElementById("services")
-											?.scrollIntoView({
-												behavior: "smooth",
-											})
-									}
-									className="text-gray-400 hover:text-yellow-500 transition-colors"
-								>
-									Perkhidmatan
+									{t('footer.links.home')}
 								</button>
 							</li>
 							<li>
 								<button
-									onClick={() =>
-										document
-											.getElementById("packages")
-											?.scrollIntoView({
-												behavior: "smooth",
-											})
-									}
+									onClick={() => document.getElementById("merchandise")?.scrollIntoView({ behavior: "smooth"})}
 									className="text-gray-400 hover:text-yellow-500 transition-colors"
 								>
-									Pakej
-								</button>
-							</li> */}
-							<li>
-								<button
-									onClick={() =>
-										document
-											.getElementById("merchandise")
-											?.scrollIntoView({
-												behavior: "smooth",
-											})
-									}
-									className="text-gray-400 hover:text-yellow-500 transition-colors"
-								>
-									Produk
+									{t('footer.links.products')}
 								</button>
 							</li>
 							<li>
 								<button
-									onClick={() =>
-										document
-											.getElementById("contact")
-											?.scrollIntoView({
-												behavior: "smooth",
-											})
-									}
+									onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", })}
 									className="text-gray-400 hover:text-yellow-500 transition-colors"
 								>
-									Hubungi Kami
+									{t('footer.links.contact')}
 								</button>
 							</li>
 						</ul>
 					</div>
 
 					<div>
-						<h4 className="font-bold text-lg mb-4 text-yellow-500">
-							Hubungi
-						</h4>
+						<h4 className="font-bold text-lg mb-4 text-yellow-500">{t('contact.information.title')}</h4>
 						<ul className="space-y-2 text-gray-400">
 							<li className="text-sm">
 								<MapIcon size={20} className="inline-block mr-2 mb-1" />

@@ -1,0 +1,218 @@
+{
+	"navbar": {
+		"home": "Utama",
+		"products": "Produk",
+		"privacy": "Polisi Privasi",
+		"terms": "Terma & Syarat",
+		"contact": "Hubungi Kami",
+		"register": "Daftar"
+	},
+	"hero": {
+		"title": "Belajar Al-Quran Dengan Mudah",
+		"subtitle": "Platform pembelajaran Al-Quran yang komprehensif untuk semua peringkat. Belajar membaca, tilawah, dan memahami Al-Quran dengan bimbingan guru berpengalaman.",
+		"cta": "Mulakan Pembelajaran",
+        "students": "Pelajar",
+        "teachers": "Guru",
+        "years": "Tahun"
+	},
+	"services": {
+		"title": "Perkhidmatan",
+		"titleHighlight": "Kami",
+		"subtitle": "Kami menyediakan pelbagai perkhidmatan untuk membantu anda dalam perjalanan pembelajaran Al-Quran",
+		"iqra": {
+			"title": "Kelas Iqra' & Tajwid",
+			"description": "Belajar membaca Iqra' dengan tajwid yang betul dari asas hingga mahir.",
+			"features": [
+				"Bacaan Asas",
+				"Tajwid",
+				"Makharijul Huruf",
+				"Kelas Individu & Kumpulan"
+			]
+		},
+		"tilawah": {
+			"title": "Kelas Al-Quran & Tilawah",
+			"description": "Pelajari seni tilawah Al-Quran dengan bimbingan guru berpengalaman.",
+			"features": [
+				"Teknik Tilawah",
+				"Lagu-lagu Tilawah",
+				"Persembahan",
+				"Sijil Pengiktirafan"
+			]
+		},
+		"fardhuAin": {
+			"title": "Masterclass Fardhu Ain",
+			"description": "Dapatkan pemahaman mendalam tentang Fardhu Ain melalui masterclass eksklusif.",
+			"features": [
+				"Topik Mendalam",
+				"Guru Pakar",
+				"Sesi Interaktif",
+				"Sijil Penyertaan"
+			]
+		},
+		"tadabbur": {
+			"title": "Masterclass Tadabbur Al-Quran",
+			"description": "Dapatkan akses kepada kelas tadabbur Al-Quran secara online.",
+			"features": [
+				"Akses Online",
+				"Kelas Interaktif",
+				"Sumber Pembelajaran",
+				"Sijil Penyertaan"
+			]
+		}
+	},
+	"packages": {
+		"title": "Pilih Pakej Anda",
+		"monthly": "Bulanan",
+		"selectPackage": "Pilih Pakej"
+	},
+	"contact": {
+		"title": "Hubungi",
+        "highlight": "Kami",
+        "subtitle": "Kami sedia membantu anda. Jangan teragak-agak untuk menghubungi kami untuk sebarang pertanyaan.",
+		"name": "Nama",
+		"email": "E-mel",
+		"send": "Hantar",
+        "information": {
+            "title": "Maklumat Hubungan",
+            "address": "Alamat",
+            "phone": "Telefon",
+            "email": "E-mel",
+            "hours": "Waktu Operasi"
+        },
+        "follow": {
+            "title": "Ikuti Kami",
+            "description": "Dapatkan kemas kini terkini tentang program dan tawaran kami dengan mengikuti kami di platform media sosial."
+        },
+        "message": {
+            "title": "Hantar Mesej",
+            "fullname": "Nama Penuh",
+            "email": "E-mel",
+            "phone": "Nombor Telefon",
+            "message": "Mesej Anda",
+            "whatsapp": "Hantar Mesej via WhatsApp",
+            "placeholder": "Tulis mesej anda di sini..."
+        }
+	},
+	"modal": {
+		"welcome": "Selamat Datang ke EzQuran",
+		"selectCountry": "Sila pilih negara anda untuk meneruskan",
+		"changeRegion": "Tukar Rantau",
+		"selectRegion": "Pilih rantau anda untuk melihat kandungan dan harga yang berkaitan",
+		"changeLater": "Anda boleh mengubahnya kemudian di tetapan",
+		"loading": "Memuatkan rantau...",
+		"error": "Tidak dapat memuatkan rantau. Sila muat semula halaman."
+	},
+	"receipt": {
+		"title": "Pembayaran Berjaya!",
+		"thankYou": "Terima kasih atas pembayaran anda. Resit anda sudah sedia.",
+		"receiptNo": "No. Resit",
+		"customerInfo": "Maklumat Pelanggan",
+		"paymentDetails": "Butiran Pembayaran",
+		"totalAmount": "Jumlah Keseluruhan",
+		"downloadPDF": "Muat Turun PDF",
+		"backToHome": "Kembali ke Laman Utama",
+		"downloadReceipt": "Muat Turun Resit",
+		"receiptNotFound": "Resit Tidak Dijumpai",
+		"fullName": "Nama Penuh",
+		"email": "E-mel",
+		"phone": "Telefon",
+		"username": "Nama Pengguna",
+		"package": "Pakej",
+		"description": "Penerangan",
+		"paymentMethod": "Kaedah Pembayaran",
+		"paymentDate": "Tarikh Pembayaran",
+		"invoiceType": "Jenis Invois",
+		"computerGenerated": "Ini adalah resit yang dijana oleh komputer dan tidak memerlukan tandatangan. Untuk sebarang pertanyaan, sila hubungi sokongan EzQuran Centre."
+	},
+    "merchandise": {
+        "badge": "Produk Kami",
+        "title": "Koleksi Produk Eksklusif Kami",
+        "subtitle": "Terokai koleksi produk eksklusif kami yang direka untuk menyokong perjalanan pembelajaran Al-Quran anda.",
+        "products": {
+            "1": {
+                "title": "Buku EzTajwid",
+                "description": "Buku EzTajwid lengkap dengan panduan pembelajaran tajwid yang mudah difahami.",
+                "image": "📕"
+            },
+            "2": {
+                "title": "Buku Disebalik Kalimah",
+                "description": "Koleksi buku yang menerangkan maksud dan tafsiran ayat-ayat Al-Quran",
+                "image": "📗"
+            },
+            "3": {
+                "title": "Buku Dear Allah, Doa Diary",
+                "description": "Buku jurnal doa harian untuk mendekatkan diri kepada Allah SWT",
+                "image": "📘"
+            }
+        }
+    },
+    "footer": {
+        "description": "Platform pembelajaran Al-Quran yang komprehensif untuk semua peringkat. Kami komited untuk membantu anda dalam perjalanan pembelajaran Al-Quran.",
+        "copyright": "Hak Cipta © EzQuran. Semua Hak Terpelihara.",
+        "links": {
+            "title": "Pautan Pantas",
+            "home": "Utama",
+            "products": "Produk",
+            "privacy": "Polisi Privasi",
+            "terms": "Terma & Syarat",
+            "contact": "Hubungi Kami"
+        }
+    },
+    "registration": {
+        "package": {
+            "title": "Pilih",
+            "highlight": "Pakej Anda",
+            "subtitle": "Pilih pakej pembelajaran yang sesuai dengan keperluan anda.",
+            "button": "Pilih Pakej"
+        },
+        "loading_package": "Memuatkan pakej...",
+        "error_package": "Tidak dapat memuatkan pakej. Sila cuba lagi kemudian.",
+        "tutor": {
+            "title": "Pilih Guru Anda",
+            "subtitle": "Pilih guru yang sesuai dengan gaya pembelajaran anda.",
+            "button": "Pilih Guru"
+        },
+        "loading_tutor": "Memuatkan guru...",
+        "error_tutor": "Tidak dapat memuatkan guru. Sila cuba lagi kemudian.",
+        "datetime": {
+            "title": "Pilih Hari & Waktu",
+            "subtitle": "Pilih tarikh dan masa yang sesuai untuk kelas anda.",
+            "button": "Pilih Tarikh & Masa",
+            "select_days": "Pilih Hari",
+            "select_time": "Pilih Waktu",
+            "days": {
+                "Monday": "Isnin",
+                "Tuesday": "Selasa",
+                "Wednesday": "Rabu",
+                "Thursday": "Khamis",
+                "Friday": "Jumaat",
+                "Saturday": "Sabtu",
+                "Sunday": "Ahad"
+            }
+        },
+        "loading_datetime": "Memuatkan hari & waktu...",
+        "error_datetime": "Tidak dapat memuatkan hari & waktu. Sila cuba lagi kemudian.",
+        "form": {
+            "title": "Maklumat Pendaftaran",
+            "subtitle": "Sila isi maklumat berikut untuk melengkapkan pendaftaran anda.",
+            "selectedPackage": "Pakej Dipilih",
+            "selectedTutor": "Guru Dipilih",
+            "selectedDatetime": "Hari & Waktu Dipilih",
+            "username": "Nama Pengguna (username)",
+            "password": "Kata Laluan",
+            "fullname": "Nama Penuh",
+            "email": "E-mel",
+            "phone": "Nombor Telefon",
+            "address": "Alamat Penghantaran",
+            "address_description": "Sila berikan alamat lengkap untuk penghantaran bahan pembelajaran.",
+            "summary": {
+                "package": "Pakej",
+                "price": "Harga",
+                "tutor": "Guru",
+                "datetime": "Hari & Waktu",
+                "amount": "Jumlah Keseluruhan"
+            },
+            "button": "Lanjut Ke Pembayaran"
+        }
+    }
+}

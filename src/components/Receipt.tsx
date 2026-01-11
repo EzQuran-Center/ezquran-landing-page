@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { api } from "../lib/api";
 import { CheckCircle, Download, Mail, Phone, Calendar, CreditCard, Package, FileText } from "lucide-react";
+import { useTranslation } from "../hooks/useTranslation";
 
 interface ReceiptData {
 	account_name: string;
@@ -29,6 +30,7 @@ interface ReceiptResponse {
 export default function Receipt() {
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 	const [receipt, setReceipt] = useState<ReceiptData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -102,7 +104,7 @@ export default function Receipt() {
 			<div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
 				<div className="text-center">
 					<div className="animate-spin rounded-full h-16 w-16 border-b-4 border-yellow-500 mx-auto"></div>
-					<p className="mt-4 text-gray-600 font-medium">Loading receipt...</p>
+					<p className="mt-4 text-gray-600 font-medium">{t('modal.loading')}</p>
 				</div>
 			</div>
 		);
@@ -116,14 +118,14 @@ export default function Receipt() {
 						<FileText className="w-8 h-8 text-red-600" />
 					</div>
 					<h2 className="text-2xl font-bold text-gray-900 mb-2">
-						Receipt Not Found
+						{t('receipt.receiptNotFound')}
 					</h2>
 					<p className="text-gray-600 mb-6">{error}</p>
 					<button
 						onClick={() => navigate("/")}
 						className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-600 transition-all"
 					>
-						Back to Home
+						{t('receipt.backToHome')}
 					</button>
 				</div>
 			</div>
