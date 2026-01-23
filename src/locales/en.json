@@ -194,25 +194,62 @@
         "error_datetime": "Unable to load available dates and times. Please try again later.",
         "form": {
             "title": "Complete Your Registration",
+            "back": "Back",
             "subtitle": "Please fill in the details below to complete your registration.",
             "selectedPackage": "Selected Package",
             "selectedTutor": "Selected Tutor",
             "selectedDatetime": "Selected Day & Time",
             "username": "Username",
+            "usernamePlaceholder": "username",
             "password": "Password",
+            "passwordPlaceholder": "Minimum 6 characters",
             "fullname": "Full Name",
+            "fullnamePlaceholder": "John Smith",
             "email": "Email",
+            "emailPlaceholder": "john@email.com",
             "phone": "Phone Number",
+            "phonePlaceholder": "+60 12-345 6789",
             "address": "Shipping Address",
             "address_description": "Please provide a complete address for the delivery of learning materials.",
             "summary": {
+                "title": "Order Summary",
                 "package": "Package",
                 "price": "Price",
                 "tutor": "Tutor",
-                "datetime": "Day & Time",
-                "amount": "Total Amount"
+                "day": "Day",
+                "time": "Time",
+                "registrationFee": "Registration Fee",
+                "packageFee": "Package Fee",
+                "totalAmount": "Total Amount",
+                "paymentNote": "Payment will be processed via WhatsApp after you submit this form."
             },
-            "button": "Proceed to Payment"
+            "button": "Proceed to Payment",
+            "submitting": "Processing...",
+            "validation": {
+                "fullnameRequired": "Please enter your full name",
+                "emailRequired": "Please enter your email",
+                "emailInvalid": "Invalid email address",
+                "usernameRequired": "Please enter a username",
+                "passwordRequired": "Please enter a password",
+                "passwordMinLength": "Password must be at least 6 characters",
+                "phoneRequired": "Please enter your phone number",
+                "packageRequired": "Please select a package"
+            }
+        },
+        "success": {
+            "title": "Registration Successful!",
+            "thankYou": "Thank you for choosing EzQuran Centre. {hasInvoice, select, true {Your invoice has been generated.} other {You will be redirected to confirm payment.}}",
+            "info": "Your Registration Information",
+            "invoiceNo": "Invoice No.",
+            "name": "Name",
+            "email": "Email",
+            "package": "Package",
+            "totalPayment": "Total Payment",
+            "checkoutPrompt": "Please click the button below to complete payment:",
+            "proceedPayment": "Continue to Payment",
+            "contactPrompt": "Or contact us for assistance:",
+            "contactWhatsapp": "Contact Us on WhatsApp",
+            "backToHome": "Back to Home"
         }
     }
 }

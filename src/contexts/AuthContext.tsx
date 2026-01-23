@@ -7,6 +7,7 @@ import {
 } from "react";
 import { api } from "../lib/api";
 import { Globe } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Region {
 	region_id: number;
@@ -37,6 +38,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+
 	const [regions, setRegions]                         = useState<Region[]>([]);
 	const [loadingRegions, setLoadingRegions]           = useState(true);
 
@@ -77,6 +79,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		setSelectedCountryState(country);
 		localStorage.setItem("selectedCountry", country);
 		setShowCountryModal(false);
+
+		if(country !== selectedCountry) {
+			// Reload the page to apply changes based on new country
+			window.location.href = "/register"
+		}		
 	};
 
 	const isCountrySelected = selectedCountry !== null;
@@ -135,7 +142,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		>
 			{/* Country Selection Modal */}
 			{showCountryModal && (
-			<div className="fixed inset-0 bg-black bg-opacity-50 z-50 p-4 flex items-center justify-center overflow-y-auto">
+			<button onClick={() => setShowCountryModal(false)} className="fixed inset-0 bg-black bg-opacity-50 z-50 p-4 flex items-center justify-center overflow-y-auto">
 				<div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative my-auto">
 						<h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome to EzQuran</h2>
 						<p className="text-sm text-gray-600 mb-6">Please select your country to continue</p>
@@ -178,7 +185,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 							You can change this later in settings
 						</p>
 					</div>
-				</div>
+				</button>
 			)}
 
 			{/* Overlay to prevent interaction when country not selected */}

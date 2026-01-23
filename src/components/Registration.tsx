@@ -84,14 +84,14 @@ export default function Registration() {
     };
 
     const validateForm = () => {
-        if (!formData.fullName.trim()) return 'Sila masukkan nama lengkap';
-        if (!formData.email.trim()) return 'Sila masukkan email';
-        if (!formData.email.includes('@')) return 'Email tidak sah';
-        if (!formData.username.trim()) return 'Sila masukkan nama pengguna';
-        if (!formData.password) return 'Sila masukkan kata laluan';
-        if (formData.password.length < 6) return 'Kata laluan mesti sekurang-kurangnya 6 aksara';
-        if (!formData.phone.trim()) return 'Sila masukkan nombor telefon';
-        if (!selectedPackage) return 'Sila pilih pakej';
+        if (!formData.fullName.trim()) return t('registration.form.validation.fullnameRequired');
+        if (!formData.email.trim()) return t('registration.form.validation.emailRequired');
+        if (!formData.email.includes('@')) return t('registration.form.validation.emailInvalid');
+        if (!formData.username.trim()) return t('registration.form.validation.usernameRequired');
+        if (!formData.password) return t('registration.form.validation.passwordRequired');
+        if (formData.password.length < 6) return t('registration.form.validation.passwordMinLength');
+        if (!formData.phone.trim()) return t('registration.form.validation.phoneRequired');
+        if (!selectedPackage) return t('registration.form.validation.packageRequired');
         return null;
     };
 
@@ -140,12 +140,12 @@ export default function Registration() {
                     setStep('success');
                 }
             } else {
-                setError(response.message || 'Pendaftaran gagal. Sila cuba lagi.');
+                setError(response.message || t('registration.form.validation.packageRequired'));
                 setLoading(false);
             }
         } catch (error: any) {
             console.error('Registration error:', error);
-            setError(error?.message || 'Ralat semasa mendaftar. Sila cuba lagi.');
+            setError(error?.message || t('registration.form.validation.packageRequired'));
             setLoading(false);
         }
     };
@@ -162,7 +162,7 @@ export default function Registration() {
             })
             .catch((err: any) => {
                 console.error('Failed to load packages', err);
-                if (mounted) setPackagesError(err?.message || 'Gagal memuatkan pakej');
+                if (mounted) setPackagesError(err?.message || t('registration.error_package'));
             })
             .finally(() => {
                 if (mounted) setPackagesLoading(false);
@@ -203,7 +203,7 @@ export default function Registration() {
             })
             .catch((err: any) => {
                 console.error('Failed to load tutors', err);
-                if (mounted) setTutorsError(err?.message || 'Gagal memuatkan tutor');
+                if (mounted) setTutorsError(err?.message || t('registration.error_tutor'));
             })
             .finally(() => {
                 if (mounted) setTutorsLoading(false);
@@ -226,7 +226,7 @@ export default function Registration() {
             })
             .catch((err: any) => {
                 console.error('Failed to load slots', err);
-                if (mounted) setSlotsError(err?.message || 'Gagal memuatkan slot waktu');
+                if (mounted) setSlotsError(err?.message || t('registration.error_datetime'));
             })
             .finally(() => {
                 if (mounted) setSlotsLoading(false);
@@ -326,7 +326,7 @@ export default function Registration() {
                     <div></div>
                 </div>
 
-                <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {tutorsLoading ? (
                     <div className="col-span-3 text-center text-gray-300">{t('registration.loading_tutor')}</div>
                 ) : tutorsError ? (
@@ -336,7 +336,7 @@ export default function Registration() {
                 ) : (
                     tutors.map((tutor: any) => (
                     <div key={tutor.tutor_id} className="flex flex-col justify-center items-center gap-4 text-left bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:shadow-lg transition">
-                        <Avatar src={tutor.tutor_image} name={tutor.tutor_fullname || tutor.tutor_name} size={56} />
+                        <Avatar src={tutor.tutor_image} name={tutor.tutor_fullname || tutor.tutor_name} size={120} />
                         <div className="flex-1 text-center">
                             <h3 className="font-semibold text-white text-lg">{tutor.tutor_fullname || tutor.tutor_name}</h3>
                             <p className="text-sm text-gray-400">Pemegang Sanad Riwayat Hafs 'An 'Asim</p>
@@ -384,7 +384,7 @@ export default function Registration() {
                 </div>
 
                 <div className='text-center max-w-2xl mx-auto'>
-                <p className="text-xl md:text-2xl text-white font-semibold mb-6">{t('registration.datetime.select_time')} ({daysSelected ? parseInt(slots.filter((s: any) => s.is_available).length || 0) : 0})</p>
+                <p className="text-xl md:text-2xl text-white font-semibold mb-6">{t('registration.datetime.select_time')} ({daysSelected ? slots.filter((s: any) => s.is_available).length : 0})</p>
                 {slotsLoading ? (
                     <div className="text-gray-300">{t('registration.loading_datetime')}</div>
                 ) : slotsError ? (
@@ -421,13 +421,13 @@ export default function Registration() {
                     className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2"
                     >
                     <ArrowLeft size={16} />
-                    Kembali
+                    {t('registration.form.back')}
                     </button>
                 </div>
 
-                <h2 className="text-3xl font-bold text-white mb-2">Maklumat Pendaftaran</h2>
+                <h2 className="text-3xl font-bold text-white mb-2">{t('registration.form.title')}</h2>
                 <p className="text-gray-400 mb-8">
-                    Pakej dipilih: <span className="text-yellow-500 font-semibold">{selectedPackage.name}</span>
+                    {t('registration.form.selectedPackage')}: <span className="text-yellow-500 font-semibold">{selectedPackage.name}</span>
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -440,107 +440,117 @@ export default function Registration() {
 
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
                         <div>
-                            <label htmlFor="username" className="block text-sm font-semibold text-white mb-2">Nama Pengguna (username)</label>
+                            <label htmlFor="username" className="block text-sm font-semibold text-white mb-2">{t('registration.form.username')}</label>
                             <input
                                 type="text"
                                 id="username"
                                 name="username"
                                 value={formData.username}
                                 onChange={handleInputChange}
-                                placeholder="nama_pengguna"
+                                placeholder={t('registration.form.usernamePlaceholder')}
                                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">Kata Laluan</label>
+                            <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">{t('registration.form.password')}</label>
                             <input
                                 type="password"
                                 id="password"
                                 name="password"
                                 value={formData.password}
                                 onChange={handleInputChange}
-                                placeholder="Minimum 6 aksara"
+                                placeholder={t('registration.form.passwordPlaceholder')}
                                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label htmlFor="fullName" className="block text-sm font-semibold text-white mb-2">Nama Lengkap</label>
+                        <label htmlFor="fullName" className="block text-sm font-semibold text-white mb-2">{t('registration.form.fullname')}</label>
                         <input
                             type="text"
                             id="fullName"
                             name="fullName"
                             value={formData.fullName}
                             onChange={handleInputChange}
-                            placeholder="Ahmad bin Ali"
+                            placeholder={t('registration.form.fullnamePlaceholder')}
                             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">E-mel</label>
+                        <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">{t('registration.form.email')}</label>
                         <input
                             type="email"
                             id="email"
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="ahmad@email.com"
+                            placeholder={t('registration.form.emailPlaceholder')}
                             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="phone" className="block text-sm font-semibold text-white mb-2">Nombor Telefon</label>
+                        <label htmlFor="phone" className="block text-sm font-semibold text-white mb-2">{t('registration.form.phone')}</label>
                         <input
                             type="tel"
                             id="phone"
                             name="phone"
                             value={formData.phone}
                             onChange={handleInputChange}
-                            placeholder="+60 12-345 6789"
+                            placeholder={t('registration.form.phonePlaceholder')}
                             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                         />
                     </div>
 
                     <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mt-8">
-                    <h3 className="font-semibold text-yellow-500 mb-2">Ringkasan Pesanan</h3>
-                    <div className="space-y-2 text-sm text-gray-300">
+                    <h3 className="font-semibold text-yellow-500 mb-2">{t('registration.form.summary.title')}</h3>
+                    <div className="space-y-3 text-sm text-gray-300">
                         <div className="flex justify-between">
-                        <span>Pakej:</span>
+                        <span>{t('registration.form.summary.package')}:</span>
                         <span className="font-semibold">{selectedPackage.name}</span>
                         </div>
                         <div className="flex justify-between">
-                        <span>Harga:</span>
+                        <span>{t('registration.form.summary.price')}:</span>
                         <span className="font-semibold">{selectedPackage.currency} {selectedPackage.price.toFixed(2)}</span>
                         </div>
                         {selectedTutor && (
                         <div className="flex justify-between">
-                        <span>Tutor:</span>
+                        <span>{t('registration.form.summary.tutor')}:</span>
                         <span className="font-semibold">{selectedTutor.tutor_fullname || selectedTutor.tutor_name}</span>
                         </div>
                         )}
                         {daysSelected.length > 0 && (
                         <div className="flex justify-between">
-                        <span>Hari:</span>
+                        <span>{t('registration.form.summary.day')}:</span>
                         <span className="font-semibold">{daysSelected}</span>
                         </div>
                         )}
                         {selectedSlot && (
                         <div className="flex justify-between">
-                        <span>Waktu:</span>
+                        <span>{t('registration.form.summary.time')}:</span>
                         <span className="font-semibold">{selectedSlot.slot_time_12h || selectedSlot.slot_time}</span>
                         </div>
                         )}
-                        <div className="flex justify-between pt-2 border-t border-yellow-500/30">
-                        <span>Jumlah:</span>
-                        <span className="text-yellow-400 font-bold text-lg">{selectedPackage.currency} {selectedPackage.price.toFixed(2)}</span>
+                        <div className="flex flex-col justify-between pt-3 border-t border-yellow-500/30 space-y-3">
+                        <div className="flex justify-between">
+                            <span>{t('registration.form.summary.registrationFee')}</span>
+                            <span className="font-semibold">{selectedPackage.currency === "MYR" ? "RM100.00" : `${selectedPackage.currency} 35.00`}</span>
+                        </div>
+                        <div className='flex justify-between'>
+                            <span>{t('registration.form.summary.packageFee')}</span>
+                            <span className="font-semibold">{selectedPackage.currency} {selectedPackage.price.toFixed(2)}</span>
+                        </div>
+                        <div className='flex justify-between'>
+                            <span>{t('registration.form.summary.totalAmount')}</span>
+                            <span className="text-yellow-400 font-bold text-lg">{selectedPackage.currency} {parseFloat(parseFloat(selectedPackage.price) + (selectedPackage.currency === "MYR" ? 100 : 35)).toFixed(2)}</span>
+                        </div>
                         </div>
                     </div>
                     <p className="text-xs text-gray-400 mt-4">
-                        Pembayaran akan diproses melalui WhatsApp selepas anda menghantar borang ini.
+                        {t('registration.form.summary.paymentNote')}
                     </p>
                     </div>
 
@@ -552,10 +562,10 @@ export default function Registration() {
                     {loading ? (
                         <>
                         <Loader className="animate-spin" size={20} />
-                        Sedang Memproses...
+                        {t('registration.form.submitting')}
                         </>
                     ) : (
-                        'Lanjut ke Pembayaran'
+                        t('registration.form.button')
                     )}
                     </button>
                 </form>
@@ -572,34 +582,34 @@ export default function Registration() {
                     </div>
                 </div>
 
-                <h2 className="text-3xl font-bold text-white mb-4">Pendaftaran Berjaya!</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">{t('registration.success.title')}</h2>
                 <p className="text-gray-300 mb-8">
-                    Terima kasih telah memilih EzQuran Centre. {registrationData?.invoice_no ? 'Invois anda telah dijana.' : 'Anda akan dibawa untuk mengesahkan pembayaran.'}
+                    {t('registration.success.thankYou').replace('{hasInvoice, select, true {Your invoice has been generated.} other {You will be redirected to confirm payment.}}', registrationData?.invoice_no ? (t('registration.success.thankYou').includes('generated') ? 'Your invoice has been generated.' : 'Invois anda telah dijana.') : (t('registration.success.thankYou').includes('redirected') ? 'You will be redirected to confirm payment.' : 'Anda akan dibawa untuk mengesahkan pembayaran.'))}
                 </p>
 
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6 mb-8 text-left">
-                    <h3 className="font-semibold text-yellow-500 mb-4">Maklumat Pendaftaran Anda</h3>
+                    <h3 className="font-semibold text-yellow-500 mb-4">{t('registration.success.info')}</h3>
                     <div className="space-y-3 text-sm text-gray-300">
                     {registrationData?.invoice_no && (
                         <div>
-                            <span className="text-gray-400">No. Invois:</span>
+                            <span className="text-gray-400">{t('registration.success.invoiceNo')}:</span>
                             <p className="font-semibold">{registrationData.invoice_no}</p>
                         </div>
                     )}
                     <div>
-                        <span className="text-gray-400">Nama:</span>
+                        <span className="text-gray-400">{t('registration.success.name')}:</span>
                         <p className="font-semibold">{formData.fullName}</p>
                     </div>
                     <div>
-                        <span className="text-gray-400">Email:</span>
+                        <span className="text-gray-400">{t('registration.success.email')}:</span>
                         <p className="font-semibold">{formData.email}</p>
                     </div>
                     <div>
-                        <span className="text-gray-400">Pakej:</span>
+                        <span className="text-gray-400">{t('registration.success.package')}:</span>
                         <p className="font-semibold">{selectedPackage.name}</p>
                     </div>
                     <div>
-                        <span className="text-gray-400">Jumlah Pembayaran:</span>
+                        <span className="text-gray-400">{t('registration.success.totalPayment')}:</span>
                         <p className="text-lg font-bold text-yellow-400">RM {selectedPackage.price.toFixed(2)}</p>
                     </div>
                     </div>
@@ -609,24 +619,24 @@ export default function Registration() {
                     {registrationData?.checkout_url && (
                         <>
                             <p className="text-sm text-gray-400">
-                                Sila klik butang di bawah untuk melengkapkan pembayaran:
+                                {t('registration.success.checkoutPrompt')}
                             </p>
                             <button
                                 onClick={() => window.location.href = registrationData.checkout_url}
                                 className="w-full py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
                             >
-                                Teruskan ke Pembayaran
+                                {t('registration.success.proceedPayment')}
                             </button>
                         </>
                     )}
                     <p className="text-sm text-gray-400">
-                        Atau hubungi kami untuk bantuan:
+                        {t('registration.success.contactPrompt')}
                     </p>
                     <button
                     onClick={() => window.open('https://wa.me/60183868296', '_blank')}
                     className="w-full py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-lg hover:from-green-400 hover:to-green-500 transition-all"
                     >
-                    Hubungi Kami di WhatsApp
+                    {t('registration.success.contactWhatsapp')}
                     </button>
                     <button
                     onClick={() => {
@@ -638,7 +648,7 @@ export default function Registration() {
                     }}
                     className="w-full py-4 bg-white/10 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all"
                     >
-                    Kembali ke Halaman Utama
+                    {t('registration.success.backToHome')}
                     </button>
                 </div>
                 </div>
