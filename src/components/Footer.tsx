@@ -15,7 +15,7 @@ export default function Footer() {
 							<img src={logo} alt="" className="max-w-12 max-h-12"/>
 							<div>
 								<h3 className="text-xl font-bold">EzQuran</h3>
-								<p className="text-xs text-yellow-500">EZQURAN CENTRE SDN. BHD.</p>
+								<p className="text-xs text-yellow-500">EZQURAN CENTRE</p>
 							</div>
 						</div>
 						<p className="text-gray-400 mb-4 max-w-md">

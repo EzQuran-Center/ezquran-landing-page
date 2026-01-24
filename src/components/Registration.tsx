@@ -339,7 +339,7 @@ export default function Registration() {
                         <Avatar src={tutor.tutor_image} name={tutor.tutor_fullname || tutor.tutor_name} size={120} />
                         <div className="flex-1 text-center">
                             <h3 className="font-semibold text-white text-lg">{tutor.tutor_fullname || tutor.tutor_name}</h3>
-                            <p className="text-sm text-gray-400">Pemegang Sanad Riwayat Hafs 'An 'Asim</p>
+                            <p className="text-sm text-gray-400">Pemegang Sanad<br />Riwayat Hafs 'An 'Asim</p>
                         </div>
                         <div>
                             <button 
