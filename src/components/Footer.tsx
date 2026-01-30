@@ -64,9 +64,9 @@ export default function Footer() {
 								Lot 84-G, Jalan Cattleya 9, Persada Cattleya, 70450 Seremban, Negeri Sembilan.
 							</li>
 							<li className="text-sm">
-								<a href="tel:+60183868296" className="text-sm hover:text-yellow-500 transition-colors">
+								<a href="tel:+601164140170" className="text-sm hover:text-yellow-500 transition-colors">
 									<PhoneIcon size={20} className="inline-block mr-2" />
-									+60 18-386 8296
+									+6011 6414 0170
 								</a>
 							</li>
 							<li className="text-sm">

@@ -66,10 +66,10 @@ export default function Contact() {
 											{t('contact.information.phone')}
 										</h4>
 										<a
-											href="tel:+60183868296"
+											href="tel:+601164140170"
 											className="text-gray-600 hover:text-yellow-600 transition-colors"
 										>
-											+60 18-386 8296
+											+6011 6414 0170
 										</a>
 									</div>
 								</div>
@@ -127,22 +127,10 @@ export default function Contact() {
 								{t('contact.follow.description')}
 							</p>
 							<div className="flex gap-4">
-								<button className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-yellow-500 transition-all group">
-									<Facebook
-										className="text-white group-hover:scale-110 transition-transform"
-										size={24}
-									/>
-								</button>
-								<button className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-yellow-500 transition-all group">
-									<Instagram
-										className="text-white group-hover:scale-110 transition-transform"
-										size={24}
-									/>
-								</button>
 								<button
 									onClick={() =>
 										window.open(
-											"https://wa.me/60183868296",
+											"https://wa.me/+601164140170",
 											"_blank"
 										)
 									}
@@ -170,7 +158,7 @@ export default function Contact() {
 								const phone = formData.get("phone");
 								const message = formData.get("message");
 								const whatsappMessage = `Nama: ${name}%0ATelefon: ${phone}%0A%0AMesej:%0A${message}`;
-								window.open(`https://wa.me/60183868296?text=${whatsappMessage}`, "_blank");
+								window.open(`https://wa.me/+601164140170?text=${whatsappMessage}`, "_blank");
 							}}
 						>
 							<div>
@@ -237,7 +225,7 @@ export default function Contact() {
 
 				<div className="mt-12 rounded-2xl overflow-hidden border border-gray-200 h-96">
 					<iframe
-						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.7665!2d101.9396!3d2.7389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwNDQnMjAuMCJOIDEwMcKwNTYnMjIuNiJF!5e0!3m2!1sen!2smy!4v1234567890"
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.4151415456486!2d101.9781725756595!3d2.692056555790959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cde11ba6541bb3%3A0x891be2ffd9a8cd7e!2sEzQuran%20Centre!5e0!3m2!1sen!2smy!4v1769445439901!5m2!1sen!2smy"
 						width="100%"
 						height="100%"
 						style={{ border: 0 }}
