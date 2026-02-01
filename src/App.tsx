@@ -19,6 +19,7 @@ import AffiliateRedirect from "./components/AffiliateRedirect";
 import Receipt from "./components/Receipt";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
+import { trackPageView } from "./lib/facebookPixel";
 
 function HomePage() {
 	return (
@@ -38,6 +39,9 @@ function ScrollToTop() {
 	const { pathname } = useLocation();
 
 	useEffect(() => {
+
+		trackPageView();
+
 		window.scrollTo(0, 0);
 	}, [pathname]); // Triggered whenever route changes
 

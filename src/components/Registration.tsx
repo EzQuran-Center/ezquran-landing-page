@@ -6,6 +6,7 @@ import Avatar from './Avatar';
 import api from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../hooks/useTranslation';
+import { trackPageView, trackCustomEvent, trackLead, trackPurchase } from '../lib/facebookPixel';
 
 export default function Registration() {
 
@@ -47,6 +48,12 @@ export default function Registration() {
 
     const dayLabel = (val: string) => weekdays.find((w) => w.value === val)?.label || val;
 
+    // Track page view when component mounts
+    useEffect(() => {
+        trackPageView();
+        trackCustomEvent('RegistrationPageView', { step: 'package' });
+    }, []);
+
     const handlePackageSelect = (pkg: any) => {
         const mapped = {
             id: pkg.package_id,
@@ -58,6 +65,15 @@ export default function Registration() {
         setSelectedPackage(mapped);
         setStep('tutor');
         setError(null);
+        
+        // Track package selection
+        trackCustomEvent('ViewContent', {
+            content_name: mapped.name,
+            content_category: 'Package',
+            content_ids: [mapped.id],
+            value: mapped.price,
+            currency: mapped.currency
+        });
     };
 
     const handleTutorSelect = (tutor: any) => {
@@ -66,6 +82,12 @@ export default function Registration() {
         setDaysSelected('');
         setSelectedSlot(null);
         setSlots([]);
+        
+        // Track tutor selection
+        trackCustomEvent('SelectTutor', {
+            tutor_id: tutor.tutor_id,
+            tutor_name: tutor.tutor_fullname || tutor.tutor_name
+        });
     };
 
     const toggleDay = (day: string) => {
@@ -76,6 +98,18 @@ export default function Registration() {
     const handleSlotSelect = (slot: any) => {
         setSelectedSlot(slot);
         setStep('form');
+        
+        // Track schedule selection (add to cart intent)
+        if (selectedPackage) {
+            trackCustomEvent('AddToCart', {
+                content_name: selectedPackage.name,
+                content_ids: [selectedPackage.id],
+                value: selectedPackage.price,
+                currency: selectedPackage.currency,
+                slot_time: slot.slot_time_12h || slot.slot_time,
+                day: daysSelected
+            });
+        }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -132,6 +166,24 @@ export default function Registration() {
 
             if(response && response.success) {
                 setRegistrationData(response.data);
+                
+                // Track successful registration
+                trackLead();
+                
+                // Track purchase/registration fee
+                const registrationFee = selectedPackage.currency === 'MYR' ? 100 : 35;
+                const totalAmount = parseFloat(selectedPackage.price) + registrationFee;
+                
+                trackPurchase(totalAmount, selectedPackage.currency);
+                
+                trackCustomEvent('CompleteRegistration', {
+                    content_name: selectedPackage.name,
+                    value: totalAmount,
+                    currency: selectedPackage.currency,
+                    invoice_no: response.data.invoice_no,
+                    tutor_name: selectedTutor?.tutor_fullname || selectedTutor?.tutor_name,
+                    has_checkout_url: !!response.data.checkout_url
+                });
                 
                 // Redirect to checkout URL
                 if (response.data.checkout_url) {
