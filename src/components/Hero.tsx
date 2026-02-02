@@ -2,6 +2,8 @@ import { BookOpen, Users, Award } from "lucide-react";
 import Banner1 from '../assets/ezquran-banner-1.png';
 import { useTranslation } from "../hooks/useTranslation";
 
+import poster1 from '../assets/poster1.png'
+
 export default function Hero() {
 
 	const { t } = useTranslation();
@@ -99,7 +101,7 @@ export default function Hero() {
 					<p className="text-lg text-gray-300">
 					Dengan nama Allah Yang Maha Pemurah lagi Maha Penyayang
 					</p> */}
-					<img src={Banner1} alt="Hero Banner" className="w-full h-auto rounded-lg shadow-lg object-cover" />
+					<img src={poster1} alt="Hero Banner" className="w-full h-full rounded-lg shadow-lg object-cover" />
 				</div>
 				</div>
 				<div className="absolute -top-6 -right-6 w-32 h-32 bg-yellow-500/20 rounded-full blur-3xl"></div>
