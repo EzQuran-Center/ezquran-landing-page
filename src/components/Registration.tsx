@@ -342,7 +342,18 @@ export default function Registration() {
                     <div className="text-4xl font-bold text-yellow-500 mb-4">
                         {pkg.region_currency} {parseFloat(pkg.final_price || '0').toFixed(2)}
                     </div>
-                    <p className="text-gray-400">{pkg.package_commitment_type || 'sebulan'}</p>
+                    <div className='my-6'>
+                        <ul className="list-disc list-inside text-gray-400 space-y-2">
+                        {pkg.package_metadata && pkg.package_metadata.length > 0 ? (
+                            pkg.package_metadata.map((feature: string, index: number) => (
+                            <li key={index} className='text-xs'>{feature}</li>
+                            ))
+                        ) : (
+                            <li>{t('registration.package.no_features')}</li>
+                        )}
+                        </ul>
+                    </div>
+                    {/* <p className="text-gray-400">{pkg.package_commitment_type || 'sebulan'}</p> */}
                     <div className="mt-6 pt-6 border-t border-white/10">
                         <button
                         onClick={() => handlePackageSelect(pkg)}
