@@ -37,14 +37,14 @@ export default function Footer() {
 									{t('footer.links.home')}
 								</button>
 							</li>
-							<li>
+							{/* <li>
 								<button
 									onClick={() => document.getElementById("merchandise")?.scrollIntoView({ behavior: "smooth"})}
 									className="text-gray-400 hover:text-yellow-500 transition-colors"
 								>
 									{t('footer.links.products')}
 								</button>
-							</li>
+							</li> */}
 							<li>
 								<button
 									onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", })}

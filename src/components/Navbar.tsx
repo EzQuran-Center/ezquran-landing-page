@@ -76,12 +76,12 @@ export default function Navbar() {
 						>
 							{t('navbar.home')}
 						</button>
-						<button
+						{/* <button
 							onClick={() => scrollToSection("merchandise")}
 							className="text-white hover:text-yellow-500 transition-colors"
 						>
 							{t('navbar.products')}
-						</button>
+						</button> */}
 						<button
 							onClick={() => navigate("/polisi-privasi")}
 							className="text-white hover:text-yellow-500 transition-colors"
@@ -141,12 +141,12 @@ export default function Navbar() {
 						>
 							{t('navbar.home')}
 						</button>
-						<button
+						{/* <button
 							onClick={() => scrollToSection("merchandise")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"
 						>
 							{t('navbar.products')}
-						</button>
+						</button> */}
 						<button
 							onClick={() => navigate("/polisi-privasi")}
 							className="block w-full text-left py-2 text-white hover:text-yellow-500 transition-colors"

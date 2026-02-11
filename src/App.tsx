@@ -28,7 +28,7 @@ function HomePage() {
 			<Hero />
 			<Services />
 			<Packages />
-			<Merchandise />
+			{/* <Merchandise /> */}
 			<Contact />
 			<Footer />
 		</div>
