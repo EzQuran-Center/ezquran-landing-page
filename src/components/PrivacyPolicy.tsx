@@ -10,9 +10,7 @@ export default function PrivacyPolicy() {
         sections: [
             {
                 heading: "1. Pengenalan",
-                content: `EzQuran Centre Sdn Bhd ("kami") mengendalikan aplikasi mudah alih EzQuran ("Aplikasi"). Dasar Privasi ini menerangkan bagaimana kami mengumpul, menggunakan, mendedahkan dan melindungi maklumat peribadi anda apabila anda menggunakan Aplikasi kami.
-
-Dengan menggunakan Aplikasi ini, anda bersetuju dengan pengumpulan dan penggunaan maklumat mengikut Dasar Privasi ini.`
+                content: `EzQuran Centre Sdn Bhd ("kami") mengendalikan aplikasi mudah alih EzQuran ("Aplikasi"). Dasar Privasi ini menerangkan bagaimana kami mengumpul, menggunakan, mendedahkan dan melindungi maklumat peribadi anda apabila anda menggunakan Aplikasi kami. Dengan menggunakan Aplikasi ini, anda bersetuju dengan pengumpulan dan penggunaan maklumat mengikut Dasar Privasi ini.`
             },
             {
                 heading: "2. Maklumat Syarikat",
