@@ -84,12 +84,12 @@
             "description": "Dapatkan kemas kini terkini tentang program dan tawaran kami dengan mengikuti kami di platform media sosial."
         },
         "message": {
-            "title": "Hantar Mesej",
+            "title": "Mesej Admin",
             "fullname": "Nama Penuh",
             "email": "Email",
             "phone": "Nombor Telefon",
             "message": "Mesej Anda",
-            "whatsapp": "Hantar Mesej via WhatsApp",
+            "whatsapp": "Mesej Admin via WhatsApp",
             "placeholder": "Tulis mesej anda di sini..."
         }
 	},

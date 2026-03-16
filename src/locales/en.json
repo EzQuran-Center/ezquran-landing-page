@@ -84,12 +84,12 @@
             "description": "Get the latest updates on programs and promotions by following our social media channels."
         },
         "message": {
-            "title": "Send a Message",
+            "title": "Message Admin",
             "fullname": "Full Name",
             "email": "Email",
             "phone": "Phone Number",
             "message": "Your Message",
-            "whatsapp": "Send Message via WhatsApp",
+            "whatsapp": "Message Admin via WhatsApp",
             "placeholder": "Type your message here..."
         }
 	},
