@@ -27,8 +27,10 @@ export default function Footer() {
 					</div>
 
 					<div>
-						<h4 className="font-bold text-lg mb-4 text-yellow-500">{t('footer.links.title')}</h4>
-						<ul className="space-y-2">
+						<h4 className="font-bold text-lg mb-4 text-yellow-500">
+							{/* {t('footer.links.title')} */}
+						</h4>
+						{/* <ul className="space-y-2">
 							<li>
 								<button
 									onClick={() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth",})}
@@ -45,7 +47,7 @@ export default function Footer() {
 									{t('footer.links.contact')}
 								</button>
 							</li>
-						</ul>
+						</ul> */}
 					</div>
 
 					<div>

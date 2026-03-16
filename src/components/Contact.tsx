@@ -119,9 +119,9 @@ export default function Contact() {
 							<h3 className="text-2xl font-bold text-white mb-4">
 								{t('contact.follow.title')}
 							</h3>
-							<p className="text-gray-300 mb-6">
+							{/* <p className="text-gray-300 mb-6">
 								{t('contact.follow.description')}
-							</p>
+							</p> */}
 							<div className="flex gap-4">
 								<button 
 									onClick={() => window.open("https://wa.me/+601164140170","_blank")}
