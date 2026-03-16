@@ -59,7 +59,7 @@ export default function Packages() {
 		price: formatPrice(p.final_price, p.region_currency),
 		period: formatPeriod(p),
 		popular: (p.package_featured || "").toLowerCase() === "yes",
-		features: p.package_metadata || [],
+		features: p.package_metadata_web || [],
 		raw: p,
 	}));
 

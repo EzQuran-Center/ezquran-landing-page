@@ -344,8 +344,8 @@ export default function Registration() {
                     </div>
                     <div className='my-6'>
                         <ul className="list-disc list-inside text-gray-400 space-y-2">
-                        {pkg.package_metadata && pkg.package_metadata.length > 0 ? (
-                            pkg.package_metadata.map((feature: string, index: number) => (
+                        {pkg.package_metadata_web && pkg.package_metadata_web.length > 0 ? (
+                            pkg.package_metadata_web.map((feature: string, index: number) => (
                             <li key={index} className='text-xs'>{feature}</li>
                             ))
                         ) : (
