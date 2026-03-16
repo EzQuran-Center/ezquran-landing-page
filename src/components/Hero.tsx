@@ -27,7 +27,7 @@ export default function Hero() {
 			<div className="space-y-8">
 				<div className="inline-block">
 				<span className="text-yellow-500 text-sm font-semibold tracking-wider border border-yellow-500/30 px-4 py-3 rounded-full">
-					Assalamualaikum, Warga EzQuran Centre
+					Assalamualaikum, Pencinta Al-Quran
 				</span>
 				</div>
 
@@ -38,7 +38,7 @@ export default function Hero() {
 				</span>
 				</h1> */}
 
-				<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-loose from-yellow-400 to-yellow-700 bg-clip-text text-transparent bg-gradient-to-r">
+				<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold from-yellow-400 to-yellow-700 bg-clip-text text-transparent bg-gradient-to-r">
 				{t('hero.title')}
 				</h1>
 
@@ -58,11 +58,12 @@ export default function Hero() {
 				</button>
 				<button
 					onClick={() =>
-					window.open("https://wa.me/60183868296", "_blank")
+					window.open("https://vt.tiktok.com/ZSu9Ygtdp", "_blank")
 					}
 					className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/20"
 				>
-					{t('navbar.contact')}
+					{/* {t('navbar.contact')} */}
+					Video Testimoni
 				</button>
 				</div>
 

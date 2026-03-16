@@ -40,10 +40,10 @@ export default function Services() {
 					<span className="text-yellow-600">{t("services.titleHighlight")}</span>
 					</h2>
 				</div>
-				<p className="text-xl text-gray-600 max-w-2xl mx-auto">
+				{/* <p className="text-xl text-gray-600 max-w-2xl mx-auto">
 					{t("services.subtitle")}
-				</p>
-				<div className="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+				</p> */}
+				<div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 					{services.map((service, index) => (
 						<div
 							key={index}

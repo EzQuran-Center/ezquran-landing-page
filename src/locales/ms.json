@@ -9,54 +9,54 @@
 	},
 	"hero": {
 		"title": "Belajar Al-Quran Dengan Mudah",
-		"subtitle": "Platform pembelajaran Al-Quran yang komprehensif untuk semua peringkat. Belajar membaca, tilawah, dan memahami Al-Quran dengan bimbingan guru berpengalaman.",
+		"subtitle": "Masih belum boleh Baca Al-Quran dengan lancar ? Susah untuk fahami Al-Quran? Kami ada solusinya. EzQuran menyediakan Kelas Tajwid, Tahsin & Tadabbur dengan bimbingan Guru yang berpengalaman dan bersanad.",
 		"cta": "Mulakan Pembelajaran",
         "students": "Pelajar",
         "teachers": "Guru",
         "years": "Tahun"
 	},
 	"services": {
-		"title": "Perkhidmatan",
-		"titleHighlight": "Kami",
+		"title": "Apa yang anda",
+		"titleHighlight": "akan pelajari?",
 		"subtitle": "Kami menyediakan pelbagai perkhidmatan untuk membantu anda dalam perjalanan pembelajaran Al-Quran",
 		"iqra": {
-			"title": "Kelas Iqra' & Tajwid",
-			"description": "Belajar membaca Iqra' dengan tajwid yang betul dari asas hingga mahir.",
+			"title": "Asas Iqra’ & Tajwid",
+			"description": "Belajar perbetulkan makhraj dan tajwid daripada asas hingga mahir.",
 			"features": [
-				"Bacaan Asas",
-				"Tajwid",
-				"Makharijul Huruf",
-				"Kelas Individu"
+				"Modul Iqra’",
+				"⁠Modul EzTajwid",
+				"Makhraj Huruf",
+				"Kelas Private Online"
 			]
 		},
 		"tilawah": {
-			"title": "Kelas Al-Quran & Tilawah",
-			"description": "Pelajari seni tilawah Al-Quran dengan bimbingan guru berpengalaman.",
+			"title": "Tahsin Sanad Al-Quran",
+			"description": "Perbetulkan bacaan Al-Quran mengikut Riwayat Hafs ‘an ‘Asim",
 			"features": [
-				"Teknik Tilawah",
-				"Lagu-lagu Tilawah",
-				"Persembahan",
-				"Sijil Pengiktirafan"
+				"Bacaan penuh 30 juzuk Al-Quran",
+				"Talaqqi Private Online",
+				"⁠Guru Bersanad & Berpengalaman",
+				"⁠Sijil Ijazah Sanad"
 			]
 		},
 		"fardhuAin": {
-			"title": "Masterclass Fardhu Ain",
-			"description": "Dapatkan pemahaman mendalam tentang Fardhu Ain melalui masterclass eksklusif.",
+			"title": "Tadabbur & Kisah Nabi",
+			"description": "Pelajari Tadabbur setiap Surah dengan lebih mendalam dengan Kisah Nabi yang menarik.",
 			"features": [
-				"Topik Mendalam",
-				"Guru Pakar",
-				"Sesi Interaktif",
-				"Sijil Penyertaan"
+				"Modul Disebalik Kalimah",
+				"Tadabbur Setiap Surah",
+				"Kisah 25 Nabi & Rasul",
+				"Refleksi & Inspirasi"
 			]
 		},
 		"tadabbur": {
-			"title": "Masterclass Tadabbur",
-			"description": "Dapatkan akses kepada kelas tadabbur Al-Quran secara online.",
+			"title": "Asas Fardhu Ain",
+			"description": "Pelajari Asas Ilmu Akidah, Bab Taharah, Bab Ibadah, dan pelbagai bab lagi dengan bimbingan Guru berpengalaman",
 			"features": [
-				"Akses Online",
-				"Kelas Interaktif",
-				"Sumber Pembelajaran",
-				"Sijil Penyertaan"
+				"Modul Fardhu Ain",
+				"⁠Akidah, Taharah, Ibadah",
+				"Kelas Private Online",
+				"⁠Guru Berpengalaman"
 			]
 		}
 	},
@@ -73,10 +73,10 @@
 		"email": "E-mel",
 		"send": "Hantar",
         "information": {
-            "title": "Maklumat Hubungan",
+            "title": "Hubungi Kami",
             "address": "Alamat",
-            "phone": "Telefon",
-            "email": "E-mel",
+            "phone": "Telefon & Whatsapp",
+            "email": "Email",
             "hours": "Waktu Operasi"
         },
         "follow": {
@@ -86,7 +86,7 @@
         "message": {
             "title": "Hantar Mesej",
             "fullname": "Nama Penuh",
-            "email": "E-mel",
+            "email": "Email",
             "phone": "Nombor Telefon",
             "message": "Mesej Anda",
             "whatsapp": "Hantar Mesej via WhatsApp",
