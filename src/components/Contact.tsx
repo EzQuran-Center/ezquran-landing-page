@@ -35,29 +35,6 @@ export default function Contact() {
 							<div className="space-y-6">
 								<div className="flex items-start gap-4">
 									<div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
-										<MapPin
-											className="text-yellow-600"
-											size={24}
-										/>
-									</div>
-									<div>
-										<h4 className="font-semibold text-black mb-1">
-											{t('contact.information.address')}
-										</h4>
-										<p className="text-gray-600 leading-relaxed">
-											Lot 84-G, Jalan Cattleya 9,
-											<br />
-											Persada Cattleya,
-											<br />
-											70450 Seremban,
-											<br />
-											Negeri Sembilan, Malaysia
-										</p>
-									</div>
-								</div>
-
-								<div className="flex items-start gap-4">
-									<div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
 										<Phone
 											className="text-yellow-600"
 											size={24}
@@ -110,6 +87,29 @@ export default function Contact() {
 										<div className="text-gray-600 space-y-1">
 											<p>Isnin - Jumaat: 9:00 Pagi - 10:00 Malam</p>
 										</div>
+									</div>
+								</div>
+
+								<div className="flex items-start gap-4">
+									<div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+										<MapPin
+											className="text-yellow-600"
+											size={24}
+										/>
+									</div>
+									<div>
+										<h4 className="font-semibold text-black mb-1">
+											{t('contact.information.address')}
+										</h4>
+										<p className="text-gray-600 leading-relaxed">
+											Lot 84-G, Jalan Cattleya 9,
+											<br />
+											Persada Cattleya,
+											<br />
+											70450 Seremban,
+											<br />
+											Negeri Sembilan, Malaysia
+										</p>
 									</div>
 								</div>
 							</div>
