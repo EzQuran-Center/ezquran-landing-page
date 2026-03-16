@@ -27,7 +27,7 @@ export default function Contact() {
 
 				<div className="grid md:grid-cols-2 gap-12">
 					<div className="space-y-8">
-						<div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200">
+						{/* <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200">
 							<h3 className="text-2xl font-bold text-black mb-6">
 								{t('contact.information.title')}
 							</h3>
@@ -113,7 +113,7 @@ export default function Contact() {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 
 						<div className="bg-gradient-to-br from-black to-gray-900 rounded-2xl p-8">
 							<h3 className="text-2xl font-bold text-white mb-4">
@@ -161,6 +161,19 @@ export default function Contact() {
 									/>
 								</button>
 							</div>
+						</div>
+
+						<div className="mt-12 rounded-2xl overflow-hidden border border-gray-200 h-96">
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.4151415456486!2d101.9781725756595!3d2.692056555790959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cde11ba6541bb3%3A0x891be2ffd9a8cd7e!2sEzQuran%20Centre!5e0!3m2!1sen!2smy!4v1769445439901!5m2!1sen!2smy"
+								width="100%"
+								height="100%"
+								style={{ border: 0 }}
+								allowFullScreen
+								loading="lazy"
+								referrerPolicy="no-referrer-when-downgrade"
+								title="EzQuran Centre Location"
+							></iframe>
 						</div>
 					</div>
 
@@ -240,19 +253,6 @@ export default function Contact() {
 							</button>
 						</form>
 					</div>
-				</div>
-
-				<div className="mt-12 rounded-2xl overflow-hidden border border-gray-200 h-96">
-					<iframe
-						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.4151415456486!2d101.9781725756595!3d2.692056555790959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cde11ba6541bb3%3A0x891be2ffd9a8cd7e!2sEzQuran%20Centre!5e0!3m2!1sen!2smy!4v1769445439901!5m2!1sen!2smy"
-						width="100%"
-						height="100%"
-						style={{ border: 0 }}
-						allowFullScreen
-						loading="lazy"
-						referrerPolicy="no-referrer-when-downgrade"
-						title="EzQuran Centre Location"
-					></iframe>
 				</div>
 			</div>
 		</section>
