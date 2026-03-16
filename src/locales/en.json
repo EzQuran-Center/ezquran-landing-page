@@ -16,47 +16,47 @@
         "years": "Years"
 	},
 	"services": {
-		"title": "Our",
-		"titleHighlight": "Services",
+		"title": "What you",
+		"titleHighlight": "will learn?",
 		"subtitle": "We provide various services to assist you in your Al-Quran learning journey",
 		"iqra": {
-			"title": "Iqra' & Tajweed Classes",
-			"description": "Learn to read Iqra' with proper tajweed from basics to mastery.",
+			"title": "Basic Iqra' & Tajwid",
+			"description": "Learn to correct your makhraj and tajwid from basics to mastery.",
 			"features": [
-				"Basic Reading",
-				"Tajweed",
+				"Iqra' Module",
+				"EzTajwid Module",
 				"Makharijul Huruf",
-				"Individual Classes"
+				"Private Online Classes"
 			]
 		},
 		"tilawah": {
-			"title": "Al-Quran & Tilawah Classes",
-			"description": "Learn the art of Quran recitation with experienced teachers.",
+			"title": "Tahsin Sanad Al-Quran",
+			"description": "Correct your Al-Quran recitation according to Riwayat Hafs 'an 'Asim.",
 			"features": [
-				"Tilawah Techniques",
-				"Recitation Melodies",
-				"Performance",
-				"Recognition Certificate"
+				"Full recitation of 30 juzuk of Al-Quran",
+				"Private Online Talaqqi",
+				"Certified & Experienced Teachers",
+				"Sanad Ijazah Certificate"
 			]
 		},
 		"fardhuAin": {
-			"title": "Fardhu Ain Masterclass",
-			"description": "Gain in-depth understanding of Fardhu Ain through exclusive masterclass.",
+			"title": "Tadabbur & Stories of the Prophets",
+			"description": "Learn Tadabbur of every Surah in depth with fascinating stories of the Prophets.",
 			"features": [
-				"In-depth Topics",
-				"Expert Teachers",
-				"Interactive Sessions",
-				"Participation Certificate"
+				"Behind the Words Module",
+				"Tadabbur of Every Surah",
+				"Stories of 25 Prophets & Messengers",
+				"Reflection & Inspiration"
 			]
 		},
 		"tadabbur": {
-			"title": "Tadabbur Al-Quran Masterclass",
-			"description": "Get access to online Tadabbur Al-Quran classes.",
+			"title": "Basic Fardhu Ain",
+			"description": "Learn the basics of Aqidah, Taharah, Ibadah, and many more chapters with guidance from experienced teachers.",
 			"features": [
-				"Online Access",
-				"Interactive Classes",
-				"Learning Resources",
-				"Participation Certificate"
+				"Fardhu Ain Module",
+				"Aqidah, Taharah, Ibadah",
+				"Private Online Classes",
+				"Experienced Teachers"
 			]
 		}
 	},
