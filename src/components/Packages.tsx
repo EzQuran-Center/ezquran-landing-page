@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../lib/api";
 import { useAuth } from "../contexts/AuthContext";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function Packages() {
 
@@ -11,6 +12,8 @@ export default function Packages() {
 	const [packages, setPackages] 	= useState<any[]>([]);
 	const [loading, setLoading] 	= useState<boolean>(true);
 	const [error, setError] 		= useState<string | null>(null);
+
+	const {t, language} = useTranslation()
 
 	const handleSelectPackage = (pkg: any) => {
 		navigate('/register', { state: { selectedPackage: pkg.raw } });
@@ -73,14 +76,14 @@ export default function Packages() {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 				<div className="text-center mb-16">
 					<h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-						Pilih{" "}
+						{/* Pilih{" "}
 						<span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
 							Pakej Anda
-						</span>
+						</span> */}
+						{t('packages.title')}
 					</h2>
 					<p className="text-xl text-gray-300 max-w-2xl mx-auto">
-						Pilihan pakej yang sesuai dengan keperluan pembelajaran
-						anda
+						{language == 'ms' ? 'Pilihan pakej yang sesuai dengan keperluan pembelajaran anda' : 'Choose a package that suits your learning needs'}
 					</p>
 				</div>
 
@@ -156,7 +159,7 @@ export default function Packages() {
 					)}
 				</div>
 
-				<div className="text-center mt-12">
+				{/* <div className="text-center mt-12">
 					<p className="text-gray-400">
 						Tidak pasti pakej mana yang sesuai?
 						<button
@@ -166,7 +169,7 @@ export default function Packages() {
 							Hubungi kami untuk konsultasi percuma
 						</button>
 					</p>
-				</div>
+				</div> */}
 			</div>
 		</section>
 	);
