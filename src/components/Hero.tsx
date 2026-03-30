@@ -22,6 +22,24 @@ export default function Hero() {
 		return () => window.removeEventListener('keydown', handleEscape);
 	}, [isVideoModalOpen]);
 
+	// Close modal when exiting fullscreen
+	useEffect(() => {
+		const handleFullscreenChange = () => {
+			if (!document.fullscreenElement && isVideoModalOpen) {
+				// Optional: close modal when exiting fullscreen
+				// setIsVideoModalOpen(false);
+			}
+		};
+
+		document.addEventListener('fullscreenchange', handleFullscreenChange);
+		document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+		
+		return () => {
+			document.removeEventListener('fullscreenchange', handleFullscreenChange);
+			document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+		};
+	}, [isVideoModalOpen]);
+
 	const scrollToPackages = () => {
 		const element = document.getElementById("packages");
 		if (element) {
@@ -141,13 +159,22 @@ export default function Hero() {
 					className="relative w-full max-w-4xl bg-black rounded-lg shadow-2xl"
 					onClick={(e) => e.stopPropagation()}
 				>
-					{/* Close Button */}
+					{/* Close Button - Desktop (outside video) */}
 					<button
 						onClick={() => setIsVideoModalOpen(false)}
-						className="absolute -top-12 right-0 text-white hover:text-yellow-500 transition-colors"
+						className="absolute -top-12 right-0 text-white hover:text-yellow-500 transition-colors hidden md:block z-50"
 						aria-label="Close video"
 					>
 						<X size={32} />
+					</button>
+
+					{/* Close Button - Inside video container (visible in fullscreen) */}
+					<button
+						onClick={() => setIsVideoModalOpen(false)}
+						className="absolute top-4 right-4 z-50 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all backdrop-blur-sm"
+						aria-label="Close video"
+					>
+						<X size={24} />
 					</button>
 					
 					{/* Video Player */}
