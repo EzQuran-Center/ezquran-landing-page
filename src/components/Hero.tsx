@@ -1,12 +1,26 @@
-import { BookOpen, Users, Award } from "lucide-react";
-import Banner1 from '../assets/ezquran-banner-1.png';
+import { BookOpen, Users, Award, Play, X } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "../hooks/useTranslation";
 
 import poster1 from '../assets/poster1.png'
+import videoFile from '../assets/ezquran-vid.MOV'
 
 export default function Hero() {
 
 	const { t } = useTranslation();
+	const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+
+	// Close modal on ESC key press
+	useEffect(() => {
+		const handleEscape = (e: KeyboardEvent) => {
+			if (e.key === 'Escape' && isVideoModalOpen) {
+				setIsVideoModalOpen(false);
+			}
+		};
+		
+		window.addEventListener('keydown', handleEscape);
+		return () => window.removeEventListener('keydown', handleEscape);
+	}, [isVideoModalOpen]);
 
 	const scrollToPackages = () => {
 		const element = document.getElementById("packages");
@@ -57,14 +71,20 @@ export default function Hero() {
 					{t('hero.cta')}
 				</button>
 				<button
+					onClick={() => setIsVideoModalOpen(true)}
+					className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/20 flex items-center justify-center gap-2"
+				>
+					<Play size={20} />
+					Tonton Video
+				</button>
+				{/* <button
 					onClick={() =>
 					window.open("https://vt.tiktok.com/ZSu9Ygtdp", "_blank")
 					}
 					className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/20"
 				>
-					{/* {t('navbar.contact')} */}
 					Video Testimoni
-				</button>
+				</button> */}
 				</div>
 
 				<div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
@@ -110,6 +130,38 @@ export default function Hero() {
 			</div>
 			</div>
 		</div>
+
+		{/* Video Modal */}
+		{isVideoModalOpen && (
+			<div 
+				className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+				onClick={() => setIsVideoModalOpen(false)}
+			>
+				<div 
+					className="relative w-full max-w-4xl bg-black rounded-lg shadow-2xl"
+					onClick={(e) => e.stopPropagation()}
+				>
+					{/* Close Button */}
+					<button
+						onClick={() => setIsVideoModalOpen(false)}
+						className="absolute -top-12 right-0 text-white hover:text-yellow-500 transition-colors"
+						aria-label="Close video"
+					>
+						<X size={32} />
+					</button>
+					
+					{/* Video Player */}
+					<video
+						className="w-full rounded-lg"
+						controls
+						autoPlay
+						src={videoFile}
+					>
+						Your browser does not support the video tag.
+					</video>
+				</div>
+			</div>
+		)}
 		</section>
 	);
 }

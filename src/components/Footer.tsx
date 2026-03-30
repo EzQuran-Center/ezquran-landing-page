@@ -55,7 +55,7 @@ export default function Footer() {
 						<ul className="space-y-2 text-gray-400">
 							<li className="text-sm">
 								<MapIcon size={20} className="inline-block mr-2 mb-1" />
-								Lot 84-G, Jalan Cattleya 9, Persada Cattleya, 70450 Seremban, Negeri Sembilan.
+								Lot 85-G, Jalan Cattleya 9, Persada Cattleya, 70450 Seremban, Negeri Sembilan.
 							</li>
 							<li className="text-sm">
 								<a href="tel:+601164140170" className="text-sm hover:text-yellow-500 transition-colors">
