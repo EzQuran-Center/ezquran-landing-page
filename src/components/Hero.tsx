@@ -167,6 +167,7 @@ export default function Hero() {
 						className="w-full rounded-lg"
 						controls
 						playsInline
+						autoPlay
 						src={videoFile}
 						style={{ maxHeight: '60vh' }}
 					>
