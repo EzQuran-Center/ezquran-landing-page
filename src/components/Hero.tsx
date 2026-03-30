@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "../hooks/useTranslation";
 
 import poster1 from '../assets/poster1.png'
+import videoBanner from '../assets/ezquran-banner-1.png'
 import videoFile from '../assets/ezquran-vid.MOV'
 
 export default function Hero() {
@@ -48,6 +49,8 @@ export default function Hero() {
 	};
 
 	return (
+		<>
+		{/* Hero Section */}
 		<section
 		id="home"
 		className="relative min-h-screen flex items-center bg-gradient-to-br from-black via-black to-black overflow-hidden"
@@ -88,21 +91,6 @@ export default function Hero() {
 				>
 					{t('hero.cta')}
 				</button>
-				<button
-					onClick={() => setIsVideoModalOpen(true)}
-					className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/20 flex items-center justify-center gap-2"
-				>
-					<Play size={20} />
-					Tonton Video
-				</button>
-				{/* <button
-					onClick={() =>
-					window.open("https://vt.tiktok.com/ZSu9Ygtdp", "_blank")
-					}
-					className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/20"
-				>
-					Video Testimoni
-				</button> */}
 				</div>
 
 				<div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
@@ -148,6 +136,45 @@ export default function Hero() {
 			</div>
 			</div>
 		</div>
+		</section>
+
+		{/* Video Thumbnail Section */}
+		<section className="py-16 bg-black">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="max-w-5xl mx-auto">
+					{/* <div 
+						className="relative group cursor-pointer" 
+						onClick={() => setIsVideoModalOpen(true)}
+					>
+						<div className="relative rounded-lg overflow-hidden shadow-2xl">
+							<img 
+								src={videoBanner} 
+								alt="Video Thumbnail" 
+								className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+							/>
+
+							<div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300"></div>
+							
+							<div className="absolute inset-0 flex items-center justify-center">
+								<div className="bg-white/90 backdrop-blur-sm rounded-full p-8 group-hover:bg-yellow-500 group-hover:scale-110 transition-all duration-300 shadow-2xl">
+									<Play size={64} className="text-black fill-black" />
+								</div>
+							</div>
+						</div>
+					</div> */}
+					{/* Video Player */}
+					<video
+						className="w-full rounded-lg"
+						controls
+						playsInline
+						src={videoFile}
+						style={{ maxHeight: '60vh' }}
+					>
+						Your browser does not support the video tag.
+					</video>
+				</div>
+			</div>
+		</section>
 
 		{/* Video Modal */}
 		{isVideoModalOpen && (
@@ -182,13 +209,15 @@ export default function Hero() {
 						className="w-full rounded-lg"
 						controls
 						autoPlay
+						playsInline
 						src={videoFile}
+						style={{ maxHeight: '80vh' }}
 					>
 						Your browser does not support the video tag.
 					</video>
 				</div>
 			</div>
 		)}
-		</section>
+		</>
 	);
 }
