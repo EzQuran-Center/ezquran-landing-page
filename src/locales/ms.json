@@ -159,6 +159,12 @@
         }
     },
     "registration": {
+        "region": {
+            "title": "Pilih",
+            "highlight": "Rantau Anda",
+            "subtitle": "Pilih negara anda untuk melihat pakej dalam mata wang tempatan.",
+            "button": "Pilih Rantau"
+        },
         "package": {
             "title": "Pilih",
             "highlight": "Pakej Anda",

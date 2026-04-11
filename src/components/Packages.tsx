@@ -59,7 +59,8 @@ export default function Packages() {
 	const displayPackages = packages.map((p) => ({
 		id: p.package_id,
 		name: p.package_name,
-		price: formatPrice(p.final_price, p.region_currency),
+		// price: formatPrice(p.final_price, p.region_currency),
+		price: Intl.NumberFormat("ms-MY", { style: 'currency', currency: p.region_currency}).format(p.final_price),
 		period: formatPeriod(p),
 		popular: (p.package_featured || "").toLowerCase() === "yes",
 		features: p.package_metadata_web || [],
@@ -87,7 +88,7 @@ export default function Packages() {
 					</p>
 				</div>
 
-				<div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+				<div className="flex flex-wrap justify-center gap-8 min-w-full">
 					{loading ? (
 						<div className="col-span-3 text-center text-gray-300">
 							Memuatkan pakej...
@@ -104,8 +105,8 @@ export default function Packages() {
 						displayPackages.map((pkg, index) => (
 							<div
 								key={pkg.id || index}
-								className={`relative rounded-2xl p-8 transition-all transform hover:scale-105 ${
-									pkg.popular 
+								className={`relative rounded-2xl p-8 transition-all transform hover:scale-105 max-w-md md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]
+									${ pkg.popular 
 									? "bg-gradient-to-br from-yellow-500 to-yellow-600 shadow-2xl shadow-yellow-500/30" 
 									: "bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-500/50"
 								}`}
@@ -124,7 +125,8 @@ export default function Packages() {
 										• {pkg.name} •
 									</h3>
 									<div className={`mb-2 ${pkg.popular ? "text-black" : "text-white"}`}>
-										<span className="text-5xl font-bold">{pkg.price}</span>
+										{/* <span className="text-5xl font-bold">{Intl.NumberFormat('ms-MY', { style: 'currency', currency: 'MYR'}).format(pkg.price)}</span> */}
+										<span className="text-3xl font-bold">{pkg.price}</span>
 									</div>
 									<p className={ pkg.popular ? "text-black/70" : "text-gray-400" }>
 										{pkg.period}

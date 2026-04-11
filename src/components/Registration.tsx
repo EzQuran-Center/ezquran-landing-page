@@ -4,17 +4,16 @@ import { getAffiliateCode } from '../lib/affiliate';
 import { CheckCircle, AlertCircle, Loader, ArrowLeft } from 'lucide-react';
 import Avatar from './Avatar';
 import api from '../lib/api';
-import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../hooks/useTranslation';
 import { trackPageView, trackCustomEvent, trackLead, trackPurchase } from '../lib/facebookPixel';
 
 export default function Registration() {
 
     const location              = useLocation();
-    const { selectedCountry }   = useAuth();
     const { t }                 = useTranslation();
 
-    const [step, setStep]                       = useState<'package' | 'tutor' | 'schedule' | 'form' | 'success'>('package');
+    const [step, setStep]                       = useState<'region' | 'package' | 'tutor' | 'schedule' | 'form' | 'success'>('region');
+    const [selectedCountry, setSelectedCountry] = useState<string>('');
     const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
     const [loading, setLoading]                 = useState(false);
     const [error, setError]                     = useState<string | null>(null);
@@ -36,6 +35,11 @@ export default function Registration() {
     const [selectedSlot, setSelectedSlot]       = useState<any | null>(null);
 
     const [daysSelected, setDaysSelected]       = useState<string>('');
+
+    const [regions, setRegions]                 = useState<any[]>([]);
+    const [regionsLoading, setRegionsLoading]   = useState<boolean>(true);
+    const [regionsError, setRegionsError]       = useState<string | null>(null);
+
     const weekdays = [
         { value: 'Monday', label: 'Monday' },
         { value: 'Tuesday', label: 'Tuesday' },
@@ -51,8 +55,42 @@ export default function Registration() {
     // Track page view when component mounts
     useEffect(() => {
         trackPageView();
-        trackCustomEvent('RegistrationPageView', { step: 'package' });
+        trackCustomEvent('RegistrationPageView', { step: 'region' });
     }, []);
+
+    // Fetch regions on mount
+    useEffect(() => {
+        let mounted = true;
+        setRegionsLoading(true);
+        setRegionsError(null);
+
+        api.get('region')
+            .then((res: any) => {
+                const items = res?.data || [];
+                if (mounted) setRegions(items);
+            })
+            .catch((err: any) => {
+                console.error('Failed to load regions', err);
+                if (mounted) setRegionsError(err?.message || 'Failed to load regions');
+            })
+            .finally(() => {
+                if (mounted) setRegionsLoading(false);
+            });
+
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
+    const handleRegionSelect = (regionId: string) => {
+        setSelectedCountry(regionId);
+        setStep('package');
+        setError(null);
+        
+        trackCustomEvent('SelectRegion', {
+            region_id: regionId
+        });
+    };
 
     const handlePackageSelect = (pkg: any) => {
         const mapped = {
@@ -315,13 +353,70 @@ export default function Registration() {
         <div className="min-h-screen bg-gradient-to-br from-black via-black to-black pt-32 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {step === 'package' && (
+            {step === 'region' && (
             <div>
                 <div className="text-center mb-12">
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                    {t('registration.package.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">{t('registration.package.highlight')}</span>
+                    {t('registration.region.title') || 'Select Your'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">{t('registration.region.highlight') || 'Region'}</span>
                 </h1>
-                <p className="text-xl text-gray-300">{t('registration.package.subtitle')}</p>
+                <p className="text-xl text-gray-300">{t('registration.region.subtitle') || 'Choose your country to see packages in your local currency'}</p>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto mb-8">
+                {regionsLoading ? (
+                    <div className="col-span-3 text-center text-gray-300">Loading regions...</div>
+                ) : regionsError ? (
+                    <div className="col-span-3 text-center text-red-400">{regionsError}</div>
+                ) : regions.length === 0 ? (
+                    <div className="col-span-3 text-center text-gray-300">No regions available</div>
+                ) : (
+                    regions.filter((region) => region.region_status === 'Active').map((region) => (
+                    <button
+                    key={region.region_id}
+                    onClick={() => handleRegionSelect(region.region_id.toString())}
+                    className="group bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-500/50 rounded-2xl p-8 transition-all transform hover:scale-105 text-center"
+                    >
+                    <div className="flex flex-col items-center gap-4">
+                        <img 
+                            src={region.region_flag} 
+                            alt={region.region_name}
+                            className="w-20 h-20 object-contain"
+                        />
+                        <h3 className="text-2xl font-bold text-white">{region.region_name}</h3>
+                        <p className="text-yellow-500 font-semibold">{region.region_currency}</p>
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-white/10">
+                        <button
+                        className="w-full py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg group-hover:from-yellow-400 group-hover:to-yellow-500 transition-all"
+                        >
+                        {t('registration.region.button') || 'Select Region'}
+                        </button>
+                    </div>
+                    </button>
+                )))}
+                </div>
+            </div>
+            )}
+
+            {step === 'package' && (
+            <div>
+                <div className="flex justify-between items-center mb-12">
+                    <button
+                        onClick={() => {
+                            setStep('region');
+                            setError(null);
+                        }}
+                        className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2"
+                    >
+                        <ArrowLeft size={24} />
+                    </button>
+                    <div className="text-center flex-1">
+                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                            {t('registration.package.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">{t('registration.package.highlight')}</span>
+                        </h1>
+                        <p className="text-xl text-gray-300">{t('registration.package.subtitle')}</p>
+                    </div>
+                    <div className="w-10"></div>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-8">
@@ -608,7 +703,7 @@ export default function Registration() {
                         </div>
                         <div className='flex justify-between'>
                             <span>{t('registration.form.summary.totalAmount')}</span>
-                            <span className="text-yellow-400 font-bold text-lg">{selectedPackage.currency} {parseFloat(parseFloat(selectedPackage.price) + (selectedPackage.currency === "MYR" ? 100 : 35)).toFixed(2)}</span>
+                            <span className="text-yellow-400 font-bold text-lg">{selectedPackage.currency} {(parseFloat(selectedPackage.price) + (selectedPackage.currency === "MYR" ? 100 : 35)).toFixed(2)}</span>
                         </div>
                         </div>
                     </div>

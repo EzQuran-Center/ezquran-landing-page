@@ -159,6 +159,12 @@
         }
     },
     "registration": {
+        "region": {
+            "title": "Select Your",
+            "highlight": "Region",
+            "subtitle": "Choose your country to see packages in your local currency.",
+            "button": "Select Region"
+        },
         "package": {
             "title": "Choose",
             "highlight": "Your Package",

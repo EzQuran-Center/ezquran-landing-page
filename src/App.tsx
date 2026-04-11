@@ -8,7 +8,8 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
 import Packages from "./components/Packages";
-import Merchandise from "./components/Merchandise";
+import SeasonalEvents from "./components/SeasonalEvents";
+import SeasonalEventDetail from "./components/SeasonalEventDetail";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Registration from "./components/Registration";
@@ -28,6 +29,7 @@ function HomePage() {
 			<Hero />
 			<Services />
 			<Packages />
+			<SeasonalEvents />
 			{/* <Merchandise /> */}
 			<Contact />
 			<Footer />
@@ -57,6 +59,7 @@ function App() {
 				<ScrollToTop />
 				<Routes>
 					<Route path="/" element={<HomePage />} />
+					<Route path="/special-event/:slug" element={<SeasonalEventDetail />} />
 					<Route
 						path="/register"
 						element={
