@@ -57,7 +57,7 @@ export const seasonalEvents: SeasonalEvent[] = [
 		},
 		fullDescription: {
 			en: "Join our exclusive Ijazah Sanad Fast Track program designed for serious students who want to obtain their Ijazah certification through an intensive, structured learning path. This special program offers personalized guidance from certified scholars with authentic chains of transmission (sanad).",
-			ms: "Sertai program eksklusif Ijazah Sanad Fast Track kami yang direka khas untuk pelajar serius yang ingin mendapatkan sijil Ijazah melalui laluan pembelajaran intensif dan berstruktur. Program istimewa ini menawarkan bimbingan peribadi daripada ulama bertauliah dengan sanad yang sahih.",
+			ms: "Sertai program eksklusif Ijazah Sanad Fast Track kami yang direka khas untuk pelajar komited yang ingin mendapatkan Ijazah Sanad Riwayat Hafs ‘an ‘Asim melalui laluan pembelajaran intensif dan berstruktur. Program istimewa ini menawarkan bimbingan peribadi daripada guru berpengalaman dengan sanad yang sahih.",
 		},
 		price: {
 			amount: "1,999.00",
@@ -66,24 +66,22 @@ export const seasonalEvents: SeasonalEvent[] = [
 		},
 		features: {
 			en: [
-				"One-on-one sessions with certified Qari",
-				"Authentic chain of transmission (Sanad)",
-				"Intensive 6-month program",
-				"Weekly progress assessments",
-				"Certificate upon completion",
-				"Lifetime access to community",
-				"Personal correction and guidance",
-				"Flexible scheduling",
+				"Private online Talaqqi with a certified teacher",
+                "5 sessions per week : 30 minutes per session",
+                "Riwayat Hafs 'an 'Asim",
+                "Intensive 4-month program",
+                "Reminder and Admin Support",
+                "Master Tajweed and Makhraj",
+                "Flexible scheduling",
 			],
 			ms: [
-				"Sesi bersama Qari bertauliah secara individu",
-				"Sanad yang sahih dan bersambung",
-				"Program intensif 6 bulan",
-				"Penilaian kemajuan mingguan",
-				"Sijil selepas tamat program",
-				"Akses seumur hidup ke komuniti",
-				"Pembetulan dan bimbingan peribadi",
-				"Jadual yang fleksibel",
+				"Talaqqi bersama Guru secara private online",
+				"5 sesi seminggu : 30 minit per sesi",
+				"Riwayat Hafs 'an 'Asim",
+				"Program intensif 4 bulan",
+				"Reminder dan Admin Support",
+				"Mahirkan Tajwid dan Makhraj",
+				"Jadual yang fleksibel"
 			],
 		},
 		images: {

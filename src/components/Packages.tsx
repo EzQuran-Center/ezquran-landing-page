@@ -105,7 +105,7 @@ export default function Packages() {
 						displayPackages.map((pkg, index) => (
 							<div
 								key={pkg.id || index}
-								className={`relative rounded-2xl p-8 transition-all transform hover:scale-105 max-w-md md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]
+								className={`relative rounded-2xl p-8 transition-all transform hover:scale-105 max-w-md md:w-[calc(50%-1rem)] lg:w-[calc(50%-1.5rem)]
 									${ pkg.popular 
 									? "bg-gradient-to-br from-yellow-500 to-yellow-600 shadow-2xl shadow-yellow-500/30" 
 									: "bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-500/50"
