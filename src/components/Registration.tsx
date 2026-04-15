@@ -551,7 +551,7 @@ export default function Registration() {
                     <div className="text-gray-300">{t('registration.error_datetime')}</div>
                 ) : (daysSelected && slots.length > 0 ) && (
                     <div className="grid md:grid-cols-3 gap-4">
-                    {slots.map((s: any) => (
+                    {slots.map((s: any) => s.is_available == true && (
                         <button 
                             key={s.slot_id} 
                             onClick={() => handleSlotSelect(s)} 
