@@ -7,7 +7,7 @@ import api from '../lib/api';
 import { useTranslation } from '../hooks/useTranslation';
 import { trackPageView, trackCustomEvent, trackLead, trackPurchase } from '../lib/facebookPixel';
 
-export default function Registration() {
+export default function RegistrationSeasonal() {
 
     const location              = useLocation();
     const { t }                 = useTranslation();
@@ -209,8 +209,8 @@ export default function Registration() {
                 trackLead();
                 
                 // Track purchase/registration fee
-                const registrationFee = selectedPackage.currency === 'MYR' ? 100 : 35;
-                const totalAmount = parseFloat(selectedPackage.price) + registrationFee;
+                const registrationFee = selectedPackage.raw.currency === 'MYR' ? 100 : 35;
+                const totalAmount = parseFloat(selectedPackage.raw.price) + registrationFee;
                 
                 trackPurchase(totalAmount, selectedPackage.currency);
                 
@@ -245,7 +245,7 @@ export default function Registration() {
         setPackagesLoading(true);
         setPackagesError(null);
 
-        api.get(`region/${selectedCountry}/packages`)
+        api.get(`region/${selectedCountry}/packages/4`)
             .then((res: any) => {
                 const items = res?.data || [];
                 if (mounted) setPackages(items);
@@ -286,10 +286,10 @@ export default function Registration() {
         setTutorsLoading(true);
         setTutorsError(null);
 
-        api.get('registration/tutors')
+        api.get('registration/tutors/1')
             .then((res: any) => {
                 const items = res?.data || res || [];
-                if (mounted) setTutors(items);
+                if (mounted) setTutors([items]);
             })
             .catch((err: any) => {
                 console.error('Failed to load tutors', err);
@@ -469,10 +469,11 @@ export default function Registration() {
                 <div className="flex justify-between text-center mb-6">
                     <div className="">
                         <button
-                        onClick={() => {
-                            setStep('package');
-                            setError(null);
-                        }}
+                        // onClick={() => {
+                        //     setStep('package');
+                        //     setError(null);
+                        // }}
+                        onClick={() => navigation.back()}
                         className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-semibold flex items-center gap-2">
                         <ArrowLeft size={24} />
                         </button>
@@ -664,6 +665,8 @@ export default function Registration() {
                     </div>
 
                     <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mt-8">
+
+                    {/* {JSON.stringify(selectedPackage)} */}
                     <h3 className="font-semibold text-yellow-500 mb-2">{t('registration.form.summary.title')}</h3>
                     <div className="space-y-3 text-sm text-gray-300">
                         <div className="flex justify-between">
@@ -695,15 +698,15 @@ export default function Registration() {
                         <div className="flex flex-col justify-between pt-3 border-t border-yellow-500/30 space-y-3">
                         <div className="flex justify-between">
                             <span>{t('registration.form.summary.registrationFee')}</span>
-                            <span className="font-semibold">{selectedPackage.currency === "MYR" ? "RM100.00" : `${selectedPackage.currency} 35.00`}</span>
+                            <span className="font-semibold">{selectedPackage.raw.currency === "MYR" ? "RM100.00" : `${selectedPackage.raw.currency} 35.00`}</span>
                         </div>
                         <div className='flex justify-between'>
                             <span>{t('registration.form.summary.packageFee')}</span>
-                            <span className="font-semibold">{selectedPackage.currency} {selectedPackage.price.toFixed(2)}</span>
+                            <span className="font-semibold">{selectedPackage.raw.currency || "MYR"} {selectedPackage.price.toFixed(2)}</span>
                         </div>
                         <div className='flex justify-between'>
                             <span>{t('registration.form.summary.totalAmount')}</span>
-                            <span className="text-yellow-400 font-bold text-lg">{selectedPackage.currency} {(parseFloat(selectedPackage.price) + (selectedPackage.currency === "MYR" ? 100 : 35)).toFixed(2)}</span>
+                            <span className="text-yellow-400 font-bold text-lg">{selectedPackage.raw.currency || "MYR"} {(parseFloat(selectedPackage.raw.price) + (selectedPackage.raw.currency === "MYR" ? 100 : 35)).toFixed(2)}</span>
                         </div>
                         </div>
                     </div>

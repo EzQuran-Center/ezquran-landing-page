@@ -23,7 +23,7 @@ export default function SeasonalEventDetail() {
 	const event = slug ? getEventBySlug(slug) : undefined;
 
     const handleSelectPackage = (pkg: any) => {
-		navigate('/register', { state: { selectedPackage: packages } });
+		navigate('/register-seasonal', { state: { selectedPackage: packages } });
 	};
 
     useEffect(() => {

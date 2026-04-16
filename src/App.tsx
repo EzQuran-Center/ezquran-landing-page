@@ -21,6 +21,7 @@ import Receipt from "./components/Receipt";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
 import { trackPageView } from "./lib/facebookPixel";
+import RegistrationSeasonal from "./components/RegistrationSeasonal";
 
 function HomePage() {
 	return (
@@ -66,6 +67,16 @@ function App() {
 							<>
 								<Navbar />
 								<Registration />
+								<Footer />
+							</>
+						}
+					/>
+					<Route
+						path="/register-seasonal"
+						element={
+							<>
+								<Navbar />
+								<RegistrationSeasonal />
 								<Footer />
 							</>
 						}
