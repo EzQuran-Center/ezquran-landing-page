@@ -18,6 +18,7 @@ import TermsAndConditions from "./components/TermsAndConditions";
 import NotFound from "./components/NotFound";
 import AffiliateRedirect from "./components/AffiliateRedirect";
 import Receipt from "./components/Receipt";
+import QuranReader from "./components/QuranReader";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
 import { trackPageView } from "./lib/facebookPixel";
@@ -60,6 +61,7 @@ function App() {
 				<ScrollToTop />
 				<Routes>
 					<Route path="/" element={<HomePage />} />
+					<Route path="/quran" element={<QuranReader />} />
 					<Route path="/special-event/:slug" element={<SeasonalEventDetail />} />
 					<Route
 						path="/register"

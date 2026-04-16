@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import high-quality Arabic fonts for Quran text */
+@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Amiri+Quran&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+
+/* Arabic font for Quran text */
+@layer base {
+  .font-arabic {
+    font-family: 'Scheherazade New', 'Amiri Quran', 'Noto Naskh Arabic', 'Traditional Arabic', 'Arabic Typesetting', serif;
+    line-height: 2.2;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+  }
+  
+  .font-arabic-bold {
+    font-family: 'Scheherazade New', 'Amiri Quran', 'Noto Naskh Arabic', 'Traditional Arabic', 'Arabic Typesetting', serif;
+    font-weight: 700;
+    line-height: 2.2;
+    letter-spacing: 0.03em;
+  }
+}
