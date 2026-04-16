@@ -8,10 +8,10 @@ import { useTranslation } from "../hooks/useTranslation";
 
 export default function Navbar() {
 
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] 					= useState(false);
 	const [showRegionModal, setShowRegionModal] = useState(false);
-	const navigate = useNavigate();
-	const location = useLocation();
+	const navigate 								= useNavigate();
+	const location 								= useLocation();
 	const { regions, selectedCountry, setSelectedCountry, loadingRegions, isCountrySelected } = useAuth();
 
 	const { t } = useTranslation()
@@ -108,6 +108,12 @@ export default function Navbar() {
 							{selectedRegion ? selectedRegion.region_code : 'Region'}
 						</button>
 						<button
+							onClick={() => window.open("https://management.ezquran.my")}
+							className="flex text-center py-3 bg-black text-white rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
+						>
+							Login Guru
+						</button>
+						<button
 							onClick={() => navigate("/register")}
 							className="px-6 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
 						>
@@ -116,6 +122,12 @@ export default function Navbar() {
 					</div>
 
 					<div className="md:hidden flex items-center gap-2">
+						<button
+							onClick={() => window.open("https://management.ezquran.my")}
+							className="block w-full text-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
+						>
+							Login Guru
+						</button>
 						<button
 							onClick={() => navigate("/register")}
 							className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg text-sm hover:from-yellow-400 hover:to-yellow-500 transition-all"
@@ -174,6 +186,12 @@ export default function Navbar() {
 						>
 							<Globe size={18} />
 							{selectedRegion ? `${selectedRegion.region_name} (${selectedRegion.region_code})` : 'Change Region'}
+						</button>
+						<button
+							onClick={() => window.open("https://management.ezquran.my")}
+							className="block w-full text-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
+						>
+							Login Guru
 						</button>
 						<button
 							onClick={() => navigate("/register")}
