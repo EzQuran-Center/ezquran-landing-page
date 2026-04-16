@@ -122,12 +122,12 @@ export default function Navbar() {
 					</div>
 
 					<div className="md:hidden flex items-center gap-2">
-						<button
+						{/* <button
 							onClick={() => window.open("https://management.ezquran.my")}
 							className="block w-full text-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all"
 						>
 							Login Guru
-						</button>
+						</button> */}
 						<button
 							onClick={() => navigate("/register")}
 							className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg text-sm hover:from-yellow-400 hover:to-yellow-500 transition-all"
