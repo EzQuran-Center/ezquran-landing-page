@@ -536,7 +536,7 @@ export default function Registration() {
                 <p className="text-xl md:text-2xl text-white font-semibold mb-6">{t('registration.datetime.select_days')}</p>
                 <div className="flex flex-wrap justify-center gap-2">
                     {weekdays.map((d) => (
-                    <button key={d.value} onClick={() => toggleDay(d.value)} className={`px-4 py-2 max-w-[120px] rounded-full ${daysSelected.includes(d.value) ? 'bg-yellow-500 text-black' : 'bg-white/5 text-white'}`}>{t(`registration.datetime.days.${d.label}`)}</button>
+                    <button key={d.value} onClick={() => toggleDay(d.value)} className={`px-4 py-2 max-w-[120px] rounded-full ${daysSelected.includes(d.value) ? 'bg-yellow-500 text-black' : 'bg-white/5 text-white border border-yellow-600'}`}>{t(`registration.datetime.days.${d.label}`)}</button>
                     ))}
                 </div>
                 </div>
@@ -555,7 +555,7 @@ export default function Registration() {
                         <button 
                             key={s.slot_id} 
                             onClick={() => handleSlotSelect(s)} 
-                            className="p-4 bg-white/5 rounded-lg text-left hover:bg-white/10"
+                            className="p-4 bg-white/5 rounded-lg text-left hover:bg-white/10 border border-yellow-600"
                             disabled={!s.is_available}  
                         >
                             <div className={`font-semibold text-white text-center ${s.is_available == false && 'text-red-600 line-through'}`}>{s.slot_time_12h || s.slot_time}</div>
