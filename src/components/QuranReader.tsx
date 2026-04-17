@@ -211,7 +211,7 @@ export default function QuranReader() {
 
 			<div className="pt-0 flex">
 				{/* Sidebar */}
-				<div className={`fixed inset-y-0 left-0 z-40 w-80 bg-black border-r border-yellow-500/20 transform transition-transform duration-300 ${showSidebar ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static overflow-y-auto mt-20`}>
+				<div className={`fixed inset-y-0 left-0 z-40 w-80 bg-black border-r border-yellow-500/20 transform transition-transform duration-300 ${showSidebar ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static overflow-y-auto mt-0`}>
 					<div className="p-6">
 						<div className="flex items-center justify-between mb-6">
 							<h2 className="text-2xl font-bold text-yellow-500">
