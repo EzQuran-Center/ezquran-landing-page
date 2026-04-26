@@ -11,6 +11,7 @@ export default function RegistrationSeasonal() {
 
     const location              = useLocation();
     const { t }                 = useTranslation();
+    const form_state            = location.state as any
 
     const [step, setStep]                       = useState<'region' | 'package' | 'tutor' | 'schedule' | 'form' | 'success'>('region');
     const [selectedCountry, setSelectedCountry] = useState<string>('1');
@@ -169,6 +170,9 @@ export default function RegistrationSeasonal() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        let state = location.state as any
+
         const validationError = validateForm();
         if (validationError) {
             setError(validationError);
@@ -196,10 +200,11 @@ export default function RegistrationSeasonal() {
             affiliateCode: affiliateCode || null,
             isWeb: true,
             region_id: selectedCountry || '1',
+            payment_plan_id: state.selectedPlan.plan_id
         };
         
         try {
-            const response = await api.post('registration/web-enroll', payload);
+            const response = await api.post('registration/seasonal-enroll', payload);
             console.log('Registration response:', response);
 
             if(response && response.success) {
@@ -266,12 +271,16 @@ export default function RegistrationSeasonal() {
     // Check for pre-selected package from navigation state
     useEffect(() => {
         const state = location.state as any;
+        console.log("Log State : ", state)
+
+        let { selectedPackage, selectedPlan } = state
+
         if (state?.selectedPackage) {
             const pkg = state.selectedPackage;
             const mapped = {
                 id: pkg.package_id,
                 name: pkg.package_name,
-                price: parseFloat(pkg.package_price || '0'),
+                price: parseFloat(selectedPlan.installment_amount || '0') + parseFloat(selectedPlan.currency === "MYR" ? 100 : 35),
                 raw: pkg,
             };
             setSelectedPackage(mapped);
@@ -706,7 +715,7 @@ export default function RegistrationSeasonal() {
                         </div>
                         <div className='flex justify-between'>
                             <span>{t('registration.form.summary.totalAmount')}</span>
-                            <span className="text-yellow-400 font-bold text-lg">{selectedPackage.raw.currency || "MYR"} {(parseFloat(selectedPackage.raw.price) + (selectedPackage.raw.currency === "MYR" ? 100 : 35)).toFixed(2)}</span>
+                            <span className="text-yellow-400 font-bold text-lg">{Intl.NumberFormat('ms-MY', { style: 'currency', currency: 'MYR'}).format(selectedPackage.price)}</span>
                         </div>
                         </div>
                     </div>

@@ -60,9 +60,9 @@ export const seasonalEvents: SeasonalEvent[] = [
 			ms: "Sertai program eksklusif Ijazah Sanad Fast Track kami yang direka khas untuk pelajar komited yang ingin mendapatkan Ijazah Sanad Riwayat Hafs ‘an ‘Asim melalui laluan pembelajaran intensif dan berstruktur. Program istimewa ini menawarkan bimbingan peribadi daripada guru berpengalaman dengan sanad yang sahih.",
 		},
 		price: {
-			amount: "1,999.00",
+			amount: "599.00",
 			currency: "RM",
-			period: "per program",
+			period: "per monthly",
 		},
 		features: {
 			en: [

@@ -16,14 +16,17 @@ import api from "../lib/api";
 export default function SeasonalEventDetail() {
 	const { slug } = useParams<{ slug: string }>();
 	const navigate = useNavigate();
-	const { language } = useTranslation();
-	const [selectedImage, setSelectedImage] = useState(0);
-    const [packages, setPackages] 	= useState<any[]>([]);
+	const { language } 									= useTranslation();
+	const [selectedImage, setSelectedImage] 			= useState(0);
+    const [packages, setPackages] 						= useState<any[]>([]);
+    const [paymentPlans, setPaymentPlans] 				= useState<any[]>([]);
+    const [paymentPlansLoading, setPaymentPlansLoading] = useState(false);
+    const [selectedPlan, setSelectedPlan] 				= useState<any | null>(null);
 
 	const event = slug ? getEventBySlug(slug) : undefined;
 
     const handleSelectPackage = (pkg: any) => {
-		navigate('/register-seasonal', { state: { selectedPackage: packages } });
+		navigate('/register-seasonal', { state: { selectedPackage: pkg, paymentPlans, selectedPlan } });
 	};
 
     useEffect(() => {
@@ -47,6 +50,29 @@ export default function SeasonalEventDetail() {
             mounted = false;
         };
     }, []);
+
+	useEffect(() => {
+		let mounted = true;
+		const packageId = 4;
+
+		setPaymentPlansLoading(true);
+		api.get(`registration/payment-plans/${packageId}`)
+			.then((res: any) => {
+				if (mounted && res?.data?.payment_plans) {
+					setPaymentPlans(res.data.payment_plans);
+				}
+			})
+			.catch((err: any) => {
+				console.error("Failed to load payment plans", err);
+			})
+			.finally(() => {
+				if (mounted) setPaymentPlansLoading(false);
+			});
+
+		return () => {
+			mounted = false;
+		};
+	}, [])
 
 	if (!event) {
 		return (
@@ -229,24 +255,88 @@ export default function SeasonalEventDetail() {
 								</div>
 							)}
 
-							{/* Price Card */}
-							<div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl p-8 mb-8 shadow-2xl">
-								<div className="text-black">
-									<p className="text-sm font-semibold mb-2 opacity-80">
-										{language === "ms"
-											? "Yuran Program"
-											: "Program Fee"}
-									</p>
-									<div className="text-5xl font-bold mb-2">
-										{event.price.currency}{" "}
-										{event.price.amount}
+							{/* Payment Plans */}
+							<div className="mb-8">
+								<h3 className="text-2xl font-bold text-white mb-4">
+									{language === "ms" ? "Pelan Pembayaran" : "Payment Plans"}
+								</h3>
+								{paymentPlansLoading ? (
+									<div className="text-gray-400 text-sm">
+										{language === "ms" ? "Memuatkan pelan..." : "Loading plans..."}
 									</div>
-									{event.price.period && (
-										<p className="text-sm opacity-80">
-											{event.price.period}
-										</p>
-									)}
-								</div>
+								) : paymentPlans.length > 0 ? (
+									<div className="space-y-3">
+										{paymentPlans.map((plan) => {
+											const isSelected = selectedPlan?.plan_id === plan.plan_id;
+											return (
+												<button
+													key={plan.plan_id}
+													onClick={() => {
+														// setSelectedPlan(plan)
+														navigate('/register-seasonal', { 
+															state: { 
+																packages, 
+																selectedPackage: packages,
+																selectedPlan: plan
+															} 
+														});
+													}}
+													className={`w-full text-left rounded-2xl p-5 border-2 transition-all ${
+														isSelected
+															? "border-yellow-500 bg-yellow-500/10"
+															: "border-white/10 bg-white/5 hover:border-yellow-500/50 hover:bg-white/10"
+													}`}
+												>
+													<div className="flex items-start justify-between gap-4">
+														<div className="flex-1">
+															<p className={`font-semibold text-base mb-1 ${ isSelected ? "text-yellow-400" : "text-white" }`}>
+																{plan.plan_name}
+															</p>
+															<p className="text-gray-400 text-sm">{plan.plan_description}</p>
+															{/* {plan.plan_type === "installment" && (
+																<p className="text-gray-400 text-xs mt-1">
+																	{plan.currency} {Number(plan.installment_amount).toFixed(2)}{" "}
+																	× {plan.installment_count}{" "}
+																	{language === "ms" ? "bayaran" : "payments"}
+																</p>
+															)} */}
+														</div>
+														<div className="text-right shrink-0">
+															<p className={`text-2xl font-bold ${ isSelected ? "text-yellow-400" : "text-white" }`}>
+																{/* {plan.currency} 
+																{Number(plan.installment_amount).toFixed(2)} */}
+																{Intl.NumberFormat('ms-MY', { style: 'currency', currency: 'MYR'}).format(plan.installment_amount)}
+															</p>
+															<p className="text-gray-400 text-xs">
+																{language === "ms" ? "jumlah" : "total"}
+															</p>
+														</div>
+													</div>
+													{isSelected && (
+														<div className="mt-3 flex items-center gap-1 text-yellow-400 text-xs font-semibold">
+															<Check size={14} />
+															{language === "ms" ? "Dipilih" : "Selected"}
+														</div>
+													)}
+												</button>
+											);
+										})}
+									</div>
+								) : (
+									<div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl p-8 shadow-2xl">
+										<div className="text-black">
+											<p className="text-sm font-semibold mb-2 opacity-80">
+												{language === "ms" ? "Yuran Program" : "Program Fee"}
+											</p>
+											<div className="text-5xl font-bold mb-2">
+												{event.price.currency} {event.price.amount}
+											</div>
+											{event.price.period && (
+												<p className="text-sm opacity-80">{event.price.period}</p>
+											)}
+										</div>
+									</div>
+								)}
 							</div>
 
 							{/* Features List */}
@@ -281,14 +371,20 @@ export default function SeasonalEventDetail() {
 							{/* Action Buttons */}
 							<div className="space-y-4">
 
-                                {Object.keys(packages).length && (
+                                {Object.keys(packages).length > 0 && (
                                     <button
                                         onClick={() => handleSelectPackage(packages)}
+                                        disabled={paymentPlans.length > 0 && !selectedPlan}
                                         className={`w-full py-4 rounded-lg font-semibold transition-all ${
-                                            "bg-gradient-to-r from-yellow-500 to-yellow-600 text-black hover:from-yellow-400 hover:to-yellow-500"
+                                            paymentPlans.length > 0 && !selectedPlan
+                                                ? "bg-yellow-500/40 text-black/50 cursor-not-allowed"
+                                                : "bg-gradient-to-r from-yellow-500 to-yellow-600 text-black hover:from-yellow-400 hover:to-yellow-500"
                                         }`}
                                     >
-                                        {language == "ms" ? "Daftar Sekarang" : "Register Now"}
+                                        {paymentPlans.length > 0 && !selectedPlan
+                                            ? (language === "ms" ? "Pilih Pelan Dahulu" : "Select a Plan First")
+                                            : (language === "ms" ? "Daftar Sekarang" : "Register Now")
+                                        }
                                     </button>
                                 )}
 
