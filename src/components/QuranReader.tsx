@@ -477,7 +477,7 @@ export default function QuranReader() {
 								// Get page number for this verse and load appropriate font
 								const pageNumber        = ayah.page;
 								const pageFontFamily    = `QCF_P${String(pageNumber).padStart(3, '0')}`;
-								
+
 								// Gate each ayah on ITS OWN page font being loaded
 								const arabicReady = loadedPages.has(pageNumber);
 							
@@ -485,18 +485,21 @@ export default function QuranReader() {
 									<div
 									key={`${ayah.surah}-${ayah.ayah}`}
 									id={`ayah-${ayah.ayah}`}
-									className={`p-6 rounded-2xl transition-all ${
+									className={`p-6 rounded-2xl transition-all overflow-hidden min-w-0 ${
 										isCurrentlyPlaying ? "bg-yellow-500/20 border-2 border-yellow-500" : "bg-white/5 border border-white/10"
 									}`}
 								>
 									{/* Arabic text with KFGQPC font */}
-									<div className="text-right mb-6">
-									{arabicReady ? (
-										<p 
-											className="text-2xl md:text-4xl leading-relaxed text-white"
-											style={{ 
-												fontFamily: pageFontFamily,
-												lineHeight: '2.5'
+								<div className="text-right mb-6 overflow-hidden">
+								{arabicReady ? (
+									<p 
+										className="text-2xl md:text-4xl leading-relaxed text-white break-all overflow-wrap-anywhere"
+										style={{ 
+											fontFamily: pageFontFamily,
+											lineHeight: '2',
+											wordBreak: 'break-all',
+											overflowWrap: 'anywhere',
+											whiteSpace: 'normal',
 											}}
 										>
 											{ayah.text}
