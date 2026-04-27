@@ -22,7 +22,7 @@ import {
 	type Surah,
 } from "../lib/quran";
 import { useTranslation } from "../hooks/useTranslation";
-import { getPageFontFamily, useQuranPageFont } from "../hooks/useQuranPageFont";
+import { getPageFontFamily, useQuranSurahFonts } from "../hooks/useQuranPageFont";
 import {
 	getSurahAyahs,
 	getSurahStartPage,
@@ -114,10 +114,9 @@ export default function QuranReader() {
 		}
 	}, [currentSurah]);
 
-	// Preload fonts for current surah's pages
+	// Load fonts for ALL pages in the current surah so each ayah gates on its own page font
 	const surahPages = getSurahPages(currentSurah);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const _startPageFont = useQuranPageFont(surahPages[0] || 1);
+	const loadedPages = useQuranSurahFonts(surahPages);
 
 	// Audio player
 	const playAyah = (ayahNumber: number) => {
@@ -301,12 +300,16 @@ export default function QuranReader() {
 								<div className="flex-1 text-center pt-6">
 									{currentSurahInfo && (
 										<div>
-										<h1 
-											className="text-4xl md:text-5xl font-bold text-black mb-1"
-											style={{ fontFamily: getPageFontFamily(getSurahStartPage(currentSurah)) }}
-										>
+										{loadedPages.has(getSurahStartPage(currentSurah)) ? (
+											<h1 
+												className="text-4xl md:text-5xl font-bold text-black mb-1"
+												style={{ fontFamily: getPageFontFamily(getSurahStartPage(currentSurah)) }}
+											>
 												{currentSurahInfo.name}
 											</h1>
+										) : (
+											<div className="h-12 w-48 mx-auto bg-black/20 rounded animate-pulse mb-1" />
+										)}
 											<p className="text-black/80">
 												{currentSurahInfo.englishName} -{" "}
 												{
@@ -449,28 +452,37 @@ export default function QuranReader() {
 								{/* Bismillah (except for Surah 9) */}
 								{currentSurah !== 1 && currentSurah !== 9 && (
 									<div className="text-center py-8">
+								{loadedPages.has(getSurahStartPage(currentSurah)) ? (
 									<p 
 										className="text-4xl md:text-5xl text-yellow-500"
 										style={{ fontFamily: getPageFontFamily(getSurahStartPage(currentSurah)) }}
 									>
 										بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 									</p>
-								</div>
+								) : (
+									<div className="h-16 flex items-center justify-center">
+										<div className="w-8 h-8 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+									</div>
 								)}
+								</div>
+							)}
 
 								{verses.arabic.map(
 								(ayah: AyahData, index: number) => {
-										const malayTranslation      = verses.malay[index];
-										const englishTranslation    = verses.english[index];
+								const malayTranslation      = verses.malay[index];
+								const englishTranslation    = verses.english[index];
 								const isBookmarked          = bookmark?.surah === currentSurah && bookmark?.ayah === ayah.ayah;
 								const isCurrentlyPlaying    = isPlaying && currentAyah === ayah.ayah;
 							
-							// Get page number for this verse and load appropriate font
-							const pageNumber        = ayah.page;
-							const pageFontFamily    = `QCF_P${String(pageNumber).padStart(3, '0')}, 'Scheherazade New'`;
+								// Get page number for this verse and load appropriate font
+								const pageNumber        = ayah.page;
+								const pageFontFamily    = `QCF_P${String(pageNumber).padStart(3, '0')}`;
+								
+								// Gate each ayah on ITS OWN page font being loaded
+								const arabicReady = loadedPages.has(pageNumber);
 							
-							return (
-											<div
+								return (
+									<div
 									key={`${ayah.surah}-${ayah.ayah}`}
 									id={`ayah-${ayah.ayah}`}
 									className={`p-6 rounded-2xl transition-all ${
@@ -479,6 +491,7 @@ export default function QuranReader() {
 								>
 									{/* Arabic text with KFGQPC font */}
 									<div className="text-right mb-6">
+									{arabicReady ? (
 										<p 
 											className="text-2xl md:text-4xl leading-relaxed text-white"
 											style={{ 
@@ -488,8 +501,11 @@ export default function QuranReader() {
 										>
 											{ayah.text}
 										</p>
-									</div>
-
+									) : (
+										<div className="flex justify-end">
+											<div className="h-12 w-3/4 bg-white/10 rounded animate-pulse" />
+										</div>
+									)}								</div>
 									{/* Translation */}
 									{showTranslation && (
 										<div className="mb-4 p-4 bg-black/30 rounded-lg">

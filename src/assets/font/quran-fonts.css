@@ -1,21 +1,8 @@
 /* KFGQPC Quran Page Fonts - Dynamic Font Loader */
-/* This file dynamically generates @font-face declarations for all 604 Mushaf pages */
-
-/* Pages 1-100 */
-@font-face { font-family: 'QCF_P001'; src: url('./p1.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P002'; src: url('./p2.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P003'; src: url('./p3.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P004'; src: url('./p4.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P005'; src: url('./p5.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P006'; src: url('./p6.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P007'; src: url('./p7.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P008'; src: url('./p8.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P009'; src: url('./p9.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'QCF_P010'; src: url('./p10.ttf') format('truetype'); font-display: swap; }
-
-/* Note: Loading all 604 fonts at once would be too heavy. 
-   Instead, we'll load fonts dynamically based on which page is being viewed.
-   For now, we'll define the pattern and load on-demand in the component. */
+/* @font-face rules are injected at runtime by useQuranPageFont.ts using
+   Vite-resolved, content-hashed URLs via import.meta.glob.
+   Static declarations are intentionally omitted to avoid duplicate font
+   registrations that can confuse Safari's CSS rendering pipeline. */
 
 /* CSS class for page-specific fonts */
 .quran-page-text {
