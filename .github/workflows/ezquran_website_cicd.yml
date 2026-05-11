@@ -3,7 +3,9 @@ name: EzQuran Landing Page Deployment
 on:
   push:
     branches:
-      - main  # or your chosen branch
+      - main
+      - staging
+      - development
 
 jobs:
   build-and-deploy:
@@ -13,63 +15,43 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Resolve environment config
+        id: config
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "build_cmd=yarn build:production" >> $GITHUB_OUTPUT
+            echo "deploy_path=/home/ezquran/website/production" >> $GITHUB_OUTPUT
+            echo "env_name=production" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "staging" ]]; then
+            echo "build_cmd=yarn build:staging" >> $GITHUB_OUTPUT
+            echo "deploy_path=/home/ezquran/website/staging" >> $GITHUB_OUTPUT
+            echo "env_name=staging" >> $GITHUB_OUTPUT
+          else
+            echo "build_cmd=yarn build:dev" >> $GITHUB_OUTPUT
+            echo "deploy_path=/home/ezquran/website/development" >> $GITHUB_OUTPUT
+            echo "env_name=development" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22  # or the version you use
+          node-version: 22
 
       - name: Install Dependencies
-        run: |
-          yarn install
-          # or npm ci
+        run: yarn install
 
-      - name: Build For Development
+      - name: Build (${{ steps.config.outputs.env_name }})
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: |
-          yarn build:dev
+        run: ${{ steps.config.outputs.build_cmd }}
 
-      - name: Deploy to Remote Server via SSH
+      - name: Deploy to ${{ steps.config.outputs.env_name }} server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_PRIVATE_KEY }}
           source: "dist/*"
-          target: "/home/ezquran/website/staging"
-          strip_components: 1
-
-      - name: Build For Staging
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: |
-          yarn build:staging
-
-      - name: Deploy to Remote Server via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_PRIVATE_KEY }}
-          source: "dist/*"
-          target: "/home/ezquran/website/staging"
-          strip_components: 1
-
-      - name: Build For Production
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: |
-          yarn build:production
-
-      - name: Deploy to Remote Server via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_PRIVATE_KEY }}
-          source: "dist/*"
-          target: "/home/ezquran/website/production"
+          target: ${{ steps.config.outputs.deploy_path }}
           strip_components: 1
