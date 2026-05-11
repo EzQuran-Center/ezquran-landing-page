@@ -18,10 +18,13 @@ export default function Footer() {
 								<p className="text-xs text-yellow-500">EZQURAN CENTRE</p>
 							</div>
 						</div>
-						<p className="text-gray-400 mb-4 max-w-md">
+						<div className="my-3">
+							<span className="text-xs text-slate-400">THYORA INTERNATIONAL SDN. BHD. (1539891M / 202301045976)</span>
+						</div>
+						<p className="text-xs text-gray-400 mb-4 max-w-md">
 							{t('footer.description')}
 						</p>
-						<p className="text-sm text-gray-500">
+						<p className="text-[9px] text-gray-500">
 							{t('footer.copyright')}
 						</p>
 					</div>
